@@ -7,28 +7,27 @@
 <meta name="description" content="RESON One. Premium over-ear headphones. 40mm beryllium drivers, adaptive noise cancellation, sixty-hour battery." />
 <!--
   RESON One — Apple-tier rebuild (2026-06-21). Reference: apple.com product pages.
-  Rules applied: ONE font (Inter, SF-neutral), ONE accent (copper), ONE theme (warm light), zero em-dashes,
-  huge type + massive negative space, hero centred (product is the hero), bulletproof reveals (scroll sweep).
-  SIGNATURE: the showcase scrubs a real Veo product film (8s, watermark removed, re-encoded all-intra) so as
-  you scroll the headphones ROTATE -> ZOOM into the copper driver -> settle FRONT. The hero + buy use frames
-  from that same film, so the product is consistent everywhere. Warm bg matches the film so it floats.
-  a11y: reduced-motion + mobile fall back to a muted autoplay loop + static features. Built from real footage.
+  ONE font (Inter), ONE accent (copper), ONE theme (warm taupe matched to the film backdrop so the product
+  floats with no seam), zero em-dashes, huge type + space, hero centred. SIGNATURE: the showcase scrubs a real
+  Veo product film (watermark removed, all-intra) so scroll ROTATES the headphones -> ZOOMS the copper driver
+  -> settles FRONT. Hero + buy use frames from that film, so the product is identical everywhere.
+  a11y: reduced-motion + mobile fall back to muted autoplay loop + static features.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#cdc4b5;          /* warm greige, matches the film backdrop so the product floats seamlessly */
-    --bg-2:#d6cec1;
-    --panel:#c3baa9;
-    --ink:#1d1d1f;
-    --muted:#5d574c;
-    --faint:#8a8175;
-    --line:rgba(29,29,31,.15);
-    --line-2:rgba(29,29,31,.08);
-    --copper:#97582b;
-    --copper-soft:#b1713c;
+    --bg:#b9b0a3;          /* warm taupe, matched to the film backdrop edges so the product floats seamlessly */
+    --bg-2:#c2b9ac;
+    --panel:#aaa093;
+    --ink:#1c1b18;
+    --muted:#4a443c;
+    --faint:#6f685c;
+    --line:rgba(28,27,24,.18);
+    --line-2:rgba(28,27,24,.10);
+    --copper:#8f4f24;
+    --copper-soft:#ab6735;
     --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -41,39 +40,39 @@
 
   header{position:fixed;top:0;left:0;width:100%;z-index:120;display:flex;align-items:center;justify-content:space-between;
     padding:18px clamp(20px,5vw,56px);transition:background .4s,box-shadow .4s,padding .4s}
-  header.solid{background:rgba(205,196,181,.72);backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 1px 0 var(--line-2);padding-top:13px;padding-bottom:13px}
+  header.solid{background:rgba(185,176,163,.74);backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 1px 0 var(--line-2);padding-top:13px;padding-bottom:13px}
   .brand{font-weight:600;font-size:20px;letter-spacing:.02em}
   nav.main{display:flex;gap:30px;align-items:center}
-  nav.main a{font-size:14px;opacity:.82;transition:opacity .3s}
+  nav.main a{font-size:14px;opacity:.86;transition:opacity .3s}
   nav.main a:hover{opacity:1}
-  nav.main a.buy{opacity:1;background:var(--copper);color:#fff;border-radius:100px;padding:9px 20px;font-weight:500;font-size:13.5px;transition:background .3s}
-  nav.main a.buy:hover{background:var(--copper-soft)}
-  @media(max-width:760px){nav.main a:not(.buy){display:none}}
+  nav.main a.navcta{opacity:1;display:inline-flex;align-items:center;background:var(--copper);color:#fff;border-radius:100px;padding:9px 22px;font-weight:500;font-size:13.5px;transition:background .3s}
+  nav.main a.navcta:hover{background:var(--copper-soft)}
+  @media(max-width:760px){nav.main a:not(.navcta){display:none}}
 
   .eyebrow{font-size:13px;letter-spacing:.01em;color:var(--copper);font-weight:600}
-  .btn{background:var(--copper);color:#fff;font-weight:500;font-size:16px;border:none;border-radius:100px;padding:15px 34px;cursor:pointer;
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--copper);color:#fff;font-weight:500;font-size:16px;border:none;border-radius:100px;padding:15px 34px;cursor:pointer;
     transition:transform .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:transform;font-family:var(--font)}
   .btn:hover{background:var(--copper-soft)}
 
-  /* HERO — centred, product is the hero */
+  /* HERO */
   .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:128px clamp(20px,5vw,56px) 0;position:relative}
   .hero .eyebrow{margin-bottom:18px}
-  .hero h1{font-weight:600;font-size:clamp(58px,10vw,148px);line-height:.94;letter-spacing:-.035em}
+  .hero h1{font-weight:600;font-size:clamp(56px,9.4vw,140px);line-height:.94;letter-spacing:-.035em}
   .hero .sub{margin-top:22px;font-size:clamp(18px,1.7vw,25px);color:var(--muted);max-width:30ch;font-weight:400}
   .hero .cta{margin-top:30px;display:flex;align-items:center;gap:22px}
   .hero .from{font-size:16px;color:var(--muted)}
-  .hero .figure{margin-top:clamp(-26px,-2vw,4px);width:min(96vw,1080px)}
+  .hero .figure{margin-top:clamp(-24px,-2vw,6px);width:min(96vw,1060px)}
   .hero .figure img{width:100%;will-change:transform}
 
-  /* SHOWCASE — pinned: scrub the product film (rotate -> driver macro -> front), features in sequence */
+  /* SHOWCASE — pinned, scrubbed film */
   .showcase{height:380vh;position:relative;background:var(--bg)}
   .show-pin{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--bg)}
   .show-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .show-pin::before,.show-pin::after{content:"";position:absolute;left:0;width:100%;z-index:2;pointer-events:none}
-  .show-pin::before{top:0;height:24%;background:linear-gradient(180deg,var(--bg) 26%,rgba(205,196,181,0))}
-  .show-pin::after{bottom:0;height:34%;background:linear-gradient(0deg,var(--bg) 14%,rgba(205,196,181,0))}
-  .show-kicker{position:absolute;top:clamp(72px,12vh,118px);left:0;width:100%;text-align:center;z-index:3}
-  .feat{position:absolute;left:0;bottom:clamp(58px,11vh,116px);width:100%;text-align:center;padding:0 6vw;z-index:3}
+  .show-pin::before{top:0;height:30%;background:linear-gradient(180deg,var(--bg),rgba(185,176,163,0))}
+  .show-pin::after{bottom:0;height:40%;background:linear-gradient(0deg,var(--bg) 8%,rgba(185,176,163,0))}
+  .show-kicker{position:absolute;top:clamp(70px,11vh,112px);left:0;width:100%;text-align:center;z-index:3}
+  .feat{position:absolute;left:0;bottom:clamp(54px,10vh,108px);width:100%;text-align:center;padding:0 6vw;z-index:3}
   .feat .line{position:absolute;left:0;width:100%;opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
   .feat .line.in{opacity:1;transform:none}
   .feat .line b{display:block;font-weight:600;font-size:clamp(26px,3.4vw,46px);letter-spacing:-.02em}
@@ -104,18 +103,14 @@
   @media(max-width:880px){.design{grid-template-columns:1fr}.design .copy{justify-self:stretch}.design figure{min-height:48vh;order:-1}}
 
   /* BUY */
-  .buy{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:clamp(32px,6vw,90px);max-width:1180px;margin:0 auto;padding:clamp(80px,14vh,180px) clamp(20px,5vw,56px)}
-  .buy figure img{width:100%;border-radius:18px}
+  .buy{display:grid;grid-template-columns:1fr 1.12fr;align-items:center;gap:clamp(32px,6vw,84px);max-width:1200px;margin:0 auto;padding:clamp(80px,14vh,180px) clamp(20px,5vw,56px)}
+  .buy figure{border-radius:22px;overflow:hidden;background:radial-gradient(120% 100% at 50% 36%,#d7cfc2,#aca294)}
+  .buy figure img{width:100%;display:block;mix-blend-mode:multiply}
   .buy .copy .eyebrow{margin-bottom:16px}
   .buy .copy h2{font-weight:600;font-size:clamp(40px,5.4vw,76px);letter-spacing:-.03em;line-height:1;margin-bottom:12px}
-  .buy .copy .price{font-size:clamp(20px,2vw,26px);color:var(--muted);margin-bottom:30px}
-  .ways{display:flex;gap:12px;margin-bottom:30px}
-  .way{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:100px;padding:8px 18px 8px 9px;font-size:14px;cursor:pointer;transition:border-color .3s}
-  .way:hover{border-color:var(--muted)}
-  .way.sel{border-color:var(--ink)}
-  .way .sw{width:20px;height:20px;border-radius:50%}
-  .sw.graphite{background:linear-gradient(135deg,#4a463f,#211f1c)}
-  .sw.copper{background:linear-gradient(135deg,#c08a55,#8a5a30)}
+  .buy .copy .price{font-size:clamp(20px,2vw,26px);color:var(--muted);margin-bottom:14px}
+  .buy .copy .finish{font-size:15px;color:var(--muted);margin-bottom:30px;display:flex;align-items:center;gap:10px}
+  .buy .copy .finish .dot{width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#5a534a 40%,#9a6233)}
   .buy .reassure{margin-top:22px;font-size:14px;color:var(--muted);line-height:1.7}
   @media(max-width:860px){.buy{grid-template-columns:1fr;gap:30px}.buy figure{order:-1}}
 
@@ -133,6 +128,7 @@
   @media(max-width:880px){
     .showcase{height:auto}
     .show-pin{position:static;height:auto;padding:clamp(70px,9vh,100px) 0 10px}
+    .show-pin::before,.show-pin::after{display:none}
     .show-vid{position:relative;height:auto;aspect-ratio:7/6;object-fit:cover}
     .show-kicker{position:static;margin-bottom:18px}
     .feat{position:static;padding:30px 8vw 0}
@@ -149,7 +145,7 @@
     <a href="#showcase">Sound</a>
     <a href="#design">Design</a>
     <a href="#specs">Specs</a>
-    <a href="#buy" class="buy">Buy</a>
+    <a href="#buy" class="navcta">Buy</a>
   </nav>
 </header>
 
@@ -167,7 +163,7 @@
   </div>
 </section>
 
-<!-- SHOWCASE: scrubbed product film (rotate -> driver macro -> front) -->
+<!-- SHOWCASE -->
 <section class="showcase" id="showcase">
   <div class="show-pin">
     <video class="show-vid" id="showVid" muted playsinline preload="auto" poster="assets/reson-f1.jpg">
@@ -176,8 +172,8 @@
     <div class="show-kicker eyebrow">Engineered to disappear</div>
     <div class="feat">
       <div class="line" data-at="0.10"><b>40mm beryllium drivers.</b><span>Hand-tuned, 5 Hz to 40 kHz.</span></div>
-      <div class="line" data-at="0.42"><b>The copper driver.</b><span>Up to 42 dB of adaptive quiet.</span></div>
-      <div class="line" data-at="0.74"><b>Sixty-hour battery.</b><span>Ten minutes gives you eight hours.</span></div>
+      <div class="line" data-at="0.44"><b>The copper driver.</b><span>Up to 42 dB of adaptive quiet.</span></div>
+      <div class="line" data-at="0.76"><b>Sixty-hour battery.</b><span>Ten minutes gives you eight hours.</span></div>
     </div>
   </div>
 </section>
@@ -223,14 +219,11 @@
     <div class="eyebrow reveal">Buy</div>
     <h2 class="reveal" style="transition-delay:.04s">RESON One</h2>
     <div class="price reveal" style="transition-delay:.08s">S$ 549</div>
-    <div class="ways reveal" style="transition-delay:.12s">
-      <div class="way sel"><span class="sw graphite"></span>Graphite</div>
-      <div class="way"><span class="sw copper"></span>Copper</div>
-    </div>
+    <div class="finish reveal" style="transition-delay:.12s"><span class="dot"></span>Graphite, with copper accents</div>
     <a href="#buy"><button class="btn reveal" style="transition-delay:.16s">Add to Bag</button></a>
     <div class="reassure reveal" style="transition-delay:.22s">Two-year warranty. Free 30-day returns. Ships in two days.</div>
   </div>
-  <figure class="reveal"><img id="buyImg" src="assets/reson-f3.jpg" alt="RESON One headphones, front view." /></figure>
+  <figure class="reveal"><img src="assets/reson-buy.jpg" alt="RESON One headphones, front view." /></figure>
 </section>
 
 <footer>
@@ -262,14 +255,13 @@
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function mobile(){ return window.innerWidth <= 880; }
 
-  // video scrub setup
   let dur=0, hasVid=false, scrub=false, targetT=0, curT=0;
   if(vid){
     vid.addEventListener('loadedmetadata',()=>{
       dur=vid.duration||0; hasVid=dur>0;
       scrub = hasVid && !reduce && !mobile();
       if(hasVid && !scrub){ vid.loop=true; vid.muted=true; const p=vid.play(); if(p&&p.catch)p.catch(()=>{}); }
-      else if(scrub){ vid.muted=true; const pp=vid.play(); if(pp&&pp.then){ pp.then(()=>vid.pause()).catch(()=>{try{vid.pause();}catch(e){}}); } } // play->pause forces full buffering so currentTime is seekable
+      else if(scrub){ vid.muted=true; const pp=vid.play(); if(pp&&pp.then){ pp.then(()=>vid.pause()).catch(()=>{try{vid.pause();}catch(e){}}); } } // play->pause forces buffering so currentTime is seekable
     });
     vid.addEventListener('error',()=>{ hasVid=false; scrub=false; });
   }
@@ -277,7 +269,7 @@
   function revealCheck(){
     for(let i=0;i<revealEls.length;i++){
       const el=revealEls[i];
-      if(!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight*0.88) el.classList.add('in');
+      if(!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight*0.9) el.classList.add('in');
     }
   }
 
@@ -336,13 +328,6 @@
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();if(lenis)lenis.scrollTo(t,{offset:-8});else t.scrollIntoView({behavior:'smooth'});});
   });
-
-  const buyImg = document.getElementById('buyImg');
-  document.querySelectorAll('.way').forEach(w=>w.addEventListener('click',()=>{
-    document.querySelectorAll('.way').forEach(x=>x.classList.remove('sel'));
-    w.classList.add('sel');
-    if(buyImg) buyImg.style.filter = w.textContent.trim()==='Copper' ? 'saturate(1.16) hue-rotate(-6deg) brightness(1.03)' : '';
-  }));
 
   // verification hook for screenshots
   window.__seek=function(p){
