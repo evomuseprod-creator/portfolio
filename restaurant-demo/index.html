@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMBER — a wood-fire tasting room</title>
+<!--
+  PACKAGE 1 (Level 1): clean & real, STATIC. Fine-dining site as "a single cinematic object".
+  Story brief: restaurant-demo/BRIEF.md  ·  Research: restaurant-demo/RESEARCH.md (Perplexity, 2026-06-21)
+  Award moves: full-bleed moody hero, the menu as a scrolling JOURNEY of course-scenes, layered translucent
+  panels over dark food imagery, oversized high-contrast serif over imagery, generous whitespace.
+  Espresso-black base, ONE accent (brass, micro only), real Gemini candlelit imagery (hands checked),
+  zero em-dashes. New register vs FORM/NOOR/Belmont.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14110c;
+    --bg2:#1a150e;
+    --ink:#efe6d4;
+    --muted:#a89a80;
+    --faint:#796e58;
+    --line:#2c2417;
+    --accent:#bd9a5a;
+    --accent-soft:#d4b780;
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#14110c}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 6vw}
+  .label{font-size:12px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+  .pad{padding:clamp(80px,12vw,160px) 0}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--accent);color:var(--accent-soft);
+    background:transparent;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    padding:15px 30px;border-radius:1px;transition:background .35s,color .35s,transform .35s}
+  .btn:hover{background:var(--accent);color:#14110c;transform:translateY(-2px)}
+  .btn--solid{background:var(--accent);color:#14110c}
+  .btn--solid:hover{background:var(--accent-soft);border-color:var(--accent-soft)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:24px 6vw;color:var(--ink);transition:background .4s,padding .4s,box-shadow .4s}
+  nav .logo{font-family:var(--serif);font-size:26px;font-weight:600;letter-spacing:.34em;text-transform:uppercase}
+  nav .links{display:flex;align-items:center;gap:34px}
+  nav .links a{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);opacity:.82;transition:opacity .2s,color .2s}
+  nav .links a:hover{opacity:1;color:var(--accent-soft)}
+  nav .navcta{border:1px solid rgba(189,154,90,.55);padding:10px 20px;border-radius:1px;color:var(--accent-soft);opacity:1}
+  nav.scrolled{background:rgba(20,17,12,.86);backdrop-filter:blur(12px);padding-top:15px;padding-bottom:15px;box-shadow:0 1px 0 var(--line)}
+
+  /* HERO */
+  .hero{position:relative;height:100dvh;min-height:620px;overflow:hidden;display:flex;align-items:flex-end}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(0deg,rgba(15,12,8,.86) 0%,rgba(15,12,8,.15) 45%,rgba(15,12,8,.5) 100%)}
+  .hero .inner{position:relative;z-index:2;width:100%;padding:0 6vw clamp(48px,7vw,90px);max-width:1240px;margin:0 auto}
+  .hero .label{color:var(--accent-soft);margin-bottom:22px}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(72px,16vw,220px);line-height:.84;letter-spacing:.04em}
+  .hero .sub{margin-top:24px;font-family:var(--serif);font-style:italic;font-size:clamp(19px,2vw,30px);color:#e7dcc6;font-weight:400}
+  .hero .actions{margin-top:34px}
+
+  /* STATEMENT + room */
+  .statement{background:var(--bg2)}
+  .statement .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(36px,5vw,80px);align-items:center}
+  .statement .big{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.4vw,62px);line-height:1.14;letter-spacing:.005em}
+  .statement .big em{font-style:italic;color:var(--accent-soft)}
+  .statement p{color:var(--muted);font-size:16px;line-height:1.85;max-width:44ch;margin-top:26px}
+  .statement .figure img{width:100%;height:clamp(380px,56vh,560px);object-fit:cover;border-radius:2px}
+
+  /* MENU JOURNEY */
+  .menu{position:relative}
+  .menu .head{text-align:center;margin-bottom:60px}
+  .menu .head h2{font-family:var(--serif);font-weight:500;font-size:clamp(34px,5vw,72px);line-height:1.02;margin-top:18px}
+  .menu .head .chapter{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:16px}
+  .menu .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,90px);align-items:start}
+  .menu .courses{display:grid}
+  .menu .c{display:grid;grid-template-columns:46px 1fr;gap:24px;padding:26px 0;border-top:1px solid var(--line)}
+  .menu .c:last-child{border-bottom:1px solid var(--line)}
+  .menu .c .rn{font-family:var(--serif);font-size:24px;color:var(--accent);font-style:italic}
+  .menu .c h3{font-family:var(--serif);font-size:clamp(24px,2.6vw,34px);font-weight:500;line-height:1.05}
+  .menu .c .ing{color:var(--muted);font-size:15px;margin-top:6px;letter-spacing:.01em}
+  .menu .figure{position:sticky;top:100px}
+  .menu .figure img{width:100%;height:clamp(440px,72vh,640px);object-fit:cover;border-radius:2px}
+  .menu .figure .cap{margin-top:14px;font-size:13px;color:var(--faint);letter-spacing:.04em;text-align:center}
+
+  /* FIRE full-bleed */
+  .fire{position:relative;height:80vh;min-height:480px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+  .fire img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .fire::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 100% at 50% 60%, rgba(15,12,8,.3), rgba(15,12,8,.82))}
+  .fire .fc{position:relative;z-index:2;padding:0 6vw;max-width:24ch}
+  .fire h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,86px);line-height:1.02}
+  .fire p{margin-top:18px;color:#e0d4be;font-size:clamp(15px,1.3vw,18px);max-width:42ch;margin-left:auto;margin-right:auto}
+
+  /* CHEF */
+  .chef{background:var(--bg2)}
+  .chef .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px);align-items:center}
+  .chef .figure img{width:100%;height:clamp(420px,62vh,600px);object-fit:cover;border-radius:2px}
+  .chef h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4vw,56px);line-height:1.08}
+  .chef .role{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:18px 0 22px}
+  .chef p{color:var(--muted);font-size:16px;line-height:1.85;max-width:48ch}
+  .chef p + p{margin-top:15px}
+
+  /* RESERVE */
+  .reserve{text-align:center}
+  .reserve h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,88px);line-height:1;margin-top:18px}
+  .reserve .grid{margin-top:54px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);text-align:left;max-width:980px;margin-left:auto;margin-right:auto}
+  .reserve .g{padding:28px 28px 28px 0;border-bottom:1px solid var(--line)}
+  .reserve .g:not(:last-child){border-right:1px solid var(--line)}
+  .reserve .g .t{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .reserve .g .v{font-family:var(--serif);font-size:21px;margin-top:8px;line-height:1.3}
+  .reserve .actions{margin-top:48px}
+  .reserve .note{margin-top:26px;font-size:13px;color:var(--faint)}
+
+  footer{background:var(--bg2);border-top:1px solid var(--line)}
+  footer .grid{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;padding:48px 0 34px}
+  footer .logo{font-family:var(--serif);font-size:22px;letter-spacing:.3em;text-transform:uppercase}
+  footer .col h5{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  footer .col p,footer .col a{display:block;color:var(--muted);font-size:14px;line-height:1.9}
+  footer .col a:hover{color:var(--accent-soft)}
+  footer .base{border-top:1px solid var(--line);padding:18px 0;font-size:12px;color:var(--faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.04em}
+
+  @media (max-width:960px){
+    .statement .grid,.menu .grid,.chef .grid,.reserve .grid{grid-template-columns:1fr;gap:32px}
+    .statement .figure{order:-1}
+    .menu .figure{position:static}
+    .menu .figure img{height:54vh}
+    .reserve .grid{max-width:460px}
+    .reserve .g:not(:last-child){border-right:0}
+    .chef .figure{order:-1;max-width:520px}
+  }
+  @media (max-width:560px){
+    nav .links a:not(.navcta){display:none}
+    .menu .c{grid-template-columns:1fr}
+    .menu .c .rn{margin-bottom:-12px}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">Ember</div>
+  <div class="links">
+    <a href="#menu">The menu</a>
+    <a href="#chef">The chef</a>
+    <a href="#reserve">Visit</a>
+    <a href="#reserve" class="navcta">Reserve</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <img src="assets/hero.jpg" alt="A plated tasting course by candlelight at Ember">
+  <div class="inner">
+    <div class="label">A wood-fire tasting room &middot; Singapore</div>
+    <h1>Ember</h1>
+    <p class="sub">One menu a night, everything touched by fire.</p>
+    <div class="actions"><a href="#reserve" class="btn btn--solid">Reserve a table</a></div>
+  </div>
+</header>
+
+<section class="statement pad">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="big">Some dinners you eat. This one you <em>sit through</em>, course by course, by the light of the fire.</p>
+        <p>There is no a la carte and no rushing. Sixteen seats face the open kitchen, one seasonal menu is served, and the evening moves at the pace of the grill. Come hungry and leave the choosing to us.</p>
+      </div>
+      <div class="figure">
+        <img src="assets/room.jpg" alt="The candlelit dining room at Ember, a green banquette and brass light">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu pad" id="menu">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">The menu</div>
+      <h2>Tonight, in seven movements.</h2>
+      <div class="chapter">Current chapter &middot; Winter 2026 &middot; $268++ per guest</div>
+    </div>
+    <div class="grid">
+      <div class="courses">
+        <div class="c"><div class="rn">I</div><div><h3>Oyster, over coals</h3><div class="ing">Smoked cream, finger lime, charred shallot</div></div></div>
+        <div class="c"><div class="rn">II</div><div><h3>Scallop and leek</h3><div class="ing">Brown butter, burnt apple, chive oil</div></div></div>
+        <div class="c"><div class="rn">III</div><div><h3>Hand-torn bread</h3><div class="ing">Ember-roasted garlic, cultured butter</div></div></div>
+        <div class="c"><div class="rn">IV</div><div><h3>Line-caught fish</h3><div class="ing">Fennel, mussel broth, a little fire</div></div></div>
+        <div class="c"><div class="rn">V</div><div><h3>Aged duck, grilled whole</h3><div class="ing">Beetroot, black garlic, the night's jus</div></div></div>
+        <div class="c"><div class="rn">VI</div><div><h3>Burnt honey</h3><div class="ing">Sheep's milk, smoked salt, oat</div></div></div>
+        <div class="c"><div class="rn">VII</div><div><h3>Chocolate and coal</h3><div class="ing">Malt, barrel-aged stout, cacao nib</div></div></div>
+      </div>
+      <div class="figure">
+        <img src="assets/course.jpg" alt="A course of scallop and leek on a dark plate">
+        <div class="cap">The chapter changes with the season. Dietary needs are met with notice.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fire">
+  <img src="assets/fire.jpg" alt="The open wood fire at the heart of the Ember kitchen">
+  <div class="fc">
+    <h2>Everything touches the fire.</h2>
+    <p>One hearth, lit before service and fed through the night. Smoke, char and embers are the only seasoning we cannot buy.</p>
+  </div>
+</section>
+
+<section class="chef pad" id="chef">
+  <div class="wrap">
+    <div class="grid">
+      <div class="figure">
+        <img src="assets/hands.jpg" alt="The chef finishing a plated dish at the pass">
+      </div>
+      <div class="copy">
+        <div class="label">The chef</div>
+        <h2>Cooked at the counter, by the same hands.</h2>
+        <div class="role">Renee Goh &middot; chef and owner</div>
+        <p>Renee cooked across wood-fire kitchens in Sydney and Copenhagen before bringing Ember home to Keong Saik. She works the pass every service, so the plate you are handed was finished by the person who wrote the menu.</p>
+        <p>Her cooking is short on garnish and long on smoke. A few ingredients, treated with respect and a hot fire, served to a room small enough to read.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reserve pad" id="reserve">
+  <div class="wrap">
+    <div class="label">Visit</div>
+    <h2>A counter of sixteen. Book ahead.</h2>
+    <div class="grid">
+      <div class="g"><div class="t">Seatings</div><div class="v">Wed to Sun<br>6.00pm and 8.30pm</div></div>
+      <div class="g"><div class="t">Where</div><div class="v">28 Keong Saik Road<br>Singapore 089138</div></div>
+      <div class="g"><div class="t">The menu</div><div class="v">One tasting menu<br>$268++ per guest</div></div>
+    </div>
+    <div class="actions"><a href="mailto:book@emberkl.sg" class="btn btn--solid">Reserve a table</a></div>
+    <p class="note">Private dining for up to ten by arrangement. Please tell us of any allergies when you book.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div class="col">
+        <div class="logo">Ember</div>
+        <p style="color:var(--muted);margin-top:10px;max-width:30ch">A wood-fire tasting room on Keong Saik Road.</p>
+      </div>
+      <div class="col">
+        <h5>Find us</h5>
+        <p>28 Keong Saik Road<br>Singapore 089138</p>
+        <p>Wed to Sun &middot; from 6pm</p>
+      </div>
+      <div class="col">
+        <h5>Reserve</h5>
+        <a href="mailto:book@emberkl.sg">book@emberkl.sg</a>
+        <a href="tel:+6562220000">+65 6222 0000</a>
+        <a href="#menu">The menu</a>
+      </div>
+      <div class="col">
+        <h5>Follow</h5>
+        <a href="#">Instagram</a>
+        <a href="#">The chapter notes</a>
+      </div>
+    </div>
+    <div class="wrap base">
+      <span>&copy; 2026 Ember</span>
+      <span>Built as an agency demo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.7);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+</body>
+</html>

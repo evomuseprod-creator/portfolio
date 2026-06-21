@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folklore Coffee Roasters — small-batch, single origin, Singapore</title>
+<meta name="description" content="A small-batch specialty coffee roastery in Singapore. Single origins, roasted the week you drink them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0a08;
+    --bg-2:#14110d;
+    --bg-3:#1d1813;
+    --text:#efe9dd;
+    --text-dim:#a39b8c;
+    --text-faint:#6f685b;
+    --accent:#e0a449;
+    --accent-deep:#c8863a;
+    --line:rgba(239,233,221,.09);
+    --line-strong:rgba(239,233,221,.16);
+    --maxw:1280px;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:#1a1206}
+  h1,h2,h3,.display{font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.04;letter-spacing:-.02em;font-weight:600}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .accent{color:var(--accent)}
+  .muted{color:var(--text-dim)}
+
+  /* film grain overlay */
+  .grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  /* ---------- NAV ---------- */
+  header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .4s var(--ease),border-color .4s var(--ease);border-bottom:1px solid transparent}
+  header.scrolled{background:rgba(11,10,8,.72);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .brand{font-family:"Space Grotesk";font-weight:700;font-size:18px;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .navlinks{display:flex;align-items:center;gap:34px}
+  .navlinks a{font-size:14px;color:var(--text-dim);transition:color .25s var(--ease)}
+  .navlinks a:hover{color:var(--text)}
+  .btn{font-family:"Space Grotesk";font-weight:500;font-size:14px;border-radius:999px;padding:11px 22px;
+    background:var(--accent);color:#1a1206;border:none;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s var(--ease);will-change:transform;display:inline-block}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(224,164,73,.28);background:#ecb05a}
+  .btn:active{transform:translateY(0) scale(.98)}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line-strong)}
+  .btn.ghost:hover{background:rgba(239,233,221,.06);box-shadow:none}
+  @media(max-width:860px){.navlinks{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:100dvh;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:40px;padding:120px 0 60px;position:relative}
+  .hero-copy{max-width:560px}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-faint);margin-bottom:26px}
+  .eyebrow .ln{width:34px;height:1px;background:var(--line-strong)}
+  .hero h1{font-size:clamp(44px,6.2vw,84px);font-weight:600}
+  .hero h1 .row{display:block;overflow:hidden}
+  .hero h1 .row span{display:block;transform:translateY(108%);transition:transform 1s var(--ease)}
+  .loaded .hero h1 .row span{transform:translateY(0)}
+  .hero h1 .row:nth-child(2) span{transition-delay:.09s}
+  .hero p.sub{margin-top:28px;font-size:18px;color:var(--text-dim);max-width:46ch;opacity:0;transform:translateY(16px);transition:all .9s var(--ease) .4s}
+  .loaded .hero p.sub{opacity:1;transform:none}
+  .hero .cta-row{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(16px);transition:all .9s var(--ease) .55s}
+  .loaded .hero .cta-row{opacity:1;transform:none}
+  .hero-media{position:relative;height:78vh;border-radius:16px;overflow:hidden;opacity:0;transform:scale(1.04);transition:all 1.3s var(--ease) .15s;box-shadow:0 40px 90px rgba(0,0,0,.55)}
+  .loaded .hero-media{opacity:1;transform:none}
+  .hero-media img{position:absolute;inset:0;width:100%;height:112%;object-fit:cover;will-change:transform}
+  .hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(11,10,8,.55))}
+  .hero-badge{position:absolute;left:22px;bottom:22px;z-index:2;font-size:13px;color:var(--text);background:rgba(11,10,8,.5);backdrop-filter:blur(8px);border:1px solid var(--line-strong);border-radius:12px;padding:12px 16px}
+  .hero-badge b{font-family:"Space Grotesk";display:block;font-size:15px;font-weight:600}
+  @media(max-width:960px){.hero{grid-template-columns:1fr;gap:30px;padding:120px 0 50px}.hero-media{height:52vh;order:-1}}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .marquee .track{display:inline-flex;gap:54px;animation:scroll 34s linear infinite;will-change:transform}
+  .marquee span{font-family:"Space Grotesk";font-size:22px;font-weight:500;color:var(--text-faint);letter-spacing:.01em;display:inline-flex;align-items:center;gap:54px}
+  .marquee span::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.7}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- SECTIONS ---------- */
+  section{position:relative}
+  .pad{padding:120px 0}
+  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+
+  /* manifesto */
+  .manifesto{padding:140px 0;text-align:center}
+  .manifesto h2{font-size:clamp(30px,4vw,54px);max-width:18ch;margin:0 auto;font-weight:500;line-height:1.12}
+  .manifesto h2 .accent{font-style:italic}
+  .manifesto .meta{margin-top:40px;display:flex;gap:60px;justify-content:center;flex-wrap:wrap}
+  .manifesto .meta .n{font-family:"Space Grotesk";font-size:40px;font-weight:600}
+  .manifesto .meta .l{font-size:13px;color:var(--text-dim);margin-top:4px}
+
+  /* origins bento */
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:230px;gap:18px}
+  .cell{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg-2)}
+  .cell img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+  .cell:hover img{transform:scale(1.06)}
+  .cell .lab{position:absolute;left:20px;bottom:18px;z-index:2}
+  .cell .lab .t{font-family:"Space Grotesk";font-weight:600;font-size:20px}
+  .cell .lab .s{font-size:13px;color:var(--text-dim)}
+  .cell.media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(8,7,5,.78))}
+  .cell.text{padding:30px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(155deg,var(--bg-3),var(--bg-2))}
+  .cell.text p{color:var(--text-dim);font-size:15px}
+  .c-a{grid-column:span 4;grid-row:span 2}
+  .c-b{grid-column:span 2}
+  .c-c{grid-column:span 2}
+  .c-d{grid-column:span 3}
+  .c-e{grid-column:span 3}
+  @media(max-width:860px){.bento{grid-template-columns:1fr 1fr;grid-auto-rows:180px}.c-a{grid-column:span 2;grid-row:span 2}.c-b,.c-c,.c-d,.c-e{grid-column:span 2}}
+
+  /* featured roast split */
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .feature .shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/5;position:relative}
+  .feature .shot img{width:100%;height:100%;object-fit:cover}
+  .feature h2{font-size:clamp(32px,4vw,52px);margin:14px 0 22px}
+  .feature .notes{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0}
+  .feature .notes .tag{font-size:13px;border:1px solid var(--line-strong);border-radius:999px;padding:7px 15px;color:var(--text-dim)}
+  .feature .price{font-family:"Space Grotesk";font-size:26px;font-weight:600;margin:6px 0 26px;display:flex;align-items:baseline;gap:10px}
+  .feature .price small{font-size:14px;color:var(--text-faint);font-weight:400}
+  .feature .spec{border-top:1px solid var(--line);margin-top:8px}
+  .feature .spec .r{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .feature .spec .r span:first-child{color:var(--text-faint)}
+  @media(max-width:860px){.feature{grid-template-columns:1fr;gap:34px}}
+
+  /* process */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+  .step{padding:48px 44px;border-right:1px solid var(--line)}
+  .step:first-child{padding-left:0}
+  .step:last-child{border-right:none;padding-right:0}
+  .step .no{font-family:"Space Grotesk";font-size:14px;color:var(--accent);margin-bottom:50px}
+  .step h3{font-size:27px;margin-bottom:14px}
+  .step p{color:var(--text-dim);font-size:15px;max-width:34ch}
+  @media(max-width:860px){.steps{grid-template-columns:1fr}.step{border-right:none;border-bottom:1px solid var(--line);padding:34px 0}.step .no{margin-bottom:18px}}
+
+  /* visit full bleed */
+  .visit{position:relative;min-height:80vh;display:flex;align-items:flex-end;border-radius:18px;overflow:hidden;margin:0 28px;border:1px solid var(--line)}
+  .visit img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .visit::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,7,5,.82) 30%,rgba(8,7,5,.15))}
+  .visit .inner{position:relative;z-index:2;padding:54px;max-width:560px}
+  .visit h2{font-size:clamp(32px,4vw,52px);margin-bottom:18px}
+  .visit .hours{display:flex;gap:46px;margin:26px 0 30px;flex-wrap:wrap}
+  .visit .hours .l{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint);margin-bottom:6px}
+  .visit .hours .v{font-family:"Space Grotesk";font-size:17px}
+  @media(max-width:860px){.visit .inner{padding:34px}}
+
+  /* footer */
+  footer{padding:90px 0 50px;border-top:1px solid var(--line);margin-top:120px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  .foot-grid h4{font-family:"Space Grotesk";font-size:15px;margin-bottom:18px}
+  .news{display:flex;gap:10px;margin-top:18px;max-width:380px}
+  .news input{flex:1;background:var(--bg-2);border:1px solid var(--line-strong);border-radius:999px;padding:12px 18px;color:var(--text);font-family:inherit;font-size:14px}
+  .news input::placeholder{color:var(--text-faint)}
+  .news input:focus{outline:none;border-color:var(--accent)}
+  .foot-links a{display:block;color:var(--text-dim);font-size:14px;padding:6px 0;transition:color .2s}
+  .foot-links a:hover{color:var(--text)}
+  .foot-bot{display:flex;justify-content:space-between;margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--text-faint);font-size:13px;flex-wrap:wrap;gap:10px}
+  @media(max-width:860px){.foot-grid{grid-template-columns:1fr;gap:30px}}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .hero h1 .row span,.hero p.sub,.hero .cta-row,.hero-media{opacity:1;transform:none}
+    .reveal{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header id="hdr">
+  <nav>
+    <a class="brand" href="#top"><span class="dot"></span>FOLKLORE</a>
+    <div class="navlinks">
+      <a href="#origins">Origins</a>
+      <a href="#roast">The roast</a>
+      <a href="#process">How we roast</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <a href="#roast" class="btn">Shop the roast</a>
+  </nav>
+</header>
+
+<main id="top" class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="ln"></span>Small-batch · Singapore</span>
+      <h1>
+        <span class="row"><span>Roasted dark.</span></span>
+        <span class="row"><span>Poured slow.</span></span>
+      </h1>
+      <p class="sub">A small-batch roastery in Tiong Bahru. We source single origins and roast them the same week you brew them. Nothing sits on a shelf.</p>
+      <div class="cta-row">
+        <a href="#roast" class="btn">Shop the roast</a>
+        <a href="#visit" class="btn ghost">Visit the cafe</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img id="heroImg" src="assets/hero.jpg" alt="Espresso shot pouring with golden crema into a matte-black cup">
+      <div class="hero-badge"><b>On the bar this week</b>Guji, Ethiopia · washed</div>
+    </div>
+  </section>
+</main>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>ETHIOPIA</span><span>COLOMBIA</span><span>KENYA</span><span>GUATEMALA</span><span>RWANDA</span><span>BRAZIL</span>
+    <span>ETHIOPIA</span><span>COLOMBIA</span><span>KENYA</span><span>GUATEMALA</span><span>RWANDA</span><span>BRAZIL</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- MANIFESTO -->
+  <section class="manifesto reveal">
+    <h2>We roast in batches of twelve kilos, by hand, the way a <span class="accent">good loaf</span> is baked. Fresh, or not at all.</h2>
+    <div class="meta">
+      <div><div class="n accent">12kg</div><div class="l">per roast batch</div></div>
+      <div><div class="n accent">6</div><div class="l">single origins on rotation</div></div>
+      <div><div class="n accent">72h</div><div class="l">rested, then shipped</div></div>
+    </div>
+  </section>
+
+  <!-- ORIGINS BENTO -->
+  <section id="origins" class="pad">
+    <div class="kicker reveal">Where it comes from</div>
+    <div class="bento">
+      <div class="cell media c-a reveal">
+        <img src="assets/roastery.jpg" alt="A drum roaster glowing in a dark roastery">
+        <div class="lab"><div class="t">The roastery</div><div class="s">Loring drum roaster, profiled by hand</div></div>
+      </div>
+      <div class="cell text c-b reveal">
+        <div class="kicker" style="margin:0">Sourcing</div>
+        <p>We buy from importers who name the farm, the altitude, and the price paid to the grower.</p>
+      </div>
+      <div class="cell media c-c reveal">
+        <img src="assets/beans.jpg" alt="Fresh roasted coffee beans held in cupped hands">
+        <div class="lab"><div class="t">Whole bean</div><div class="s">Roasted to order</div></div>
+      </div>
+      <div class="cell media c-d reveal">
+        <img src="assets/roast-levels.jpg" alt="Light, medium and dark roast coffee beans side by side on dark slate">
+        <div class="lab"><div class="t">Light to dark</div><div class="s">A roast for every method</div></div>
+      </div>
+      <div class="cell text c-e reveal">
+        <div class="kicker" style="margin:0">Freshness</div>
+        <p>Every bag is stamped with its roast date, not a "best before". You will taste the difference in a fortnight.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED ROAST -->
+  <section id="roast" class="pad">
+    <div class="feature">
+      <div class="shot reveal">
+        <img src="assets/bag.jpg" alt="Matte-black Folklore coffee bag on dark stone">
+      </div>
+      <div class="reveal">
+        <div class="kicker">The house blend</div>
+        <h2>Nocturne Blend</h2>
+        <p class="muted">Our darkest, most comforting roast. A bold, earthy espresso blend built for milk drinks and slow mornings, with a heavy body and a long, sweet finish.</p>
+        <div class="notes">
+          <span class="tag">Dark chocolate</span><span class="tag">Molasses</span><span class="tag">Toasted walnut</span><span class="tag">Brown sugar</span>
+        </div>
+        <div class="price">$24 <small>/ 500g whole bean</small></div>
+        <div class="spec">
+          <div class="r"><span>Style</span><span>Espresso blend</span></div>
+          <div class="r"><span>Origins</span><span>Brazil &amp; Sumatra</span></div>
+          <div class="r"><span>Roast level</span><span>Dark · espresso</span></div>
+          <div class="r"><span>Best for</span><span>Espresso, milk, moka</span></div>
+        </div>
+        <a href="#" class="btn" style="margin-top:30px">Add to basket</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="pad">
+    <div class="kicker reveal">From cherry to cup</div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="no">Source</div>
+        <h3>We taste before we buy</h3>
+        <p>Every lot is cupped blind before it earns a place on the bar. If it doesn't move us, we pass.</p>
+      </div>
+      <div class="step reveal">
+        <div class="no">Roast</div>
+        <h3>Profiled by hand, weekly</h3>
+        <p>Small drums, full attention. Each origin gets its own curve, dialled in roast after roast.</p>
+      </div>
+      <div class="step reveal">
+        <div class="no">Brew</div>
+        <h3>Rested, then yours</h3>
+        <p>We let the beans settle for three days, then they ship. You brew them at their peak, not ours.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- VISIT -->
+<section id="visit" class="pad" style="padding-top:40px">
+  <div class="visit reveal">
+    <img src="assets/interior.jpg" alt="Warm, moody interior of the Folklore coffee cafe">
+    <div class="inner">
+      <div class="kicker">Find us</div>
+      <h2>Come sit with us</h2>
+      <p class="muted">A narrow room, a long bench, and a brew bar. Filter, espresso, and whatever single origin we opened that morning.</p>
+      <div class="hours">
+        <div><div class="l">Open</div><div class="v">Tue to Sun</div></div>
+        <div><div class="l">Hours</div><div class="v">7:30am to 6pm</div></div>
+        <div><div class="l">Where</div><div class="v">78 Yong Siak St</div></div>
+      </div>
+      <a href="#" class="btn">Get directions</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top" style="font-size:20px"><span class="dot"></span>FOLKLORE</a>
+        <p class="muted" style="margin-top:16px;max-width:34ch;font-size:14px">Small-batch coffee roasters. Roasted the week you drink it, in Tiong Bahru, Singapore.</p>
+        <form class="news" onsubmit="return false">
+          <input type="email" placeholder="Your email for the weekly roast" aria-label="Email">
+          <button class="btn" type="submit">Join</button>
+        </form>
+      </div>
+      <div class="foot-links">
+        <h4>Coffee</h4>
+        <a href="#roast">This week's roast</a>
+        <a href="#origins">Single origins</a>
+        <a href="#">Subscriptions</a>
+        <a href="#">Brew guides</a>
+      </div>
+      <div class="foot-links">
+        <h4>Folklore</h4>
+        <a href="#visit">Visit the cafe</a>
+        <a href="#process">How we roast</a>
+        <a href="#">Wholesale</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Folklore Coffee Roasters</span>
+      <span>Made in Singapore</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // nav scrolled state
+  const hdr=document.getElementById('hdr');
+  const onScroll=()=>{hdr.classList.toggle('scrolled',window.scrollY>40)};
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // hero load-in
+  requestAnimationFrame(()=>document.body.classList.add('loaded'));
+
+  // scroll reveal
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.16,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // subtle hero parallax (transform only, rAF-driven, reduced-motion safe)
+  const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const heroImg=document.getElementById('heroImg');
+  if(!reduce&&heroImg){
+    let ticking=false;
+    window.addEventListener('scroll',()=>{
+      if(ticking)return;ticking=true;
+      requestAnimationFrame(()=>{
+        const y=Math.min(window.scrollY,900);
+        heroImg.style.transform='translateY('+(y*0.06)+'px)';
+        ticking=false;
+      });
+    },{passive:true});
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WREN — a seasonal floral studio</title>
+<!--
+  PACKAGE 1 (Level 1): clean & real, STATIC. Florist as "a small museum / slow-luxury brand".
+  Story brief: florist-demo/BRIEF.md  ·  Research: florist-demo/RESEARCH.md (Perplexity, 2026-06-21)
+  Award moves: oversized airy serif interacting with botanical imagery, asymmetry, an offerings strip, an
+  asymmetric "gallery-wall" collections grid with prices, a real studio band, a floating "seasonal note" card,
+  generous whitespace. Ecru base, mushroom surfaces, ONE accent (smoky plum). Real Gemini floral imagery,
+  zero em-dashes. New register: botanical / organic editorial. Italiana display serif. Completes Package 1 (10/10).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4efe3;
+    --paper:#faf6ec;
+    --stone:#e8e0cf;
+    --ink:#34302a;
+    --muted:#82796a;
+    --faint:#a79d8b;
+    --line:#e2d8c6;
+    --accent:#76475a;
+    --accent-deep:#5d3747;
+    --serif:"Italiana",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 6vw}
+  .label{font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+  .pad{padding:clamp(78px,11vw,144px) 0}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#f7f1f3;font-size:13px;font-weight:500;
+    letter-spacing:.06em;text-transform:uppercase;padding:15px 30px;border-radius:2px;transition:background .3s,transform .3s}
+  .btn:hover{background:var(--accent-deep);transform:translateY(-2px)}
+  .btn--ghost{background:transparent;color:var(--ink);border:1px solid rgba(52,48,42,.22)}
+  .btn--ghost:hover{background:rgba(52,48,42,.04);transform:translateY(-2px)}
+  .arrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:7px;transition:gap .25s}
+  .arrow:hover{gap:12px}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:24px 6vw;transition:background .35s,padding .35s,box-shadow .35s}
+  nav .logo{font-family:var(--serif);font-size:27px;letter-spacing:.22em}
+  nav .links{display:flex;align-items:center;gap:32px}
+  nav .links a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+  nav .links a:hover{color:var(--ink)}
+  nav .navcta{font-size:11px;color:#f7f1f3;padding:11px 20px}
+  nav.scrolled{background:rgba(244,239,227,.92);backdrop-filter:blur(12px);padding-top:14px;padding-bottom:14px;box-shadow:0 1px 0 var(--line)}
+
+  /* HERO */
+  .hero{display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(32px,5vw,72px);align-items:center;
+    min-height:100dvh;padding:120px 6vw 64px;max-width:1340px;margin:0 auto}
+  .hero .copy .label{margin-bottom:26px}
+  .hero h1{font-family:var(--serif);font-size:clamp(54px,7.6vw,118px);line-height:1.0;letter-spacing:.005em}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .lead{margin-top:28px;font-size:clamp(16px,1.3vw,19px);color:var(--muted);max-width:40ch;line-height:1.75}
+  .hero .actions{margin-top:36px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .hero .figure{position:relative}
+  .hero .figure img{width:100%;height:clamp(440px,74vh,720px);object-fit:cover;border-radius:3px;
+    box-shadow:0 50px 90px -52px rgba(80,50,60,.4)}
+  .hero .figure .note{position:absolute;left:-34px;bottom:44px;background:var(--paper);border:1px solid var(--line);
+    border-radius:3px;padding:18px 22px;box-shadow:0 26px 54px -30px rgba(80,50,60,.5);max-width:226px}
+  .hero .figure .note .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  .hero .figure .note .v{font-family:var(--serif);font-size:18px;line-height:1.35}
+
+  /* OFFERINGS */
+  .offerings{background:var(--paper)}
+  .offerings .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(24px,3vw,48px)}
+  .offerings .o{border-top:1px solid var(--line);padding-top:24px}
+  .offerings .o h3{font-family:var(--serif);font-size:clamp(22px,2.1vw,28px);margin-bottom:10px}
+  .offerings .o p{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:18px;max-width:30ch}
+
+  /* COLLECTIONS (asymmetric) */
+  .collections .head{margin-bottom:50px;max-width:34ch}
+  .collections h2{font-family:var(--serif);font-size:clamp(34px,4.6vw,64px);line-height:1.02}
+  .collections .dek{color:var(--muted);font-size:16px;margin-top:16px;max-width:46ch}
+  .collections .grid{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(22px,3vw,40px);align-items:stretch}
+  .collections .feature .ph{width:100%;height:100%;min-height:420px;object-fit:cover;border-radius:3px}
+  .collections .side{display:grid;grid-template-rows:1fr 1fr;gap:clamp(22px,3vw,40px)}
+  .item{position:relative}
+  .item .ph{width:100%;height:100%;object-fit:cover;border-radius:3px}
+  .feature{position:relative}
+  .meta{position:absolute;left:18px;bottom:18px;right:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;
+    background:linear-gradient(0deg,rgba(28,22,24,.55),rgba(28,22,24,0));padding:30px 16px 14px;border-radius:0 0 3px 3px}
+  .meta .nm{font-family:var(--serif);font-size:clamp(20px,1.9vw,26px);color:#fbf7f3;line-height:1.1}
+  .meta .pr{font-size:13px;letter-spacing:.04em;color:#f0e6ea;white-space:nowrap}
+  .side .item .ph{min-height:200px}
+
+  /* STUDIO */
+  .studio{background:var(--stone)}
+  .studio .grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(36px,5vw,80px);align-items:center}
+  .studio .figure img{width:100%;height:clamp(420px,60vh,580px);object-fit:cover;border-radius:3px}
+  .studio h2{font-family:var(--serif);font-size:clamp(30px,4vw,56px);line-height:1.04}
+  .studio p{color:var(--muted);font-size:16px;line-height:1.85;max-width:46ch;margin-top:22px}
+  .studio p + p{margin-top:14px}
+
+  /* WEDDINGS full-bleed */
+  .weddings{position:relative;min-height:80vh;display:flex;align-items:center;overflow:hidden}
+  .weddings img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .weddings::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(40,30,34,.6),rgba(40,30,34,.12) 60%)}
+  .weddings .wc{position:relative;z-index:2;color:#fbf7f3;padding:0 6vw;max-width:1240px;margin:0 auto;width:100%}
+  .weddings .label{color:#e6c9d4}
+  .weddings h2{font-family:var(--serif);font-size:clamp(34px,5.4vw,80px);line-height:1.02;max-width:16ch;margin-top:20px}
+  .weddings p{margin-top:20px;max-width:42ch;font-size:clamp(15px,1.2vw,18px);color:#efe3e7}
+  .weddings .actions{margin-top:30px}
+
+  /* CLOSE */
+  .close{background:var(--paper);text-align:center}
+  .close h2{font-family:var(--serif);font-size:clamp(36px,5.4vw,84px);line-height:1.02}
+  .close h2 em{font-style:normal;color:var(--accent)}
+  .close p{margin:22px auto 0;color:var(--muted);max-width:42ch;font-size:16px}
+  .close .actions{margin-top:34px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  footer{background:var(--bg);border-top:1px solid var(--line)}
+  footer .grid{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;padding:48px 0 32px}
+  footer .logo{font-family:var(--serif);font-size:24px;letter-spacing:.2em}
+  footer .col h5{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  footer .col p,footer .col a{display:block;color:var(--muted);font-size:14px;line-height:1.95}
+  footer .col a:hover{color:var(--ink)}
+  footer .base{border-top:1px solid var(--line);padding:18px 0;font-size:12px;color:var(--faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.02em}
+
+  @media (max-width:960px){
+    .hero{grid-template-columns:1fr;min-height:auto;gap:36px}
+    .hero .figure{order:-1}
+    .hero .figure img{height:58vh}
+    .offerings .grid{grid-template-columns:1fr 1fr;gap:28px}
+    .collections .grid,.studio .grid{grid-template-columns:1fr;gap:24px}
+    .collections .feature .ph{min-height:300px}
+    .studio .figure{order:-1;max-width:560px}
+  }
+  @media (max-width:560px){
+    nav .links a:not(.navcta){display:none}
+    .offerings .grid{grid-template-columns:1fr}
+    .side .item .ph{min-height:240px}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">WREN</div>
+  <div class="links">
+    <a href="#collections">Bouquets</a>
+    <a href="#weddings">Weddings</a>
+    <a href="#studio">Studio</a>
+    <a href="#order" class="btn navcta">Order florals</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="copy">
+    <div class="label">A seasonal floral studio &middot; Singapore</div>
+    <h1>Botanicals, <em>considered</em>.</h1>
+    <p class="lead">Loose, garden-led arrangements built from what is good that week, and site-specific florals for the days that matter.</p>
+    <div class="actions">
+      <a href="#order" class="btn">Order florals</a>
+      <a href="#weddings" class="arrow">Explore weddings &rarr;</a>
+    </div>
+  </div>
+  <div class="figure">
+    <img src="assets/hero.jpg" alt="A sculptural seasonal arrangement by WREN">
+    <div class="note">
+      <div class="k">This week</div>
+      <div class="v">Garden roses, ranunculus, wild fennel and sweet pea.</div>
+    </div>
+  </div>
+</header>
+
+<section class="offerings pad">
+  <div class="wrap">
+    <div class="grid">
+      <div class="o"><h3>Daily florals</h3><p>Garden-led bouquets for the everyday and small celebrations.</p><a href="#collections" class="arrow">Order &rarr;</a></div>
+      <div class="o"><h3>Weddings &amp; events</h3><p>Site-specific design that responds to light, space and season.</p><a href="#weddings" class="arrow">Enquire &rarr;</a></div>
+      <div class="o"><h3>Subscriptions</h3><p>A fresh arrangement, weekly or fortnightly, left at your door.</p><a href="#order" class="arrow">Subscribe &rarr;</a></div>
+      <div class="o"><h3>Editorial &amp; installations</h3><p>Florals for shoots, launches and spaces that want a quiet edge.</p><a href="#order" class="arrow">Work with us &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="collections pad" id="collections">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">The collection</div>
+      <h2 style="margin-top:18px">This week, in bloom.</h2>
+      <p class="dek">Each arrangement is made the morning it ships, from the best of that week's market.</p>
+    </div>
+    <div class="grid">
+      <div class="feature">
+        <img class="ph" src="assets/bouquet.jpg" alt="The weekly garden-led bouquet">
+        <div class="meta"><span class="nm">The weekly</span><span class="pr">from $85</span></div>
+      </div>
+      <div class="side">
+        <div class="item">
+          <img class="ph" src="assets/stems.jpg" alt="Market jar of seasonal stems">
+          <div class="meta"><span class="nm">Market jar</span><span class="pr">from $65</span></div>
+        </div>
+        <div class="item">
+          <img class="ph" src="assets/hero.jpg" alt="The statement arrangement">
+          <div class="meta"><span class="nm">The statement</span><span class="pr">from $180</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="studio pad" id="studio">
+  <div class="wrap">
+    <div class="grid">
+      <div class="figure">
+        <img src="assets/studio.jpg" alt="The WREN studio bench, buckets of fresh seasonal stems">
+      </div>
+      <div class="copy">
+        <div class="label">The studio</div>
+        <h2 style="margin-top:18px">Led by the season, never the catalogue.</h2>
+        <p>WREN is a small studio off Tiong Bahru. We buy what is at its best each week and let it lead, so no two bouquets are ever the same.</p>
+        <p>Our hand is loose and a little wild, with a quiet architectural edge. We would rather make fewer arrangements and make them properly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="weddings" id="weddings">
+  <img src="assets/event.jpg" alt="A WREN floral installation arch in a light-filled space">
+  <div class="wc">
+    <div class="label">Weddings &amp; events</div>
+    <h2>Florals that belong to the room.</h2>
+    <p>We design site-specific installations that respond to the light, the architecture and the season, for a small number of weddings each year.</p>
+    <div class="actions"><a href="#order" class="btn">Enquire about your date</a></div>
+  </div>
+</section>
+
+<section class="close pad" id="order">
+  <div class="wrap">
+    <div class="label" style="display:inline-block;margin-bottom:20px">Order florals</div>
+    <h2>Send something <em>seasonal</em>.</h2>
+    <p>Order by 10am for same-day islandwide delivery. Subscriptions and gift notes welcome.</p>
+    <div class="actions">
+      <a href="mailto:hello@wren.sg" class="btn">Order or enquire</a>
+      <a href="mailto:hello@wren.sg" class="btn btn--ghost">Join the studio list</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div class="col">
+        <div class="logo">WREN</div>
+        <p style="color:var(--muted);margin-top:10px;max-width:30ch">A seasonal floral studio in Singapore.</p>
+      </div>
+      <div class="col">
+        <h5>Studio</h5>
+        <p>78 Yong Siak Street, #01-12<br>Singapore 163078</p>
+        <p>Order by 10am for same-day</p>
+      </div>
+      <div class="col">
+        <h5>Shop</h5>
+        <a href="#collections">Bouquets</a>
+        <a href="#weddings">Weddings</a>
+        <a href="#order">Subscriptions</a>
+      </div>
+      <div class="col">
+        <h5>Keep in touch</h5>
+        <a href="#">Instagram</a>
+        <a href="mailto:hello@wren.sg">hello@wren.sg</a>
+        <a href="#">The studio list</a>
+      </div>
+    </div>
+    <div class="wrap base">
+      <span>&copy; 2026 WREN Floral Studio</span>
+      <span>Built as an agency demo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+</body>
+</html>

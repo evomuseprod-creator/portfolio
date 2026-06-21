@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belmont House — a courtyard home on Belmont Road</title>
+<!--
+  PACKAGE 1 (Level 1): clean & real, STATIC. Single-property site as "an architecture monograph you click through".
+  Story brief: property-demo/BRIEF.md  ·  Research: property-demo/RESEARCH.md (Perplexity, 2026-06-21)
+  Award moves: full-bleed cinematic architecture, oversized sparse SANS type that breaks the grid, asymmetric
+  image/text inversion (the "walk"), a floating key-facts card, numbers as graphic objects, generous whitespace.
+  Parchment base, ONE accent (deep olive), real Gemini imagery (geometry checked), zero em-dashes.
+  IMPROVES on NOOR: new architectural/spatial register, SANS-led restraint vs serif beauty.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1e9;
+    --paper:#faf8f2;
+    --ink:#272420;
+    --muted:#736c5d;
+    --faint:#a39a86;
+    --line:#e2dac9;
+    --accent:#5c6447;
+    --accent-deep:#474e36;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;font-weight:400}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 6vw}
+  .label{font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--accent)}
+  .pad{padding:clamp(80px,11vw,150px) 0}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#f7f6f0;font-size:14px;font-weight:500;
+    letter-spacing:.02em;padding:15px 28px;border-radius:1px;transition:background .3s,transform .3s}
+  .btn:hover{background:var(--accent-deep);transform:translateY(-2px)}
+  .btn--ghost{background:transparent;color:var(--ink);border:1px solid rgba(39,36,32,.25)}
+  .btn--ghost:hover{background:rgba(39,36,32,.05);transform:translateY(-2px)}
+  .btn--light{background:rgba(255,255,255,.94);color:var(--ink)}
+  .btn--light:hover{background:#fff}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:24px 6vw;color:#f7f6f0;transition:background .35s,color .35s,padding .35s,box-shadow .35s}
+  nav .logo{font-size:18px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:inherit}
+  nav .links{display:flex;align-items:center;gap:34px}
+  nav .links a{font-size:13px;letter-spacing:.04em;color:inherit;opacity:.92}
+  nav .links a:hover{opacity:1}
+  nav .navcta{border:1px solid rgba(247,246,240,.5);padding:10px 18px;border-radius:1px;opacity:1}
+  nav.scrolled{background:rgba(244,241,233,.9);backdrop-filter:blur(12px);color:var(--ink);padding-top:14px;padding-bottom:14px;box-shadow:0 1px 0 var(--line)}
+  nav.scrolled .navcta{border-color:rgba(39,36,32,.25)}
+
+  /* HERO */
+  .hero{position:relative;height:100dvh;min-height:620px;overflow:hidden;display:flex;align-items:flex-end}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(0deg,rgba(20,19,16,.72) 0%,rgba(20,19,16,.05) 42%,rgba(20,19,16,.28) 100%)}
+  .hero .inner{position:relative;z-index:2;width:100%;padding:0 6vw clamp(40px,6vw,74px);color:#f7f6f0;
+    display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:end;max-width:1380px;margin:0 auto}
+  .hero .label{color:#e7e3d4;margin-bottom:20px}
+  .hero h1{font-size:clamp(48px,7.5vw,118px);font-weight:300;line-height:.96;letter-spacing:-.02em}
+  .hero .pos{margin-top:20px;font-size:clamp(15px,1.3vw,18px);max-width:40ch;opacity:.92;font-weight:300}
+  .hero .actions{margin-top:30px;display:flex;gap:13px;flex-wrap:wrap}
+  .hero .facts{background:rgba(250,248,242,.96);color:var(--ink);border-radius:2px;padding:26px 28px;
+    box-shadow:0 30px 70px -34px rgba(0,0,0,.6);align-self:end}
+  .hero .facts .row{display:flex;justify-content:space-between;gap:18px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .hero .facts .row:last-child{border-bottom:0}
+  .hero .facts .k{font-size:13px;color:var(--muted);letter-spacing:.02em}
+  .hero .facts .v{font-size:15px;font-weight:600}
+  .hero .facts .v em{font-style:normal;color:var(--accent)}
+
+  /* INTRO */
+  .intro .label{margin-bottom:30px}
+  .intro h2{font-size:clamp(28px,4vw,56px);font-weight:300;line-height:1.16;letter-spacing:-.015em;max-width:20ch}
+  .intro h2 b{font-weight:600;color:var(--accent)}
+  .intro .cols{margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,90px);max-width:none}
+  .intro .cols p{color:var(--muted);font-size:16px;line-height:1.8;max-width:52ch}
+
+  /* WALK rows (asymmetric, inverting) */
+  .walk .row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,80px);align-items:center;padding:clamp(50px,7vw,96px) 0}
+  .walk .row.flip .media{order:2}
+  .walk .media img{width:100%;height:clamp(360px,52vh,580px);object-fit:cover;border-radius:2px;box-shadow:0 40px 80px -50px rgba(60,55,40,.5)}
+  .walk .copy .no{font-size:13px;letter-spacing:.2em;color:var(--faint);font-weight:500;margin-bottom:18px}
+  .walk .copy h3{font-size:clamp(26px,3.2vw,44px);font-weight:300;line-height:1.1;letter-spacing:-.015em}
+  .walk .copy p{color:var(--muted);font-size:16px;line-height:1.8;max-width:46ch;margin-top:20px}
+  .walk .copy .meta{margin-top:26px;display:flex;gap:36px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px}
+  .walk .copy .meta .n{font-size:24px;font-weight:600;letter-spacing:-.01em}
+  .walk .copy .meta .t{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+
+  /* FULL-BLEED grounds */
+  .grounds{position:relative;height:78vh;min-height:480px;overflow:hidden;display:flex;align-items:flex-end}
+  .grounds img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .grounds::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(20,19,16,.66),rgba(20,19,16,0) 55%)}
+  .grounds .gc{position:relative;z-index:2;width:100%;padding:0 6vw clamp(44px,6vw,80px);color:#f7f6f0;max-width:1380px;margin:0 auto}
+  .grounds h2{font-size:clamp(30px,5vw,72px);font-weight:300;letter-spacing:-.02em;line-height:1;max-width:16ch}
+  .grounds p{margin-top:18px;max-width:46ch;opacity:.92;font-size:clamp(15px,1.2vw,18px);font-weight:300}
+
+  /* FACTS + PLANS */
+  .facts2{background:var(--paper)}
+  .facts2 .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(40px,6vw,96px);align-items:center}
+  .facts2 h2{font-size:clamp(26px,3.4vw,46px);font-weight:300;letter-spacing:-.015em;line-height:1.1}
+  .facts2 .data{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:8px;border-top:1px solid var(--line)}
+  .facts2 .d{padding:22px 0;border-bottom:1px solid var(--line)}
+  .facts2 .d:nth-child(odd){padding-right:24px;border-right:1px solid var(--line)}
+  .facts2 .d:nth-child(even){padding-left:24px}
+  .facts2 .d .n{font-size:30px;font-weight:600;letter-spacing:-.01em}
+  .facts2 .d .n em{font-style:normal;color:var(--accent)}
+  .facts2 .d .t{font-size:13px;color:var(--muted);margin-top:4px}
+  .facts2 .docs{display:grid;gap:12px;margin-top:30px}
+  .facts2 .docs a{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:var(--bg);
+    border-radius:2px;padding:16px 20px;font-size:15px;transition:border-color .25s,transform .25s}
+  .facts2 .docs a:hover{border-color:var(--accent);transform:translateX(3px)}
+  .facts2 .docs a span{color:var(--accent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+
+  /* LOCATION */
+  .loc h2{font-size:clamp(26px,3.4vw,46px);font-weight:300;letter-spacing:-.015em;max-width:18ch}
+  .loc .lead{color:var(--muted);font-size:16px;max-width:48ch;margin-top:20px;line-height:1.8}
+  .loc .places{margin-top:46px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+  .loc .p{padding:26px 24px 26px 0;border-bottom:1px solid var(--line)}
+  .loc .p:not(:last-child){border-right:1px solid var(--line);padding-right:24px}
+  .loc .p .t{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .loc .p .name{font-size:18px;font-weight:500;margin:8px 0 4px}
+  .loc .p .w{font-size:14px;color:var(--accent)}
+
+  /* ENQUIRE */
+  .enquire{background:var(--accent-deep);color:#f3f1e8}
+  .enquire .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(36px,6vw,90px);align-items:center}
+  .enquire .label{color:#c7cbb3}
+  .enquire h2{font-size:clamp(30px,4.4vw,64px);font-weight:300;letter-spacing:-.02em;line-height:1.04;margin-top:24px}
+  .enquire .sub{margin-top:22px;color:#cfccbe;max-width:42ch;font-size:16px;line-height:1.75;font-weight:300}
+  .enquire .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:3px;padding:30px 32px}
+  .enquire .card .agent{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#c7cbb3}
+  .enquire .card .name{font-size:24px;font-weight:500;margin:10px 0 4px}
+  .enquire .card .firm{color:#cfccbe;font-size:14px}
+  .enquire .card .contact{margin-top:24px;display:grid;gap:11px;font-size:15px}
+  .enquire .card .contact a{color:#f3f1e8}
+  .enquire .card .contact a:hover{color:#fff;text-decoration:underline}
+  .enquire .card .btn{margin-top:26px;width:100%;justify-content:center;background:#f3f1e8;color:var(--accent-deep)}
+  .enquire .card .btn:hover{background:#fff;transform:translateY(-2px)}
+
+  footer{background:var(--bg)}
+  footer .grid{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;padding:46px 0 30px;align-items:flex-end}
+  footer .logo{font-size:16px;font-weight:600;letter-spacing:.26em;text-transform:uppercase}
+  footer p{color:var(--muted);font-size:14px;line-height:1.9}
+  footer .base{border-top:1px solid var(--line);padding:18px 0;font-size:12px;color:var(--faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.02em}
+
+  @media (max-width:960px){
+    .hero{height:auto;min-height:0;padding-top:120px}
+    .hero .inner{grid-template-columns:1fr;gap:28px;padding-bottom:48px}
+    .hero .facts{max-width:420px}
+    .intro .cols,.walk .row,.facts2 .grid,.loc .places,.enquire .grid{grid-template-columns:1fr;gap:30px}
+    .walk .row.flip .media{order:0}
+    .walk .media img{height:48vh}
+    .loc .places{grid-template-columns:1fr 1fr}
+    .loc .p,.loc .p:not(:last-child){border-right:0;padding-right:24px}
+  }
+  @media (max-width:560px){
+    nav .links a:not(.navcta){display:none}
+    .facts2 .data,.loc .places{grid-template-columns:1fr}
+    .facts2 .d:nth-child(odd){border-right:0;padding-right:0}
+    .facts2 .d:nth-child(even){padding-left:0}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">Belmont House</div>
+  <div class="links">
+    <a href="#house">The house</a>
+    <a href="#facts">Facts</a>
+    <a href="#location">Location</a>
+    <a href="#enquire" class="navcta">Enquire</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <img src="assets/hero.jpg" alt="Belmont House at dusk, a timber and concrete home reflected in a still pool">
+  <div class="inner">
+    <div class="lead">
+      <div class="label">For sale &middot; District 10, Singapore</div>
+      <h1>Belmont House</h1>
+      <p class="pos">A courtyard home on Belmont Road that opens slowly, from a quiet street front to a double-height living space framed by rain trees.</p>
+      <div class="actions">
+        <a href="#enquire" class="btn">Book a private viewing</a>
+        <a href="#house" class="btn btn--light">Walk through it</a>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="row"><span class="k">Bedrooms</span><span class="v">5</span></div>
+      <div class="row"><span class="k">Bathrooms</span><span class="v">6</span></div>
+      <div class="row"><span class="k">Land area</span><span class="v">511 m&sup2;</span></div>
+      <div class="row"><span class="k">Tenure</span><span class="v">Freehold</span></div>
+      <div class="row"><span class="k">Guide</span><span class="v"><em>On application</em></span></div>
+    </div>
+  </div>
+</header>
+
+<section class="intro pad" id="house">
+  <div class="wrap">
+    <div class="label">The house</div>
+    <h2>Anchored by a concrete spine and wrapped in timber screens, it lives quietly, and <b>opens to the garden</b>.</h2>
+    <div class="cols">
+      <p>Designed in 2021 as a home for one family, Belmont House sets a calm, almost monastic ground floor against a canopy of mature trees. Light is the material that changes through the day.</p>
+      <p>Every room looks onto green. The plan keeps the street at arm's length and turns the living, the pool and the bedrooms inward, toward a planted courtyard at the heart of the house.</p>
+    </div>
+  </div>
+</section>
+
+<section class="walk">
+  <div class="wrap">
+    <div class="row">
+      <div class="media"><img src="assets/living.jpg" alt="The double-height living space with floor-to-ceiling glass to the garden"></div>
+      <div class="copy">
+        <div class="no">01 / The living space</div>
+        <h3>A double-height room that borrows the garden.</h3>
+        <p>The main living volume rises the full height of the house, glazed on two sides so the rain trees feel like part of the room. A board-formed concrete wall holds the fireplace and the stair.</p>
+        <div class="meta">
+          <div><div class="n">Double</div><div class="t">height living</div></div>
+          <div><div class="n">2 sides</div><div class="t">full-height glass</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="row flip">
+      <div class="media"><img src="assets/space.jpg" alt="A calm bedroom opening to a private green courtyard"></div>
+      <div class="copy">
+        <div class="no">02 / The private wing</div>
+        <h3>Five bedrooms, each framing its own green.</h3>
+        <p>The sleeping wing sits quieter and lower, each room opening to a private slice of courtyard or canopy. Timber, linen and stone keep the rooms warm and unhurried.</p>
+        <div class="meta">
+          <div><div class="n">5</div><div class="t">en-suite bedrooms</div></div>
+          <div><div class="n">North</div><div class="t">facing the garden</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="media"><img src="assets/detail.jpg" alt="Material detail: board-formed concrete meeting oak joinery and travertine"></div>
+      <div class="copy">
+        <div class="no">03 / Material &amp; craft</div>
+        <h3>Concrete, oak and stone, left to be themselves.</h3>
+        <p>The palette is short and honest: board-formed concrete, solid oak joinery and travertine underfoot. Nothing is veneered, and the details are made to age well rather than to impress on day one.</p>
+        <div class="meta">
+          <div><div class="n">3</div><div class="t">core materials</div></div>
+          <div><div class="n">Solid</div><div class="t">oak joinery throughout</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grounds">
+  <img src="assets/court.jpg" alt="The courtyard and lap pool beside the house, in late afternoon light">
+  <div class="gc">
+    <h2>A lap pool, a courtyard, and a canopy that does the rest.</h2>
+    <p>The grounds are planted to feel established rather than designed: a quiet lap pool, a shaded courtyard, and rain trees that hold the heat off the house through the afternoon.</p>
+  </div>
+</section>
+
+<section class="facts2 pad" id="facts">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="label">The numbers</div>
+        <h2 style="margin-top:24px">Everything you need before a viewing.</h2>
+        <div class="data">
+          <div class="d"><div class="n">5</div><div class="t">Bedrooms, all en-suite</div></div>
+          <div class="d"><div class="n">6</div><div class="t">Bathrooms</div></div>
+          <div class="d"><div class="n"><em>511</em> m&sup2;</div><div class="t">Land area</div></div>
+          <div class="d"><div class="n">~560 m&sup2;</div><div class="t">Built-up area</div></div>
+          <div class="d"><div class="n">2</div><div class="t">Covered car spaces</div></div>
+          <div class="d"><div class="n">Freehold</div><div class="t">Tenure &middot; District 10</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="docs">
+          <a href="#enquire">Floorplans (PDF) <span>Request</span></a>
+          <a href="#enquire">Information memorandum <span>Request</span></a>
+          <a href="#enquire">Architect's drawings <span>On request</span></a>
+        </div>
+        <p style="color:var(--muted);font-size:14px;margin-top:20px;line-height:1.7">Documents are shared with qualified buyers after a first viewing. The guide price is available on application.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="loc pad" id="location">
+  <div class="wrap">
+    <div class="label">Location</div>
+    <h2 style="margin-top:24px">Quiet, leafy, and ten minutes from town.</h2>
+    <p class="lead">Belmont Road sits in one of Singapore's calmest residential pockets, walkable to the Botanic Gardens and a short drive to Orchard and the city.</p>
+    <div class="places">
+      <div class="p"><div class="t">Park</div><div class="name">Botanic Gardens</div><div class="w">9 min walk</div></div>
+      <div class="p"><div class="t">Transit</div><div class="name">Farrer Road MRT</div><div class="w">12 min walk</div></div>
+      <div class="p"><div class="t">School</div><div class="name">Nanyang Primary</div><div class="w">6 min drive</div></div>
+      <div class="p"><div class="t">Everyday</div><div class="name">Cluny Court</div><div class="w">10 min walk</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="enquire pad" id="enquire">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="label">Enquire</div>
+        <h2>Arrange a private viewing of Belmont House.</h2>
+        <p class="sub">Viewings are by appointment, with the listing agent. Tell us a little about your search and we will find a time that suits, usually within the week.</p>
+      </div>
+      <div class="card">
+        <div class="agent">Listing agent</div>
+        <div class="name">Marcus Lim</div>
+        <div class="firm">Belmont House enquiries &middot; CEA reg. R0000000</div>
+        <div class="contact">
+          <a href="mailto:marcus@belmonthouse.sg">marcus@belmonthouse.sg</a>
+          <a href="tel:+6590000000">+65 9000 0000</a>
+        </div>
+        <a href="mailto:marcus@belmonthouse.sg" class="btn">Book a private viewing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="logo">Belmont House</div>
+        <p style="margin-top:10px">Belmont Road &middot; District 10 &middot; Singapore</p>
+      </div>
+      <p>A private sale &middot; viewings by appointment<br>marcus@belmonthouse.sg &middot; +65 9000 0000</p>
+    </div>
+    <div class="wrap base">
+      <span>&copy; 2026 Belmont House</span>
+      <span>Built as an agency demo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.7);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+</body>
+</html>

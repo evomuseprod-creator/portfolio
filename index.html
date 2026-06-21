@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selected Work — Web Design & Development</title>
+<meta name="description" content="Custom, high-end websites built to convert. Selected concept work across hospitality, beauty, retail, property and more.">
+<!--
+  PORTFOLIO HUB — the single shareable link (goes on Upwork + everywhere).
+  WORDMARK "DZIKRI" is a PLACEHOLDER — rename to your name or studio name (one line, search WORDMARK).
+  Shows the work by tier: Immersive (featured) -> Motion -> Conversion. Each card opens the live demo.
+  Dark editorial system, ONE accent (amber). Lenis smooth scroll + bulletproof scroll-reveals. Zero em-dashes.
+  Thumbnails live in ./thumbs/*.png (captured via _tools/shoot.mjs). UMBRA uses its own poster frame.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0c0e;
+    --bg-2:#101216;
+    --card:#14171c;
+    --ink:#eceae6;
+    --muted:#8b9099;
+    --faint:#565c66;
+    --line:rgba(255,255,255,.09);
+    --line-2:rgba(255,255,255,.05);
+    --accent:#e8954a;
+    --accent-soft:#f0b079;
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#1a1206}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 6vw}
+  .label{font-size:11.5px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:90}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;
+    padding:24px 6vw;transition:padding .4s,background .4s,box-shadow .4s,backdrop-filter .4s}
+  nav.scrolled{padding:15px 6vw;background:rgba(11,12,14,.72);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line-2)}
+  nav .logo{font-family:var(--serif);font-size:23px;font-weight:600;letter-spacing:.01em}
+  nav .logo b{color:var(--accent);font-weight:600}
+  nav .links{display:flex;align-items:center;gap:30px}
+  nav .links a{font-size:13px;letter-spacing:.04em;color:var(--muted);transition:color .3s}
+  nav .links a:hover{color:var(--ink)}
+  nav .navcta{color:var(--ink);border:1px solid var(--line);padding:10px 20px;border-radius:100px;transition:border-color .3s,background .3s}
+  nav .navcta:hover{border-color:var(--accent);background:rgba(232,149,74,.1)}
+
+  /* HERO */
+  .hero{position:relative;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;
+    padding:140px 6vw 90px;max-width:1280px;margin:0 auto;overflow:hidden}
+  .hero::before{content:"";position:absolute;right:-10%;top:8%;width:60vw;height:60vw;max-width:760px;max-height:760px;
+    background:radial-gradient(circle,rgba(232,149,74,.16),transparent 62%);pointer-events:none;filter:blur(10px)}
+  .hero .eyebrow{margin-bottom:26px}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(46px,8.2vw,128px);line-height:.98;letter-spacing:-.018em;max-width:15ch}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lead{margin-top:30px;font-size:clamp(16px,1.5vw,21px);color:var(--muted);max-width:54ch;line-height:1.66}
+  .hero .actions{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .meta{position:absolute;left:6vw;bottom:46px;display:flex;gap:34px;color:var(--faint);font-size:12.5px;letter-spacing:.04em}
+  .hero .meta b{color:var(--ink);font-weight:600;display:block;font-family:var(--serif);font-size:24px;letter-spacing:0;margin-bottom:3px}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#1a1206;font-weight:600;font-size:14px;
+    letter-spacing:.01em;padding:15px 28px;border-radius:100px;transition:transform .35s cubic-bezier(.2,.9,.3,1),box-shadow .35s,background .35s;will-change:transform}
+  .btn:hover{background:var(--accent-soft);box-shadow:0 18px 44px -16px rgba(232,149,74,.5);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);background:rgba(232,149,74,.08);box-shadow:none}
+
+  /* SECTION HEADERS */
+  .sec{padding:clamp(70px,9vw,120px) 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:46px;flex-wrap:wrap}
+  .sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.4vw,58px);line-height:1.02;letter-spacing:-.01em}
+  .sec-head p{color:var(--muted);font-size:15px;max-width:40ch}
+
+  /* FEATURED (UMBRA) */
+  .feature{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;
+    display:block;aspect-ratio:16/8;min-height:340px}
+  .feature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .feature:hover img{transform:scale(1.04)}
+  .feature .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,7,9,.92),rgba(6,7,9,.5) 48%,transparent 78%),
+    linear-gradient(0deg,rgba(6,7,9,.7),transparent 40%)}
+  .feature .fc{position:absolute;left:0;bottom:0;padding:clamp(28px,4vw,54px);z-index:2;max-width:640px}
+  .feature .badge{display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);
+    border:1px solid rgba(232,149,74,.4);border-radius:100px;padding:6px 14px;margin-bottom:20px}
+  .feature h3{font-family:var(--serif);font-weight:500;font-size:clamp(34px,5vw,72px);line-height:.98;letter-spacing:-.01em}
+  .feature p{margin-top:14px;color:#cfd2d6;font-size:clamp(15px,1.3vw,18px);max-width:46ch}
+  .feature .arrow{margin-top:24px;display:inline-flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.04em;color:var(--ink)}
+  .feature .arrow span{transition:transform .35s}
+  .feature:hover .arrow span{transform:translateX(6px)}
+
+  /* WORK GRID */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2vw,28px)}
+  .card{position:relative;display:block;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line-2);
+    transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s,box-shadow .4s}
+  .card:hover{transform:translateY(-5px);border-color:var(--line);box-shadow:0 30px 60px -34px rgba(0,0,0,.8)}
+  .card .shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg-2)}
+  .card .shot img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform 1s cubic-bezier(.16,1,.3,1)}
+  .card:hover .shot img{transform:scale(1.05)}
+  .card .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,12,14,.5),transparent 50%)}
+  .card .body{padding:18px 20px 22px}
+  .card .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .card .name{font-family:var(--serif);font-size:21px;font-weight:500;letter-spacing:-.005em}
+  .card .niche{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  .card .what{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.5}
+  .card .open{position:absolute;top:14px;right:14px;z-index:3;width:34px;height:34px;border-radius:100px;
+    background:rgba(11,12,14,.6);backdrop-filter:blur(6px);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:translateY(-4px);transition:opacity .35s,transform .35s,background .35s}
+  .card:hover .open{opacity:1;transform:none}
+  .card .open svg{width:14px;height:14px;stroke:var(--ink)}
+
+  /* APPROACH strip */
+  .approach{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:var(--bg-2)}
+  .approach .row{display:grid;grid-template-columns:repeat(3,1fr)}
+  .approach .col{padding:clamp(40px,5vw,72px) 4vw;border-left:1px solid var(--line-2)}
+  .approach .col:first-child{border-left:none}
+  .approach .n{font-family:var(--serif);color:var(--accent);font-size:15px}
+  .approach .col h3{font-family:var(--serif);font-weight:500;font-size:clamp(20px,2vw,27px);margin:14px 0 10px;letter-spacing:-.005em}
+  .approach .col p{color:var(--muted);font-size:14.5px;line-height:1.6}
+
+  /* CONTACT */
+  .contact{position:relative;text-align:center;padding:clamp(100px,15vw,200px) 0;overflow:hidden}
+  .contact::before{content:"";position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:70vw;height:70vw;
+    max-width:760px;max-height:760px;background:radial-gradient(circle,rgba(232,149,74,.13),transparent 62%);pointer-events:none}
+  .contact .inner{position:relative;z-index:2}
+  .contact h2{font-family:var(--serif);font-weight:500;font-size:clamp(40px,7vw,104px);line-height:.98;letter-spacing:-.02em}
+  .contact h2 em{font-style:italic;color:var(--accent)}
+  .contact p{margin:22px auto 0;color:var(--muted);font-size:clamp(15px,1.3vw,18px);max-width:46ch}
+  .contact .actions{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line-2);padding:40px 6vw;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;color:var(--faint);font-size:13px}
+  footer .logo{font-family:var(--serif);font-size:18px;color:var(--ink)}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:980px){ .grid{grid-template-columns:repeat(2,1fr)} .approach .row{grid-template-columns:1fr} .approach .col{border-left:none;border-top:1px solid var(--line-2)} .approach .col:first-child{border-top:none} }
+  @media (max-width:620px){ .grid{grid-template-columns:1fr} nav .links a:not(.navcta){display:none} .hero .meta{display:none} }
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1;transform:none;transition:none} }
+</style>
+</head>
+<body>
+<div class="progress"></div>
+
+<nav>
+  <!-- WORDMARK: placeholder, rename to your name/studio -->
+  <div class="logo">Dzikri<b>.</b></div>
+  <div class="links">
+    <a href="#work">Work</a>
+    <a href="#approach">Approach</a>
+    <a class="navcta" href="#contact">Hire me</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow label">Web Design &amp; Development</div>
+  <h1>Websites that <em>mean</em> something.</h1>
+  <p class="lead">Custom, high-end sites built to convert. Not templates. Hand-built for the brand, from a clean
+    booking page to a full cinematic, scroll-driven experience. Below is selected concept work across industries.</p>
+  <div class="actions">
+    <a class="btn" href="#work">See the work</a>
+    <a class="btn ghost" href="#contact">Start a project</a>
+  </div>
+  <div class="meta">
+    <div><b>21</b>concept builds</div>
+    <div><b>3</b>tiers of ambition</div>
+    <div><b>1</b>goal: convert</div>
+  </div>
+</header>
+
+<main id="work">
+  <!-- FEATURED -->
+  <section class="sec wrap">
+    <div class="sec-head reveal">
+      <h2>The showpiece</h2>
+      <p>The top of what I build: an immersive, scroll-driven launch.</p>
+    </div>
+    <a class="feature reveal" href="level-3/umbra-demo/" target="_blank" rel="noopener">
+      <img src="level-3/umbra-demo/assets/umbra-poster.jpg" alt="UMBRA immersive car launch">
+      <div class="scrim"></div>
+      <div class="fc">
+        <span class="badge">Immersive</span>
+        <h3>UMBRA</h3>
+        <p>An electric hypercar revealed like a sculpture from shadow. The whole reveal is driven by your
+          scroll, a cinematic film scrubbing frame by frame.</p>
+        <span class="arrow">View the live site <span>&rarr;</span></span>
+      </div>
+    </a>
+  </section>
+
+  <!-- MOTION -->
+  <section class="sec wrap">
+    <div class="sec-head reveal">
+      <h2>Motion</h2>
+      <p>Sites that move and respond, each with one signature scroll moment.</p>
+    </div>
+    <div class="grid" id="grid-motion"></div>
+  </section>
+
+  <!-- CONVERSION -->
+  <section class="sec wrap">
+    <div class="sec-head reveal">
+      <h2>Conversion</h2>
+      <p>Clean, real, fast sites built around the one action that matters.</p>
+    </div>
+    <div class="grid" id="grid-conv"></div>
+  </section>
+</main>
+
+<!-- APPROACH -->
+<section class="approach" id="approach">
+  <div class="row">
+    <div class="col reveal"><div class="n">01</div><h3>Built, not assembled</h3><p>Every site is hand-coded for the brand. No page-builder bloat, no template you have seen a hundred times.</p></div>
+    <div class="col reveal"><div class="n">02</div><h3>Designed to convert</h3><p>Clear hierarchy, real imagery, motion that earns its place, and a single obvious path to book, buy or call.</p></div>
+    <div class="col reveal"><div class="n">03</div><h3>Matched to you</h3><p>A fast converting page for a local shop, or a full cinematic experience for a brand that wants to stand out.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="inner">
+    <div class="label" style="margin-bottom:24px">Open for projects</div>
+    <h2>Let's build <em>yours.</em></h2>
+    <p>Tell me what you are building and the goal, and I will tell you exactly how I would approach it.</p>
+    <div class="actions">
+      <!-- CONTACT: replace with your Upwork profile link / email -->
+      <a class="btn" href="#" data-contact>Hire me on Upwork</a>
+      <a class="btn ghost" href="#work">See the work again</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Dzikri<span style="color:var(--accent)">.</span></div>
+  <div>Selected concept work &middot; built to demonstrate range and craft &middot; 2026</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  // ---- demo data ----
+  const MOTION = [
+    ['Lumera','Resort','Pinned horizontal pavilions','resort','level-2/resort-demo/'],
+    ['MAREN','Fashion','Pinned scroll lookbook','fashion','level-2/fashion-demo/'],
+    ['AURÈLE','Fragrance','Pinned notes pyramid','fragrance','level-2/fragrance-demo/'],
+    ['RIPE','Sparkling soda','Sticky-stacking flavour cards','beverage','level-2/beverage-demo/'],
+    ['HØLM','Architecture','Scroll-stepper process','studio','level-2/studio-demo/'],
+    ['RESON One','Headphones','Pinned product callouts','product','level-2/product-demo/'],
+    ['CADENCE','Spin studio','Velocity marquee + counters','spin','level-2/spin-demo/'],
+    ['MARLOWE','All-day kitchen','Day-to-night scroll wipe','restaurant2','level-2/restaurant2-demo/'],
+    ['OBJECT','Creative studio','Hover-reveal work list','studio2','level-2/studio2-demo/'],
+    ['HAVEN','Day spa','Draw-on ritual line','spa','level-2/spa-demo/']
+  ];
+  const CONV = [
+    ['Lina','Dental clinic','Clean, trustworthy, booking-first','dental','dental-demo/'],
+    ['Folklore','Coffee roaster','Brand storytelling that scrolls','coffee','coffee-demo/story.html'],
+    ['Flour &amp; Ash','Bakery','Warm, tactile, appetite-first','bakery','bakery-demo/'],
+    ['FORM','Strength studio','Dark, bold, type-as-hero','fitness','fitness-demo/'],
+    ['NOOR','Skin &amp; aesthetics','Light, luminous, conversion-led','medspa','medspa-demo/'],
+    ['Belmont House','Property','Single-property architecture monograph','property','property-demo/'],
+    ['EMBER','Fine dining','Candlelit, cinematic menu journey','restaurant','restaurant-demo/'],
+    ['Ashworth Quek','Law firm','Corporate, made premium','law','law-demo/'],
+    ['TANAH','Ceramics','DTC commerce with real products','homeware','homeware-demo/'],
+    ['WREN','Floral studio','Art-book, slow-luxury','florist','florist-demo/']
+  ];
+  const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>';
+
+  function card(d){
+    const [name,niche,what,thumb,href]=d;
+    const a=document.createElement('a');
+    a.className='card reveal'; a.href=href; a.target='_blank'; a.rel='noopener';
+    a.innerHTML='<div class="shot"><img src="thumbs/'+thumb+'.jpg" alt="'+name+' website"></div>'
+      +'<div class="open">'+ICON+'</div>'
+      +'<div class="body"><div class="top"><div class="name">'+name+'</div><div class="niche">'+niche+'</div></div>'
+      +'<div class="what">'+what+'</div></div>';
+    return a;
+  }
+  const gm=document.getElementById('grid-motion'), gc=document.getElementById('grid-conv');
+  MOTION.forEach(d=>gm.appendChild(card(d)));
+  CONV.forEach(d=>gc.appendChild(card(d)));
+
+  // ---- scroll reveals (bulletproof: driven by scroll handler, not IntersectionObserver) ----
+  const nav=document.querySelector('nav'), bar=document.querySelector('.progress');
+  const revealEls=Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  function onScroll(){
+    const h=document.documentElement;
+    const max=h.scrollHeight-h.clientHeight;
+    if(bar) bar.style.width=(max>0?(h.scrollTop/max*100):0).toFixed(2)+'%';
+    if(nav) nav.classList.toggle('scrolled', window.scrollY>40);
+    for(let i=0;i<revealEls.length;i++){
+      const el=revealEls[i];
+      if(!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight*0.88) el.classList.add('in');
+    }
+  }
+  let lenis=null;
+  if(!reduce && window.Lenis){
+    lenis=new Lenis({lerp:0.1});
+    const raf=t=>{lenis.raf(t);requestAnimationFrame(raf);};
+    requestAnimationFrame(raf);
+    lenis.on('scroll',onScroll);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+
+  // magnetic buttons
+  if(matchMedia('(hover:hover)').matches && !reduce){
+    document.querySelectorAll('.btn').forEach(b=>{
+      b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();
+        b.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.16).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*0.3-2).toFixed(1)+'px)';});
+      b.addEventListener('mouseleave',()=>{b.style.transform='';});
+    });
+  }
+})();
+</script>
+</body>
+</html>

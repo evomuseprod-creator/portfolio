@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CADENCE — Indoor Cycling</title>
+<meta name="description" content="CADENCE: a dark room, loud music, real-time watts. Book your ride." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0B0B0C; --raised:#141416; --text:#E7E7E4; --soft:#8A8A86;
+    --lime:#C7FB4F; --amber:#F5A623; --line:rgba(255,255,255,.12);
+    --disp:"Anton",system-ui,sans-serif;
+    --body:"Manrope",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--lime);color:#0B0B0C}
+
+  .progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:130}
+  .progress span{display:block;height:100%;width:0;background:var(--lime)}
+
+  header{position:fixed;top:0;left:0;width:100%;z-index:120;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(18px,5vw,56px);transition:background .4s,box-shadow .4s,padding .4s}
+  header.solid{background:rgba(11,11,12,.7);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line);padding-top:14px;padding-bottom:14px}
+  .brand{font-family:var(--disp);font-size:24px;letter-spacing:.06em;text-transform:uppercase}
+  nav.main{display:flex;gap:28px;align-items:center}
+  nav.main a{text-decoration:none;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--text);font-weight:600;transition:color .3s}
+  nav.main a:hover{color:var(--lime)}
+  nav.main a.pill{background:var(--lime);color:#0B0B0C;border-radius:100px;padding:11px 22px;letter-spacing:.1em}
+  nav.main a.pill:hover{background:#fff}
+  @media(max-width:760px){nav.main a:not(.pill){display:none}}
+
+  /* hero */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:0 clamp(18px,5vw,56px) clamp(50px,9vh,90px);overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;will-change:transform}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,.55) 0%,rgba(11,11,12,.2) 40%,rgba(11,11,12,.92) 100%)}
+  .hero-copy{position:relative;z-index:2;max-width:1000px}
+  .eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);font-weight:600;margin-bottom:22px}
+  .hero h1{font-family:var(--disp);font-size:clamp(58px,11vw,168px);line-height:.86;letter-spacing:.01em;text-transform:uppercase}
+  .hero h1 em{font-style:normal;color:var(--lime)}
+  .hero p{font-size:clamp(15px,1.3vw,18px);color:var(--text);opacity:.85;max-width:46ch;margin-top:24px}
+  .hero-actions{display:flex;align-items:center;gap:22px;margin-top:32px;flex-wrap:wrap}
+  .btn{font-family:var(--body);font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;border:none;border-radius:100px;padding:16px 32px;cursor:pointer;background:var(--lime);color:#0B0B0C;transition:transform .25s cubic-bezier(.16,1,.3,1),background .35s}
+  .btn:hover{background:#fff}
+  .hero-actions .note{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+
+  /* velocity marquee (signature) */
+  .marquee{padding:clamp(26px,5vh,52px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--bg)}
+  .track{display:flex;white-space:nowrap;will-change:transform}
+  .track+.track{margin-top:10px}
+  .track .item{font-family:var(--disp);font-size:clamp(40px,7vw,104px);line-height:1;text-transform:uppercase;letter-spacing:.02em;padding-right:.4em;color:transparent;-webkit-text-stroke:1.4px var(--lime)}
+  .track.solid .item{color:var(--lime);-webkit-text-stroke:0}
+  .track .dot{color:var(--amber);padding-right:.4em;font-family:var(--disp);font-size:clamp(40px,7vw,104px);line-height:1}
+
+  /* why grid */
+  .why{padding:clamp(70px,12vh,150px) clamp(18px,5vw,56px);max-width:1280px;margin:0 auto}
+  .why-head{font-family:var(--disp);font-size:clamp(34px,6vw,84px);line-height:.92;text-transform:uppercase;margin-bottom:clamp(34px,6vh,64px)}
+  .why-head em{font-style:normal;color:var(--lime)}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,28px)}
+  .wcard{background:var(--raised);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+  .wcard figure{aspect-ratio:4/3;overflow:hidden}
+  .wcard img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.16,1,.3,1)}
+  .wcard:hover img{transform:scale(1.05)}
+  .wcard .wtxt{padding:24px}
+  .wcard h3{font-family:var(--disp);font-size:24px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:8px}
+  .wcard h3 b{color:var(--lime);font-weight:400}
+  .wcard p{font-size:14.5px;color:var(--soft)}
+  @media(max-width:820px){.why-grid{grid-template-columns:1fr;gap:16px}}
+
+  /* rider full-bleed band */
+  .ride-band{position:relative;height:80vh;min-height:520px;overflow:hidden;display:grid;place-items:center}
+  .ride-band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
+  .ride-band::after{content:"";position:absolute;inset:0;background:rgba(11,11,12,.4)}
+  .ride-band h2{position:relative;z-index:2;font-family:var(--disp);font-size:clamp(48px,11vw,150px);text-transform:uppercase;line-height:.9;text-align:center;letter-spacing:.02em}
+  .ride-band h2 em{font-style:normal;color:var(--lime)}
+
+  /* experience band */
+  .exp{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+  .exp figure{overflow:hidden}
+  .exp img{width:100%;height:100%;min-height:60vh;object-fit:cover}
+  .exp .ecopy{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,8vh,90px) clamp(20px,5vw,72px);background:var(--raised)}
+  .exp h2{font-family:var(--disp);font-size:clamp(34px,5vw,64px);text-transform:uppercase;line-height:.95;margin-bottom:22px}
+  .exp h2 em{font-style:normal;color:var(--lime)}
+  .exp p{font-size:16px;color:var(--soft);max-width:42ch;margin-bottom:16px}
+  @media(max-width:860px){.exp{grid-template-columns:1fr}.exp figure{order:-1}.exp img{min-height:44vh}}
+
+  /* count-up stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,4vw,60px);max-width:1200px;margin:0 auto;padding:clamp(70px,12vh,150px) clamp(18px,5vw,56px);text-align:center}
+  .stat .n{font-family:var(--disp);font-size:clamp(56px,9vw,128px);line-height:1;color:var(--lime)}
+  .stat .n.amber{color:var(--amber)}
+  .stat .l{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);margin-top:10px}
+  @media(max-width:760px){.stats{grid-template-columns:1fr;gap:42px}}
+
+  /* schedule */
+  .sched{max-width:1100px;margin:0 auto;padding:clamp(50px,9vh,110px) clamp(18px,5vw,56px)}
+  .sched h2{font-family:var(--disp);font-size:clamp(34px,6vw,84px);text-transform:uppercase;margin-bottom:clamp(28px,5vh,52px)}
+  .sched h2 em{font-style:normal;color:var(--lime)}
+  .ride-row{display:grid;grid-template-columns:120px 1fr 1fr 110px 120px;align-items:center;gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+  .ride-row .t{font-family:var(--disp);font-size:26px}
+  .ride-row .nm{font-weight:600;font-size:16px}
+  .ride-row .ins{color:var(--soft);font-size:14.5px}
+  .ride-row .int{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+  .ride-row .bk{justify-self:end;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;border:1px solid var(--line);border-radius:100px;padding:9px 18px;cursor:pointer;transition:border-color .3s,color .3s}
+  .ride-row .bk:hover{border-color:var(--lime);color:var(--lime)}
+  @media(max-width:760px){.ride-row{grid-template-columns:70px 1fr auto;gap:10px}.ride-row .ins,.ride-row .int{display:none}}
+
+  /* book */
+  .book{text-align:center;padding:clamp(70px,13vh,170px) clamp(18px,5vw,56px);border-top:1px solid var(--line)}
+  .book h2{font-family:var(--disp);font-size:clamp(46px,9vw,128px);text-transform:uppercase;line-height:.9}
+  .book h2 em{font-style:normal;color:var(--lime)}
+  .magnetic{position:relative;display:inline-block;margin-top:36px;background:var(--lime);color:#0B0B0C;font-family:var(--body);font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase;border:none;border-radius:100px;padding:19px 44px;cursor:pointer;overflow:hidden;transition:transform .25s cubic-bezier(.16,1,.3,1),background .35s}
+  .magnetic:hover{background:#fff}
+  .magnetic .ring{position:absolute;top:50%;left:50%;width:42px;height:42px;border:1px solid rgba(11,11,12,.6);border-radius:50%;transform:translate(-50%,-50%) scale(.4);opacity:.9;pointer-events:none;animation:ring .62s ease-out forwards}
+  @keyframes ring{to{transform:translate(-50%,-50%) scale(4.4);opacity:0}}
+  .book .price{margin-top:22px;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+
+  footer{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:44px clamp(18px,5vw,56px);border-top:1px solid var(--line)}
+  footer .brand{font-size:20px}
+  footer nav{display:flex;gap:24px}
+  footer nav a{text-decoration:none;color:var(--soft);font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:color .3s}
+  footer nav a:hover{color:var(--text)}
+  footer .copy{font-size:12px;color:var(--soft);letter-spacing:.06em}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+  body.reduce .reveal{opacity:1;transform:none;transition:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+  <div class="progress"><span id="prog"></span></div>
+
+  <header id="header">
+    <div class="brand">CADENCE</div>
+    <nav class="main">
+      <a href="#why">Ride</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#exp">Studio</a>
+      <a href="#book" class="pill">Book a ride</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"><img class="hero-img" src="assets/hero.jpg" alt="The CADENCE studio: rows of bikes under acid-lime neon." /></div>
+    <div class="hero-copy">
+      <div class="eyebrow reveal">Indoor cycling · Singapore</div>
+      <h1 class="reveal">Lights down.<br><em>Watts up.</em></h1>
+      <p class="reveal" style="transition-delay:.08s">Forty-five minutes in a dark room with loud music and real-time watts. You will not check your phone once.</p>
+      <div class="hero-actions reveal" style="transition-delay:.16s">
+        <a href="#book"><button class="btn">Book a ride</button></a>
+        <span class="note">First ride is on us</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VELOCITY MARQUEE (signature) -->
+  <section class="marquee" aria-hidden="true">
+    <div class="track" id="track1"></div>
+    <div class="track solid" id="track2"></div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why" id="why">
+    <h2 class="why-head reveal">Not a gym.<br>A <em>room</em> with a beat.</h2>
+    <div class="why-grid">
+      <div class="wcard reveal">
+        <figure><img src="assets/bikes.jpg" alt="Rows of bikes." /></figure>
+        <div class="wtxt"><h3>Live <b>watts</b></h3><p>Every bike tracks your output on screen, ride after ride. You against yesterday.</p></div>
+      </div>
+      <div class="wcard reveal" style="transition-delay:.08s">
+        <figure><img src="assets/wheel.jpg" alt="Flywheel detail." /></figure>
+        <div class="wtxt"><h3>45 <b>minutes</b></h3><p>One climb, one sprint, one flat-out finish. Around 800 calories, then you are out.</p></div>
+      </div>
+      <div class="wcard reveal" style="transition-delay:.16s">
+        <figure><img src="assets/shoe.jpg" alt="Cycling shoe clipping in." /></figure>
+        <div class="wtxt"><h3>Clip in, <b>switch off</b></h3><p>Lights down, no mirrors, no judgement. Just you, the dark, and the music.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIDER BAND -->
+  <section class="ride-band">
+    <img class="band-img" src="assets/rider.jpg" alt="A rider in neon haze." />
+    <h2>Find your <em>cadence.</em></h2>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="exp" id="exp">
+    <div class="ecopy">
+      <h2 class="reveal">The room does <em>the work.</em></h2>
+      <p class="reveal" style="transition-delay:.06s">Beams, haze and a sound system built for the climb. The lighting moves with the ride, so the hard part feels like the best part.</p>
+      <p class="reveal" style="transition-delay:.12s">Live DJ-led sets on weekends. Bring a friend, find a pace, leave a different person.</p>
+    </div>
+    <figure class="reveal"><img src="assets/studio.jpg" alt="The CADENCE studio mid-ride, light beams crossing." /></figure>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat reveal"><div class="n" data-to="12000" data-suffix="">0</div><div class="l">Riders and counting</div></div>
+    <div class="stat reveal" style="transition-delay:.08s"><div class="n amber" data-to="60" data-suffix="">0</div><div class="l">Rides every week</div></div>
+    <div class="stat reveal" style="transition-delay:.16s"><div class="n" data-to="1" data-suffix="">0</div><div class="l">Very dark room</div></div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="sched" id="schedule">
+    <h2 class="reveal">This <em>week.</em></h2>
+    <div class="ride-row reveal"><div class="t">06:00</div><div class="nm">Sunrise Climb</div><div class="ins">with Maya</div><div class="int">Hard</div><div class="bk">Book</div></div>
+    <div class="ride-row reveal"><div class="t">07:15</div><div class="nm">Express 30</div><div class="ins">with Theo</div><div class="int">Medium</div><div class="bk">Book</div></div>
+    <div class="ride-row reveal"><div class="t">12:30</div><div class="nm">Lunch Sprint</div><div class="ins">with Priya</div><div class="int">Hard</div><div class="bk">Book</div></div>
+    <div class="ride-row reveal"><div class="t">18:30</div><div class="nm">After Dark</div><div class="ins">with Jonas</div><div class="int">All levels</div><div class="bk">Book</div></div>
+    <div class="ride-row reveal"><div class="t">20:00</div><div class="nm">DJ Ride</div><div class="ins">Live set</div><div class="int">Party</div><div class="bk">Book</div></div>
+  </section>
+
+  <!-- BOOK -->
+  <section class="book" id="book">
+    <h2 class="reveal">First ride<br>is <em>on us.</em></h2>
+    <button class="magnetic reveal" style="transition-delay:.1s">Book a ride</button>
+    <div class="price reveal" style="transition-delay:.18s">10-class pack S$ 280 · No lock-in · Shoes included</div>
+  </section>
+
+  <footer>
+    <div class="brand">CADENCE</div>
+    <nav>
+      <a href="#why">Ride</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#exp">Studio</a>
+      <a href="#book">Book</a>
+    </nav>
+    <div class="copy">© 2026 CADENCE Cycling · Singapore</div>
+  </footer>
+
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) document.body.classList.add('reduce');
+  let lenis=null;
+  if(!reduce && window.Lenis){ lenis=new Lenis({lerp:0.1}); window.lenis=lenis; }
+
+  const header=document.getElementById('header');
+  const prog=document.getElementById('prog');
+  const heroImg=document.querySelector('.hero-img');
+  const bandImg=document.querySelector('.band-img');
+  const docEl=document.documentElement;
+
+  // build marquee tracks (duplicated for seamless loop)
+  const words=['Ride','Climb','Sprint','Recover','Stand','Power','Breathe','Push'];
+  function fill(el){
+    let html='';
+    for(let r=0;r<2;r++){ for(const w of words){ html+='<span class="item">'+w+'</span><span class="dot">/</span>'; } }
+    el.innerHTML=html;
+  }
+  const t1=document.getElementById('track1'), t2=document.getElementById('track2');
+  fill(t1); fill(t2);
+  let p1=0, p2=0, half1=0, half2=0;
+  function measure(){ half1=t1.scrollWidth/2; half2=t2.scrollWidth/2; p2=-half2; }
+  measure(); window.addEventListener('resize',measure);
+
+  // count-up
+  let counted=false;
+  function runCount(){
+    if(counted) return; counted=true;
+    document.querySelectorAll('.stat .n').forEach(el=>{
+      const to=parseInt(el.getAttribute('data-to'),10); const start=performance.now(); const dur=1500;
+      function step(now){
+        const k=Math.min(1,(now-start)/dur); const e=1-Math.pow(1-k,3);
+        el.textContent=Math.round(to*e).toLocaleString();
+        if(k<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  let lastY=0, vel=0;
+  function update(){
+    const max=docEl.scrollHeight-docEl.clientHeight;
+    const y=docEl.scrollTop;
+    prog.style.width=((max>0?y/max:0)*100).toFixed(2)+'%';
+    header.classList.toggle('solid',y>40);
+
+    // smoothed scroll velocity
+    vel += ((y-lastY)-vel)*0.12; lastY=y;
+
+    if(!reduce){
+      // marquee: auto + velocity-reactive, opposite directions
+      const base=0.5, vf=0.85;
+      p1 -= base + vel*vf;
+      p2 += base + vel*vf;
+      if(half1){ if(p1<=-half1) p1+=half1; if(p1>0) p1-=half1; }
+      if(half2){ if(p2>=0) p2-=half2; if(p2<-half2) p2+=half2; }
+      t1.style.transform='translateX('+p1.toFixed(1)+'px)';
+      t2.style.transform='translateX('+p2.toFixed(1)+'px)';
+
+      if(heroImg && y<window.innerHeight){ heroImg.style.transform='translateY('+(y*0.12).toFixed(1)+'px) scale(1.06)'; }
+      if(bandImg){ const r=bandImg.getBoundingClientRect(); if(r.bottom>0&&r.top<window.innerHeight){ const c=(window.innerHeight-r.top)/(window.innerHeight+r.height); bandImg.style.transform='translateY('+((c-0.5)*40).toFixed(1)+'px) scale(1.08)'; } }
+    }
+  }
+  function raf(t){ if(lenis) lenis.raf(t); update(); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();if(lenis)lenis.scrollTo(t,{offset:-10});else t.scrollIntoView({behavior:'smooth'});});
+  });
+
+  const io=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');if(en.target.classList.contains('stats')||en.target.querySelector&&en.target.querySelector('.stat')){}io.unobserve(en.target);}});},{threshold:0.14,rootMargin:'0px 0px -7% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  requestAnimationFrame(function(){document.querySelectorAll('.reveal').forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight*0.92){el.classList.add('in');io.unobserve(el);}});});
+
+  // count-up trigger on stats band
+  const statsIO=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){runCount();statsIO.disconnect();}});},{threshold:0.3});
+  const statsSec=document.querySelector('.stats'); if(statsSec) statsIO.observe(statsSec);
+  if(reduce){ document.querySelectorAll('.stat .n').forEach(el=>el.textContent=parseInt(el.getAttribute('data-to'),10).toLocaleString()); }
+
+  // magnetic CTA + ring
+  const canHover=matchMedia('(hover:hover)').matches && !reduce;
+  document.querySelectorAll('.magnetic').forEach(btn=>{
+    if(canHover){
+      btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();const dx=Math.max(-8,Math.min(8,(e.clientX-(r.left+r.width/2))*0.3));const dy=Math.max(-8,Math.min(8,(e.clientY-(r.top+r.height/2))*0.4));btn.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';});
+      btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+    }
+    btn.addEventListener('click',()=>{const ring=document.createElement('span');ring.className='ring';btn.appendChild(ring);setTimeout(()=>ring.remove(),640);});
+  });
+})();
+</script>
+</body>
+</html>

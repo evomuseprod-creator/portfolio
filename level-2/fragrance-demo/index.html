@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AURÈLE · Nº VII — Ambre Fumé</title>
+<meta name="description" content="Nº VII, Ambre Fumé. A smoked-amber extrait from the AURÈLE perfume house, built in three acts." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#07070A; --raised:#0E0F14; --light:#16181F;
+    --text:#D4D6DD; --head:#F4F4F7; --meta:#8A8D98;
+    --accent:#C79A4B; --accent-soft:rgba(199,154,75,.16);
+    --line:rgba(255,255,255,.10);
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Jost",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-weight:300;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{ /* faint vignette to deepen the dark */
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(120% 90% at 50% 30%,transparent 55%,rgba(0,0,0,.55) 100%);
+  }
+  img{display:block;max-width:100%}
+  ::selection{background:var(--accent-soft);color:var(--head)}
+
+  /* ---------- progress + header ---------- */
+  .progress{position:fixed;top:0;left:0;height:2px;width:100%;background:transparent;z-index:120}
+  .progress span{display:block;height:100%;width:0;background:var(--accent);box-shadow:0 0 12px rgba(199,154,75,.6)}
+
+  header{
+    position:fixed;top:0;left:0;width:100%;z-index:110;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:26px clamp(20px,5vw,64px);
+    transition:background .5s ease,padding .5s ease,border-color .5s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.solid{background:rgba(7,7,10,.72);backdrop-filter:blur(14px);border-bottom-color:var(--line);padding-top:18px;padding-bottom:18px}
+  .brand{font-family:var(--sans);font-weight:400;letter-spacing:.42em;font-size:15px;color:var(--head);text-transform:uppercase;padding-left:.42em}
+  .brand b{font-weight:500}
+  .nref{font-size:12px;letter-spacing:.34em;color:var(--meta);text-transform:uppercase}
+  .nav-cta{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--head);text-decoration:none;border:1px solid var(--line);padding:11px 20px;border-radius:2px;transition:border-color .4s,color .4s,background .4s}
+  .nav-cta:hover{border-color:var(--accent);color:var(--accent)}
+  @media(max-width:680px){.nref{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:100svh;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:clamp(20px,4vw,60px);padding:120px clamp(20px,5vw,64px) 70px;z-index:1}
+  .glow{position:absolute;top:50%;right:6%;width:60vw;height:60vw;max-width:760px;max-height:760px;transform:translateY(-50%);
+    background:radial-gradient(circle,rgba(199,154,75,.30) 0%,rgba(199,154,75,.10) 34%,transparent 64%);
+    filter:blur(8px);z-index:-1;animation:breathe 16s ease-in-out infinite}
+  @keyframes breathe{0%,100%{opacity:.75;transform:translateY(-50%) scale(1)}50%{opacity:1;transform:translateY(-50%) scale(1.07)}}
+  .hero-copy{max-width:560px}
+  .eyebrow{font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);margin-bottom:30px}
+  .hero h1{font-family:var(--serif);font-weight:330;color:var(--head);line-height:.92;letter-spacing:-.01em;font-size:clamp(58px,11vw,148px)}
+  .hero h1 em{font-style:italic;color:var(--accent);font-weight:340}
+  .hero p{font-size:clamp(16px,1.35vw,19px);color:var(--text);max-width:42ch;margin-top:34px}
+  .hero .meta-line{margin-top:30px;display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--meta)}
+  .hero .meta-line::before{content:"";width:46px;height:1px;background:var(--line)}
+  .hero-figure{position:relative;justify-self:center}
+  .hero-figure img{width:min(38vw,460px);border-radius:3px;will-change:transform}
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;text-align:left;padding-top:130px;gap:6px}
+    .hero-figure{justify-self:start;margin-top:8px}
+    .hero-figure img{width:min(74vw,360px)}
+    .glow{right:-10%;top:62%}
+  }
+
+  /* ---------- sensory band ---------- */
+  .band{position:relative;z-index:1;text-align:center;padding:clamp(90px,16vh,180px) clamp(20px,5vw,64px)}
+  .band h2{font-family:var(--serif);font-weight:300;color:var(--head);font-size:clamp(26px,4.4vw,60px);line-height:1.18;letter-spacing:-.01em;max-width:18ch;margin:0 auto}
+  .band h2 i{font-style:italic;color:var(--accent)}
+
+  /* ---------- the notes pyramid (signature) ---------- */
+  .pyramid{position:relative;height:300vh;z-index:1}
+  .pin{position:sticky;top:0;height:100vh;overflow:hidden}
+  .rail{position:absolute;top:clamp(86px,12vh,120px);left:0;width:100%;display:flex;justify-content:center;gap:clamp(18px,4vw,52px);z-index:5;pointer-events:none}
+  .rail-item{display:flex;align-items:baseline;gap:10px;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--meta);opacity:.5;transition:opacity .5s,color .5s}
+  .rail-item .num{font-family:var(--serif);font-style:italic;font-size:14px}
+  .rail-item.active{opacity:1;color:var(--accent)}
+  .pin-kicker{position:absolute;top:clamp(54px,8vh,84px);left:0;width:100%;text-align:center;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--meta);z-index:5}
+
+  .bottle{position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);z-index:3;pointer-events:none}
+  .bottle img{width:min(27vw,330px);filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
+
+  .act{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;opacity:0;transition:opacity .8s cubic-bezier(.16,1,.3,1);pointer-events:none}
+  .act.active{opacity:1;pointer-events:auto}
+  .act-macro{justify-self:center;align-self:center;grid-column:1;width:min(26vw,320px);transform:translateY(26px) scale(.97);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+  .act.active .act-macro{transform:translateY(0) scale(1)}
+  .act-macro img{border-radius:3px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .act-copy{grid-column:3;justify-self:start;align-self:center;max-width:300px;padding-right:clamp(12px,3vw,40px);transform:translateY(26px);transition:transform 1s cubic-bezier(.16,1,.3,1) .06s}
+  .act.active .act-copy{transform:translateY(0)}
+  .act-copy .tier{font-family:var(--serif);font-weight:300;color:var(--head);font-size:clamp(30px,3.6vw,46px);line-height:1;margin-bottom:22px}
+  .act-copy .tier i{font-style:italic;color:var(--accent)}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px}
+  .chips span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text);border:1px solid var(--line);border-radius:100px;padding:7px 14px}
+  .act-copy .desc{font-size:15px;color:var(--meta);max-width:34ch}
+
+  /* ---------- light chapter: craft ---------- */
+  .craft{position:relative;z-index:1;background:var(--light);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .craft-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(28px,6vw,90px);max-width:1280px;margin:0 auto;padding:clamp(70px,12vh,150px) clamp(20px,5vw,64px)}
+  .craft-figure img{width:100%;border-radius:3px;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+  .craft-copy{max-width:480px}
+  .craft-copy h2{font-family:var(--serif);font-weight:300;color:var(--head);font-size:clamp(30px,4.4vw,54px);line-height:1.08;letter-spacing:-.01em;margin:24px 0 26px}
+  .craft-copy h2 i{font-style:italic;color:var(--accent)}
+  .craft-copy p{font-size:16px;color:var(--text);max-width:46ch;margin-bottom:18px}
+  .craft-copy .small{font-size:13px;color:var(--meta);letter-spacing:.04em}
+  @media(max-width:900px){.craft-inner{grid-template-columns:1fr;gap:34px}.craft-figure{order:-1}}
+
+  /* ---------- acquire ---------- */
+  .acquire{position:relative;z-index:1;text-align:center;padding:clamp(100px,18vh,200px) clamp(20px,5vw,64px)}
+  .acquire .eyebrow{margin-bottom:24px}
+  .acquire h2{font-family:var(--serif);font-weight:300;color:var(--head);font-size:clamp(38px,7vw,90px);line-height:1;letter-spacing:-.01em}
+  .acquire h2 i{font-style:italic;color:var(--accent)}
+  .price{margin:30px 0 8px;font-family:var(--serif);font-size:clamp(24px,3vw,34px);color:var(--head)}
+  .spec{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--meta)}
+  .magnetic{position:relative;display:inline-block;margin-top:42px;background:var(--accent);color:#120d04;font-family:var(--sans);font-weight:500;font-size:13px;letter-spacing:.22em;text-transform:uppercase;border:none;border-radius:3px;padding:19px 42px;cursor:pointer;overflow:hidden;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .4s;box-shadow:0 10px 40px rgba(199,154,75,.22)}
+  .magnetic:hover{box-shadow:0 14px 54px rgba(199,154,75,.4)}
+  .magnetic .ring{position:absolute;top:50%;left:50%;width:40px;height:40px;border:1px solid rgba(18,13,4,.7);border-radius:50%;transform:translate(-50%,-50%) scale(.4);opacity:.9;pointer-events:none;animation:ring .62s ease-out forwards}
+  @keyframes ring{to{transform:translate(-50%,-50%) scale(4.2);opacity:0}}
+  .reassure{margin-top:26px;font-size:13px;color:var(--meta)}
+
+  /* ---------- footer ---------- */
+  footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:48px clamp(20px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  footer .brand{font-size:13px}
+  footer nav{display:flex;gap:26px}
+  footer nav a{color:var(--meta);text-decoration:none;font-size:12px;letter-spacing:.2em;text-transform:uppercase;transition:color .35s}
+  footer nav a:hover{color:var(--accent)}
+  footer .copy{font-size:12px;color:var(--meta);letter-spacing:.06em}
+
+  /* ---------- reveals ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .95s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- static (mobile + reduced motion): stack the pyramid ---------- */
+  body.static .pyramid{height:auto}
+  body.static .pin{position:static;height:auto;overflow:visible;padding:clamp(70px,10vh,110px) clamp(20px,6vw,48px) 30px}
+  body.static .rail,body.static .pin-kicker{display:none}
+  body.static .bottle{position:relative;top:auto;left:auto;transform:none;display:flex;justify-content:center;margin-bottom:46px}
+  body.static .bottle img{width:min(58vw,260px)}
+  body.static .act{position:relative;inset:auto;opacity:1;display:grid;grid-template-columns:1fr;gap:22px;pointer-events:auto;padding-bottom:64px;text-align:left}
+  body.static .act-macro{grid-column:1;width:min(70vw,360px);transform:none}
+  body.static .act-copy{grid-column:1;justify-self:start;padding-right:0;transform:none;max-width:46ch}
+  body.static .pin-kicker-mob{display:block}
+
+  body.reduce .reveal{opacity:1;transform:none;transition:none}
+  body.reduce .glow{animation:none}
+  @media(prefers-reduced-motion:reduce){.glow{animation:none}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+  <div class="progress"><span id="prog"></span></div>
+
+  <header id="header">
+    <div class="brand">AUR<b>È</b>LE</div>
+    <div class="nref">Nº VII · Ambre Fumé</div>
+    <a href="#acquire" class="nav-cta">Acquire</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="glow"></div>
+    <div class="hero-copy">
+      <div class="eyebrow reveal">AURÈLE · Extrait de Parfum</div>
+      <h1 class="reveal">Ambre<br><em>Fumé</em></h1>
+      <p class="reveal" style="transition-delay:.08s">A smoked amber extrait, built in three acts. Nº VII holds the light the way dusk does, slow and unhurried.</p>
+      <div class="meta-line reveal" style="transition-delay:.16s">Composed in small batches</div>
+    </div>
+    <div class="hero-figure reveal" style="transition-delay:.1s">
+      <img class="hero-img" src="assets/hero.jpg" alt="The Nº VII faceted amber-glass bottle in low light, a wisp of smoke rising." />
+    </div>
+  </section>
+
+  <!-- SENSORY BAND -->
+  <section class="band">
+    <h2 class="reveal">Smoked vanilla, sun warmed fig, <i>cold brass.</i></h2>
+  </section>
+
+  <!-- THE NOTES PYRAMID -->
+  <section class="pyramid" id="composition" aria-label="The composition, top heart and base notes">
+    <div class="pin">
+      <div class="pin-kicker">The Composition</div>
+      <div class="rail">
+        <div class="rail-item" data-i="0"><span class="num">01</span> Top</div>
+        <div class="rail-item" data-i="1"><span class="num">02</span> Heart</div>
+        <div class="rail-item" data-i="2"><span class="num">03</span> Base</div>
+      </div>
+
+      <div class="bottle"><img src="assets/bottle.jpg" alt="The Nº VII bottle, centred, glowing amber." /></div>
+
+      <div class="act act-top">
+        <div class="act-macro"><img src="assets/note-top.jpg" alt="Bergamot, citrus peel and pink peppercorns." /></div>
+        <div class="act-copy">
+          <div class="tier"><i>Top.</i></div>
+          <div class="chips"><span>Bergamot</span><span>Pink Pepper</span><span>Neroli</span></div>
+          <p class="desc">The first lift. Bright citrus oil and a peppered spark, the moment it meets the skin.</p>
+        </div>
+      </div>
+
+      <div class="act act-heart">
+        <div class="act-macro"><img src="assets/note-heart.jpg" alt="White jasmine and pale iris petals." /></div>
+        <div class="act-copy">
+          <div class="tier"><i>Heart.</i></div>
+          <div class="chips"><span>Jasmine</span><span>Orris</span><span>Fig</span></div>
+          <p class="desc">The turn. White florals warmed by sun ripe fig, soft and a little sweet.</p>
+        </div>
+      </div>
+
+      <div class="act act-base">
+        <div class="act-macro"><img src="assets/note-base.jpg" alt="Amber resin, vanilla pods and cedar shavings." /></div>
+        <div class="act-copy">
+          <div class="tier"><i>Base.</i></div>
+          <div class="chips"><span>Smoked Amber</span><span>Vanilla</span><span>Cedar</span></div>
+          <p class="desc">The stay. Resinous amber, smoke, and soft woods that hold for hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHT CHAPTER: CRAFT -->
+  <section class="craft" id="making">
+    <div class="craft-inner">
+      <div class="craft-copy">
+        <div class="eyebrow reveal">The Making</div>
+        <h2 class="reveal">Aged ninety days. Bottled by hand, <i>numbered.</i></h2>
+        <p class="reveal" style="transition-delay:.06s">Nº VII is blended in small batches in our atelier, then rested for three months so the smoke settles into the amber and the edges soften.</p>
+        <p class="reveal" style="transition-delay:.12s">Only then is it decanted by hand into faceted glass. Every bottle carries its own number, and the maker's mark.</p>
+        <p class="small reveal" style="transition-delay:.18s">Atelier No. 3 · Singapore</p>
+      </div>
+      <div class="craft-figure reveal"><img src="assets/craft.jpg" alt="A perfumer drawing amber oil with a glass dropper above labelled essence vials." /></div>
+    </div>
+  </section>
+
+  <!-- ACQUIRE -->
+  <section class="acquire" id="acquire">
+    <div class="eyebrow reveal">Acquire</div>
+    <h2 class="reveal">Nº VII · <i>Ambre Fumé</i></h2>
+    <div class="price reveal" style="transition-delay:.06s">S$ 280</div>
+    <div class="spec reveal" style="transition-delay:.1s">50 ml · Extrait de Parfum · 22% concentration</div>
+    <button class="magnetic reveal" style="transition-delay:.14s">Acquire Nº VII</button>
+    <div class="reassure reveal" style="transition-delay:.2s">Complimentary 2 ml sample with every order. Ships within two days.</div>
+  </section>
+
+  <footer>
+    <div class="brand">AUR<b>È</b>LE</div>
+    <nav>
+      <a href="#composition">Composition</a>
+      <a href="#making">The Making</a>
+      <a href="#acquire">Acquire</a>
+    </nav>
+    <div class="copy">© 2026 AURÈLE · Independent perfume house</div>
+  </footer>
+
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) document.body.classList.add('reduce');
+
+  // Lenis smooth scroll (skip when reduced motion)
+  let lenis=null;
+  if(!reduce && window.Lenis){
+    lenis = new Lenis({lerp:0.1, wheelMultiplier:1, smoothWheel:true});
+    window.lenis = lenis;
+  }
+
+  const header = document.getElementById('header');
+  const prog   = document.getElementById('prog');
+  const heroImg= document.querySelector('.hero-img');
+  const py     = document.querySelector('.pyramid');
+  const acts   = Array.from(document.querySelectorAll('.act'));
+  const rails  = Array.from(document.querySelectorAll('.rail-item'));
+  const docEl  = document.documentElement;
+
+  function isStatic(){ return reduce || window.innerWidth <= 900; }
+
+  function update(){
+    const stat = isStatic();
+    document.body.classList.toggle('static', stat);
+
+    // progress bar
+    const max = docEl.scrollHeight - docEl.clientHeight;
+    const sc  = max>0 ? docEl.scrollTop/max : 0;
+    prog.style.width = (sc*100).toFixed(2)+'%';
+
+    // header solid after a little scroll
+    header.classList.toggle('solid', docEl.scrollTop > 40);
+
+    if(stat) return;
+
+    // hero parallax (gentle)
+    if(heroImg){
+      const y = docEl.scrollTop;
+      heroImg.style.transform = 'translateY('+(y*0.08).toFixed(1)+'px)';
+    }
+
+    // the notes pyramid: which act is active
+    if(py){
+      const r = py.getBoundingClientRect();
+      const total = r.height - window.innerHeight;
+      let p = total>0 ? (-r.top)/total : 0;
+      p = Math.max(0, Math.min(0.9999, p));
+      const idx = Math.min(2, Math.floor(p*3));
+      acts.forEach((a,i)=>a.classList.toggle('active', i===idx));
+      rails.forEach((a,i)=>a.classList.toggle('active', i===idx));
+    }
+  }
+
+  function raf(time){
+    if(lenis) lenis.raf(time);
+    update();
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // anchor links work through Lenis
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(!t) return;
+      e.preventDefault();
+      if(lenis) lenis.scrollTo(t,{offset:-10}); else t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  // reveals
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  },{threshold:0.16, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // reveal anything already in view on first paint, instantly (no blank hero)
+  requestAnimationFrame(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){
+      if(el.getBoundingClientRect().top < window.innerHeight*0.92){ el.classList.add('in'); io.unobserve(el); }
+    });
+  });
+
+  // magnetic CTA + click ring
+  const canHover = matchMedia('(hover:hover)').matches && !reduce;
+  document.querySelectorAll('.magnetic').forEach(btn=>{
+    if(canHover){
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        const mx=e.clientX-(r.left+r.width/2);
+        const my=e.clientY-(r.top+r.height/2);
+        const dx=Math.max(-8,Math.min(8,mx*0.3));
+        const dy=Math.max(-8,Math.min(8,my*0.4));
+        btn.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';
+      });
+      btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+    }
+    btn.addEventListener('click',()=>{
+      const ring=document.createElement('span');
+      ring.className='ring';
+      btn.appendChild(ring);
+      setTimeout(()=>ring.remove(),640);
+    });
+  });
+
+  // initialise the first active act immediately so it is never blank
+  if(acts.length){ acts[0].classList.add('active'); rails[0].classList.add('active'); }
+})();
+</script>
+</body>
+</html>

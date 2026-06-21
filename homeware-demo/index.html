@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TANAH — hand-thrown stoneware</title>
+<!--
+  PACKAGE 1 (Level 1): clean & real, STATIC. DTC ceramics brand: "a studio that still sells".
+  Story brief: homeware-demo/BRIEF.md  ·  Research: homeware-demo/RESEARCH.md (Perplexity, 2026-06-21)
+  Award moves: editorial-tactile, oversized soft serif interacting with product imagery, asymmetry, a tactile
+  "gallery-wall" collection grid with PRICES + finish + stock, maker/materials bands, generous whitespace.
+  Warm off-white base, clay surfaces, ONE accent (terracotta). Real Gemini product/craft imagery, zero em-dashes.
+  New register: COMMERCE / product brand. Newsreader serif.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f1e6;
+    --paper:#fdfaf3;
+    --clay:#efe4d2;
+    --ink:#352f28;
+    --muted:#857a69;
+    --faint:#ada291;
+    --line:#e6dcc9;
+    --accent:#a8573a;
+    --accent-deep:#8c4528;
+    --serif:"Newsreader",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 6vw}
+  .label{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+  .pad{padding:clamp(76px,10vw,140px) 0}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fdf7f0;font-size:14px;font-weight:500;
+    letter-spacing:.01em;padding:15px 28px;border-radius:2px;transition:background .3s,transform .3s}
+  .btn:hover{background:var(--accent-deep);transform:translateY(-2px)}
+  .btn--ghost{background:transparent;color:var(--ink);border:1px solid rgba(53,47,40,.24)}
+  .btn--ghost:hover{background:rgba(53,47,40,.04);transform:translateY(-2px)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:22px 6vw;transition:background .35s,padding .35s,box-shadow .35s}
+  nav .logo{font-family:var(--serif);font-size:25px;font-weight:500;letter-spacing:.18em}
+  nav .links{display:flex;align-items:center;gap:32px}
+  nav .links a{font-size:14px;color:var(--muted);transition:color .2s}
+  nav .links a:hover{color:var(--ink)}
+  nav .navcta{font-size:13px;color:#fdf7f0;padding:11px 20px}
+  nav.scrolled{background:rgba(247,241,230,.92);backdrop-filter:blur(12px);padding-top:14px;padding-bottom:14px;box-shadow:0 1px 0 var(--line)}
+
+  /* HERO (split) */
+  .hero{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,5vw,72px);align-items:center;
+    min-height:100dvh;padding:116px 6vw 64px;max-width:1340px;margin:0 auto}
+  .hero .copy .label{margin-bottom:24px}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(44px,5.8vw,84px);line-height:1.04;letter-spacing:-.01em}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lead{margin-top:26px;font-size:clamp(16px,1.3vw,18px);color:var(--muted);max-width:42ch;line-height:1.75}
+  .hero .actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .ship{margin-top:28px;font-size:13px;color:var(--faint);letter-spacing:.02em}
+  .hero .figure{position:relative}
+  .hero .figure img{width:100%;height:clamp(440px,72vh,700px);object-fit:cover;border-radius:3px;
+    box-shadow:0 50px 90px -52px rgba(90,60,40,.4)}
+  .hero .figure .tag{position:absolute;left:-30px;bottom:40px;background:var(--paper);border:1px solid var(--line);
+    border-radius:3px;padding:16px 20px;box-shadow:0 26px 54px -30px rgba(90,60,40,.5);max-width:210px}
+  .hero .figure .tag .n{font-family:var(--serif);font-size:17px;font-weight:500}
+  .hero .figure .tag .t{font-size:13px;color:var(--muted);margin-top:3px}
+
+  /* COLLECTION */
+  .collection{background:var(--paper)}
+  .collection .head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:50px}
+  .collection h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,56px);line-height:1.04;letter-spacing:-.01em}
+  .collection .head p{color:var(--muted);font-size:16px;max-width:38ch}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,3vw,40px)}
+  .card .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px;background:var(--clay);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  .card:hover .ph{transform:scale(1.02)}
+  .card .row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:18px}
+  .card .nm{font-family:var(--serif);font-size:22px;font-weight:500}
+  .card .pr{font-size:16px;font-weight:500;color:var(--accent);white-space:nowrap}
+  .card .fin{color:var(--muted);font-size:14px;margin-top:4px}
+  .card .stock{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-top:10px}
+
+  /* MAKER */
+  .maker{position:relative}
+  .maker .grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(36px,5vw,80px);align-items:center}
+  .maker .figure img{width:100%;height:clamp(420px,60vh,580px);object-fit:cover;border-radius:3px}
+  .maker h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.8vw,52px);line-height:1.08;letter-spacing:-.01em}
+  .maker h2 em{font-style:italic;color:var(--accent)}
+  .maker p{color:var(--muted);font-size:16px;line-height:1.85;max-width:48ch;margin-top:22px}
+  .maker p + p{margin-top:14px}
+
+  /* CARE */
+  .care{background:var(--clay)}
+  .care .head{max-width:30ch;margin-bottom:8px}
+  .care h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,46px);line-height:1.1}
+  .care .rows{margin-top:36px;border-top:1px solid #e0d4bf}
+  .care .r{display:grid;grid-template-columns:200px 1fr;gap:clamp(20px,4vw,60px);padding:26px 0;border-bottom:1px solid #e0d4bf}
+  .care .r .t{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .care .r p{font-size:16px;color:var(--ink);line-height:1.7;max-width:54ch}
+
+  /* CLOSE */
+  .close{text-align:center;background:var(--paper)}
+  .close h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,76px);line-height:1.04;letter-spacing:-.01em}
+  .close h2 em{font-style:italic;color:var(--accent)}
+  .close p{margin:22px auto 0;color:var(--muted);max-width:40ch;font-size:16px}
+  .close .actions{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  footer{background:var(--bg);border-top:1px solid var(--line)}
+  footer .grid3{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;padding:48px 0 32px}
+  footer .logo{font-family:var(--serif);font-size:22px;letter-spacing:.16em;font-weight:500}
+  footer .col h5{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  footer .col p,footer .col a{display:block;color:var(--muted);font-size:14px;line-height:1.95}
+  footer .col a:hover{color:var(--ink)}
+  footer .base{border-top:1px solid var(--line);padding:18px 0;font-size:12px;color:var(--faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.02em}
+
+  @media (max-width:960px){
+    .hero{grid-template-columns:1fr;min-height:auto;gap:36px}
+    .hero .figure{order:-1}
+    .hero .figure img{height:56vh}
+    .grid{grid-template-columns:1fr 1fr;gap:22px}
+    .maker .grid2,.care .r{grid-template-columns:1fr;gap:28px}
+    .maker .figure{order:-1;max-width:560px}
+    .care .r{gap:6px}.care .r .t{margin-bottom:4px}
+  }
+  @media (max-width:560px){
+    nav .links a:not(.navcta){display:none}
+    .grid{grid-template-columns:1fr;max-width:420px}
+    .hero .figure .tag{left:0}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">TANAH</div>
+  <div class="links">
+    <a href="#collection">Collection</a>
+    <a href="#maker">The studio</a>
+    <a href="#care">Care</a>
+    <a href="#collection" class="btn navcta">Shop</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="copy">
+    <div class="label">Hand-thrown stoneware &middot; Singapore</div>
+    <h1>Quiet objects for <em>daily</em> rituals.</h1>
+    <p class="lead">Small-batch tableware, thrown by hand in our Jalan Besar studio. No two pieces are quite alike, and that is the point.</p>
+    <div class="actions">
+      <a href="#collection" class="btn">Shop the collection</a>
+      <a href="#maker" class="btn btn--ghost">Meet the maker</a>
+    </div>
+    <p class="ship">Made to order &middot; ships in 3 weeks &middot; free local delivery over $80</p>
+  </div>
+  <div class="figure">
+    <img src="assets/hero.jpg" alt="A table set with hand-thrown TANAH stoneware in warm morning light">
+    <div class="tag">
+      <div class="n">The Tanah table</div>
+      <div class="t">our everyday collection, made to live with</div>
+    </div>
+  </div>
+</header>
+
+<section class="collection pad" id="collection">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="label">The collection</div>
+        <h2 style="margin-top:18px">Made to be used, every day.</h2>
+      </div>
+      <p>Stoneware fired for everyday resilience. Dishwasher and microwave safe, with a soft satin glaze.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <img class="ph" src="assets/bowls.jpg" alt="A set of speckled stoneware bowls">
+        <div class="row"><span class="nm">Everyday bowls</span><span class="pr">$68 / set of 2</span></div>
+        <div class="fin">Sandstone glaze &middot; hand-thrown</div>
+        <div class="stock">Made to order &middot; ships in 3 weeks</div>
+      </div>
+      <div class="card">
+        <img class="ph" src="assets/mugs.jpg" alt="A pair of hand-thrown stoneware mugs">
+        <div class="row"><span class="nm">Morning mugs</span><span class="pr">$58 / pair</span></div>
+        <div class="fin">Ash satin glaze &middot; 280ml</div>
+        <div class="stock">In stock &middot; ships in 2 to 3 days</div>
+      </div>
+      <div class="card">
+        <img class="ph" src="assets/serve.jpg" alt="A stoneware serving jug and bowl">
+        <div class="row"><span class="nm">The serving pair</span><span class="pr">$120</span></div>
+        <div class="fin">Jug and shallow bowl &middot; clay glaze</div>
+        <div class="stock">Made to order &middot; ships in 3 weeks</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="maker pad" id="maker">
+  <div class="wrap">
+    <div class="grid2">
+      <div class="figure">
+        <img src="assets/maker.jpg" alt="A potter shaping wet clay on the wheel in the TANAH studio">
+      </div>
+      <div class="copy">
+        <div class="label">The studio</div>
+        <h2 style="margin-top:18px">Thrown by hand, <em>one piece at a time</em>.</h2>
+        <p>Everything starts on the wheel with local stoneware clay. Each piece is trimmed, dried, glazed by hand and fired twice in our kiln, over the better part of two weeks.</p>
+        <p>That slowness is why the speckle and the form shift a little from piece to piece. We think a cup you can feel the maker in is worth the wait.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="care pad" id="care">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Materials &amp; care</div>
+      <h2 style="margin-top:16px">Built to be lived with.</h2>
+    </div>
+    <div class="rows">
+      <div class="r"><div class="t">Material</div><p>Local stoneware clay, high-fired for strength, finished in a food-safe satin glaze.</p></div>
+      <div class="r"><div class="t">Everyday use</div><p>Dishwasher and microwave safe. The glaze softens with use and only gets better.</p></div>
+      <div class="r"><div class="t">Each is unique</div><p>Small variations in glaze and form are signs of the hand at work, not flaws.</p></div>
+      <div class="r"><div class="t">Shipping</div><p>Made to order in 3 weeks, in-stock pieces in 2 to 3 days. Free local delivery over $80.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="close pad">
+  <div class="wrap">
+    <div class="label" style="display:inline-block;margin-bottom:20px">Shop</div>
+    <h2>Start with a <em>cup</em> you will reach for.</h2>
+    <p>Pieces are made in small batches and sell out. New drops go to the studio list first.</p>
+    <div class="actions">
+      <a href="#collection" class="btn">Shop the collection</a>
+      <a href="mailto:hello@tanah.sg" class="btn btn--ghost">Join the studio list</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="col">
+        <div class="logo">TANAH</div>
+        <p style="color:var(--muted);margin-top:10px;max-width:30ch">Hand-thrown stoneware, made in Singapore.</p>
+      </div>
+      <div class="col">
+        <h5>Studio</h5>
+        <p>42 Jalan Besar, #03-04<br>Singapore 208801</p>
+        <p>Studio visits by appointment</p>
+      </div>
+      <div class="col">
+        <h5>Shop</h5>
+        <a href="#collection">The collection</a>
+        <a href="#care">Materials &amp; care</a>
+        <a href="#">Shipping &amp; returns</a>
+      </div>
+      <div class="col">
+        <h5>Keep in touch</h5>
+        <a href="#">Instagram</a>
+        <a href="mailto:hello@tanah.sg">hello@tanah.sg</a>
+        <a href="#">The studio list</a>
+      </div>
+    </div>
+    <div class="wrap base">
+      <span>&copy; 2026 TANAH Ceramics</span>
+      <span>Built as an agency demo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RIPE — sparkling pressed fruit</title>
+<meta name="description" content="RIPE: craft sparkling soda made from real pressed fruit. Lightly fizzy, low sugar, four flavours. Build your own pack." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#FBF5EA; --ink:#15120E; --muted:#6B6358;
+    --orange:#D8442A; --yuzu:#E0A21C; --berry:#9B2E6E; --lime:#3E8E4F;
+    --line:rgba(21,18,14,.12);
+    --disp:"Bricolage Grotesque",system-ui,sans-serif;
+    --body:"Hanken Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);font-family:var(--body);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--orange);color:#fff}
+
+  /* progress + header */
+  .progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:130}
+  .progress span{display:block;height:100%;width:0;background:var(--orange)}
+  header{position:fixed;top:0;left:0;width:100%;z-index:120;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(18px,5vw,56px);transition:background .4s,box-shadow .4s,padding .4s}
+  header.solid{background:rgba(251,245,234,.82);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line);padding-top:14px;padding-bottom:14px}
+  .brand{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.02em;color:var(--ink)}
+  .brand span{color:var(--orange)}
+  nav.main{display:flex;gap:30px;align-items:center}
+  nav.main a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px;transition:color .3s}
+  nav.main a:hover{color:var(--orange)}
+  nav.main a.pill{background:var(--ink);color:var(--cream);border-radius:100px;padding:11px 22px;font-weight:600;font-size:14px}
+  nav.main a.pill:hover{background:var(--orange);color:#fff}
+  @media(max-width:760px){nav.main a:not(.pill){display:none}}
+
+  /* hero */
+  .hero{position:relative;min-height:100svh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:clamp(20px,4vw,56px);padding:120px clamp(18px,5vw,56px) 60px;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(38px);opacity:.5;z-index:0;will-change:transform}
+  .blob.b1{width:340px;height:340px;background:var(--yuzu);top:-60px;left:-60px}
+  .blob.b2{width:300px;height:300px;background:var(--lime);bottom:-80px;left:32%}
+  .blob.b3{width:280px;height:280px;background:var(--berry);top:18%;right:-40px}
+  .hero-copy{position:relative;z-index:2;max-width:620px}
+  .kicker{display:inline-block;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);background:#fff;border:1px solid var(--line);border-radius:100px;padding:7px 15px;margin-bottom:26px}
+  .hero h1{font-family:var(--disp);font-weight:800;line-height:.9;letter-spacing:-.03em;font-size:clamp(58px,11vw,148px)}
+  .hero h1 em{font-style:normal;color:var(--orange)}
+  .hero p{font-size:clamp(16px,1.4vw,20px);color:var(--ink);max-width:40ch;margin-top:28px;opacity:.86}
+  .hero-actions{display:flex;align-items:center;gap:22px;margin-top:36px;flex-wrap:wrap}
+  .btn{font-family:var(--body);font-weight:600;font-size:15px;border:none;border-radius:100px;padding:16px 30px;cursor:pointer;background:var(--orange);color:#fff;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .35s;box-shadow:0 10px 30px rgba(216,68,42,.28)}
+  .btn:hover{box-shadow:0 16px 40px rgba(216,68,42,.4)}
+  .hero-actions .note{font-size:14px;color:var(--muted);font-weight:500}
+  .hero-figure{position:relative;z-index:2;justify-self:center}
+  .hero-figure img{width:min(40vw,440px);border-radius:18px;will-change:transform;filter:drop-shadow(0 30px 50px rgba(21,18,14,.18))}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;gap:14px}.hero-figure{justify-self:start}.hero-figure img{width:min(72vw,360px)}}
+
+  /* value props */
+  .values{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,3vw,40px);max-width:1240px;margin:0 auto;padding:clamp(40px,7vh,90px) clamp(18px,5vw,56px);border-top:1px solid var(--line)}
+  .value .vmark{font-family:var(--disp);font-weight:700;font-size:30px;color:var(--orange);margin-bottom:8px}
+  .value h3{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.01em;margin-bottom:4px}
+  .value p{font-size:14.5px;color:var(--muted)}
+  @media(max-width:760px){.values{grid-template-columns:1fr 1fr;gap:26px}}
+
+  /* sticky-stacking flavor cards (signature) */
+  .stack{position:relative}
+  .card{position:sticky;top:0;min-height:100vh;display:flex;align-items:center;background:var(--c);color:var(--tx);border-radius:34px 34px 0 0;box-shadow:0 -26px 70px rgba(21,18,14,.28);overflow:hidden}
+  .card-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(20px,4vw,56px);width:100%;max-width:1240px;margin:0 auto;padding:clamp(40px,7vh,80px) clamp(22px,5vw,64px)}
+  .card.flip .card-inner{direction:rtl}
+  .card.flip .card-inner>*{direction:ltr}
+  .card-text .idx{font-family:var(--disp);font-weight:700;font-size:16px;opacity:.7;letter-spacing:.04em}
+  .card-text h2{font-family:var(--disp);font-weight:800;line-height:.9;letter-spacing:-.03em;font-size:clamp(54px,8.5vw,124px);margin:14px 0 18px}
+  .card-text .note{font-size:clamp(16px,1.4vw,20px);max-width:30ch;opacity:.92}
+  .card-text .add{margin-top:32px;display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:600;font-size:15px;border:1.5px solid currentColor;background:transparent;color:inherit;border-radius:100px;padding:14px 26px;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1),background .3s,color .3s;position:relative;overflow:hidden}
+  .card-text .add:hover{background:var(--tx);color:var(--c)}
+  .card-figure{justify-self:center}
+  .card-figure img{width:min(34vw,400px);border-radius:16px;filter:drop-shadow(0 24px 50px rgba(0,0,0,.28))}
+  @media(max-width:860px){
+    .card-inner{grid-template-columns:1fr;gap:18px;text-align:left}
+    .card.flip .card-inner{direction:ltr}
+    .card-figure{justify-self:start;order:2}
+    .card-figure img{width:min(64vw,320px)}
+  }
+
+  /* flavour dots indicator */
+  .dots{position:fixed;right:clamp(14px,2.4vw,34px);top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity .4s}
+  .dots.show{opacity:1}
+  .dots b{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.45);transition:transform .3s,background .3s;display:block}
+  .dots b.on{background:#fff;transform:scale(1.5)}
+  @media(max-width:760px){.dots{display:none}}
+
+  /* pour strip */
+  .strip{padding:clamp(50px,9vh,110px) 0 clamp(40px,7vh,80px)}
+  .strip h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,5vw,64px);letter-spacing:-.02em;line-height:1;padding:0 clamp(18px,5vw,56px);max-width:16ch;margin-bottom:40px}
+  .strip h2 em{font-style:normal;color:var(--orange)}
+  .rail{display:flex;gap:18px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:4px clamp(18px,5vw,56px) 22px;-webkit-overflow-scrolling:touch}
+  .rail::-webkit-scrollbar{height:7px}
+  .rail::-webkit-scrollbar-thumb{background:rgba(21,18,14,.2);border-radius:10px}
+  .rail figure{flex:0 0 auto;width:min(70vw,330px);scroll-snap-align:start}
+  .rail img{width:100%;height:420px;object-fit:cover;border-radius:18px}
+  .rail figcaption{margin-top:12px;font-weight:600;font-size:15px}
+  .rail figcaption small{display:block;font-weight:400;color:var(--muted);font-size:13.5px}
+
+  /* ingredient band */
+  .made{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(24px,5vw,80px);max-width:1240px;margin:0 auto;padding:clamp(50px,9vh,120px) clamp(18px,5vw,56px)}
+  .made-figure img{width:100%;border-radius:20px}
+  .made h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,4.6vw,58px);letter-spacing:-.02em;line-height:1.02;margin-bottom:22px}
+  .made h2 em{font-style:normal;color:var(--orange)}
+  .made p{font-size:16.5px;color:var(--ink);opacity:.84;max-width:46ch;margin-bottom:16px}
+  @media(max-width:860px){.made{grid-template-columns:1fr;gap:30px}.made-figure{order:-1}}
+
+  /* shop */
+  .shop{text-align:center;padding:clamp(60px,11vh,150px) clamp(18px,5vw,56px);border-top:1px solid var(--line)}
+  .shop .kicker{margin-bottom:22px}
+  .shop h2{font-family:var(--disp);font-weight:800;font-size:clamp(40px,8vw,108px);letter-spacing:-.03em;line-height:.92}
+  .shop h2 em{font-style:normal;color:var(--orange)}
+  .price{margin:26px 0 6px;font-family:var(--disp);font-weight:700;font-size:clamp(22px,3vw,32px)}
+  .pack{font-size:14px;color:var(--muted);font-weight:500}
+  .magnetic{position:relative;display:inline-block;margin-top:38px;background:var(--orange);color:#fff;font-family:var(--body);font-weight:600;font-size:16px;border:none;border-radius:100px;padding:19px 44px;cursor:pointer;overflow:hidden;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .35s;box-shadow:0 12px 36px rgba(216,68,42,.3)}
+  .magnetic:hover{box-shadow:0 18px 50px rgba(216,68,42,.45)}
+  .magnetic .ring{position:absolute;top:50%;left:50%;width:42px;height:42px;border:1.5px solid rgba(255,255,255,.8);border-radius:50%;transform:translate(-50%,-50%) scale(.4);opacity:.9;pointer-events:none;animation:ring .62s ease-out forwards}
+  @keyframes ring{to{transform:translate(-50%,-50%) scale(4.4);opacity:0}}
+  .reassure{margin-top:22px;font-size:14px;color:var(--muted)}
+
+  footer{background:var(--ink);color:var(--cream);padding:46px clamp(18px,5vw,56px);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  footer .brand{color:var(--cream)}
+  footer nav{display:flex;gap:24px}
+  footer nav a{color:rgba(251,245,234,.7);text-decoration:none;font-size:14px;transition:color .3s}
+  footer nav a:hover{color:var(--cream)}
+  footer .copy{font-size:13px;color:rgba(251,245,234,.5)}
+
+  /* reveals */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+  body.reduce .reveal{opacity:1;transform:none;transition:none}
+
+  /* reduced motion / no sticky stack */
+  body.reduce .card{position:relative;min-height:auto}
+  @media(prefers-reduced-motion:reduce){.card{position:relative;min-height:auto}.blob{display:none}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+  <div class="progress"><span id="prog"></span></div>
+
+  <header id="header">
+    <div class="brand">RIPE<span>.</span></div>
+    <nav class="main">
+      <a href="#flavours">Flavours</a>
+      <a href="#made">Story</a>
+      <a href="#shop" class="pill">Shop the pack</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="hero-copy">
+      <span class="kicker reveal">Sparkling pressed fruit</span>
+      <h1 class="reveal">Fizz,<br>fully <em>ripe.</em></h1>
+      <p class="reveal" style="transition-delay:.08s">Real pressed fruit. Lightly sparkling. None of the sugar crash. Four flavours, built into your own pack.</p>
+      <div class="hero-actions reveal" style="transition-delay:.16s">
+        <a href="#shop"><button class="btn">Shop the variety pack</button></a>
+        <span class="note">40 cals · no added sugar</span>
+      </div>
+    </div>
+    <div class="hero-figure reveal" style="transition-delay:.1s">
+      <img class="hero-img" src="assets/hero.jpg" alt="A frosted bottle of RIPE blood-orange soda with ice and an orange slice." />
+    </div>
+  </section>
+
+  <!-- VALUE PROPS -->
+  <section class="values">
+    <div class="value reveal"><div class="vmark">01</div><h3>Real pressed fruit</h3><p>Cold-pressed, never from concentrate.</p></div>
+    <div class="value reveal" style="transition-delay:.06s"><div class="vmark">02</div><h3>No sugar crash</h3><p>A whisper of cane sugar, that is all.</p></div>
+    <div class="value reveal" style="transition-delay:.12s"><div class="vmark">03</div><h3>40 calories</h3><p>Light enough to drink all afternoon.</p></div>
+    <div class="value reveal" style="transition-delay:.18s"><div class="vmark">04</div><h3>Lightly sparkling</h3><p>Soft bubbles, never sharp or fizzy-harsh.</p></div>
+  </section>
+
+  <!-- STICKY-STACKING FLAVOR CARDS (signature) -->
+  <section class="stack" id="flavours">
+    <article class="card" style="--c:var(--orange);--tx:#fff">
+      <div class="card-inner">
+        <div class="card-text">
+          <div class="idx">01 / 04</div>
+          <h2>Blood<br>Orange</h2>
+          <p class="note">Deep, bittersweet citrus with a peppery lift. The one everyone reaches for first.</p>
+          <button class="add">Add to pack +</button>
+        </div>
+        <div class="card-figure"><img src="assets/flavor-orange.jpg" alt="RIPE Blood Orange bottle on red." /></div>
+      </div>
+    </article>
+
+    <article class="card flip" style="--c:var(--yuzu);--tx:#1a1206">
+      <div class="card-inner">
+        <div class="card-text">
+          <div class="idx">02 / 04</div>
+          <h2>Yuzu<br>Ginger</h2>
+          <p class="note">Bright Japanese citrus with a warm ginger snap. Sharp, awake, a little spicy.</p>
+          <button class="add">Add to pack +</button>
+        </div>
+        <div class="card-figure"><img src="assets/flavor-yuzu.jpg" alt="RIPE Yuzu Ginger bottle on mustard." /></div>
+      </div>
+    </article>
+
+    <article class="card" style="--c:var(--berry);--tx:#fff">
+      <div class="card-inner">
+        <div class="card-text">
+          <div class="idx">03 / 04</div>
+          <h2>Wild<br>Berry</h2>
+          <p class="note">Blackberry and raspberry pressed dark and tart, with a clean mint finish.</p>
+          <button class="add">Add to pack +</button>
+        </div>
+        <div class="card-figure"><img src="assets/flavor-berry.jpg" alt="RIPE Wild Berry bottle on magenta." /></div>
+      </div>
+    </article>
+
+    <article class="card flip" style="--c:var(--lime);--tx:#fff">
+      <div class="card-inner">
+        <div class="card-text">
+          <div class="idx">04 / 04</div>
+          <h2>Lime<br>Basil</h2>
+          <p class="note">Cool lime cut with fresh garden basil. The crisp, grown-up one.</p>
+          <button class="add">Add to pack +</button>
+        </div>
+        <div class="card-figure"><img src="assets/flavor-lime.jpg" alt="RIPE Lime Basil bottle on green." /></div>
+      </div>
+    </article>
+  </section>
+
+  <div class="dots" id="dots">
+    <b data-i="0"></b><b data-i="1"></b><b data-i="2"></b><b data-i="3"></b>
+  </div>
+
+  <!-- POUR STRIP -->
+  <section class="strip">
+    <h2 class="reveal">You can almost <em>hear</em> the fizz.</h2>
+    <div class="rail">
+      <figure><img src="assets/pour.jpg" alt="A splash of blood-orange RIPE." /><figcaption>Blood Orange<small>Cold pressed, mid-pour</small></figcaption></figure>
+      <figure><img src="assets/flavor-lime.jpg" alt="Lime Basil." /><figcaption>Lime Basil<small>Lime, fresh basil</small></figcaption></figure>
+      <figure><img src="assets/flavor-berry.jpg" alt="Wild Berry." /><figcaption>Wild Berry<small>Blackberry, raspberry, mint</small></figcaption></figure>
+      <figure><img src="assets/flavor-yuzu.jpg" alt="Yuzu Ginger." /><figcaption>Yuzu Ginger<small>Yuzu, root ginger</small></figcaption></figure>
+      <figure><img src="assets/flavor-orange.jpg" alt="Blood Orange." /><figcaption>Blood Orange<small>Bittersweet citrus</small></figcaption></figure>
+    </div>
+  </section>
+
+  <!-- INGREDIENT BAND -->
+  <section class="made" id="made">
+    <div class="made-copy">
+      <h2 class="reveal">Pressed, never from <em>concentrate.</em></h2>
+      <p class="reveal" style="transition-delay:.06s">We press whole fruit in small runs, sparkle it gently, and sweeten with barely a touch of cane sugar. What you taste is the fruit, not the syrup.</p>
+      <p class="reveal" style="transition-delay:.12s">No artificial flavours, no preservatives, nothing you cannot pronounce. Just ripe fruit and soft bubbles.</p>
+    </div>
+    <div class="made-figure reveal"><img src="assets/pour.jpg" alt="A blood-orange slice caught in a splash of RIPE." /></div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="shop" id="shop">
+    <span class="kicker reveal">Build your pack</span>
+    <h2 class="reveal">Mix all <em>four.</em></h2>
+    <div class="price reveal" style="transition-delay:.06s">S$ 48</div>
+    <div class="pack reveal" style="transition-delay:.1s">12 bottles · choose your mix · 330ml each</div>
+    <button class="magnetic reveal" style="transition-delay:.14s">Build your pack</button>
+    <div class="reassure reveal" style="transition-delay:.2s">Free delivery over S$ 40. Shipped chilled within two days.</div>
+  </section>
+
+  <footer>
+    <div class="brand">RIPE<span>.</span></div>
+    <nav>
+      <a href="#flavours">Flavours</a>
+      <a href="#made">Story</a>
+      <a href="#shop">Shop</a>
+    </nav>
+    <div class="copy">© 2026 RIPE Drinks Co. · Pressed in Singapore</div>
+  </footer>
+
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) document.body.classList.add('reduce');
+
+  let lenis=null;
+  if(!reduce && window.Lenis){ lenis=new Lenis({lerp:0.1}); window.lenis=lenis; }
+
+  const header=document.getElementById('header');
+  const prog=document.getElementById('prog');
+  const heroImg=document.querySelector('.hero-img');
+  const blobs=Array.from(document.querySelectorAll('.blob'));
+  const stack=document.querySelector('.stack');
+  const cards=Array.from(document.querySelectorAll('.card'));
+  const dots=document.getElementById('dots');
+  const dotEls=Array.from(document.querySelectorAll('.dots b'));
+  const docEl=document.documentElement;
+
+  function update(){
+    const max=docEl.scrollHeight-docEl.clientHeight;
+    const sc=max>0?docEl.scrollTop/max:0;
+    prog.style.width=(sc*100).toFixed(2)+'%';
+    header.classList.toggle('solid',docEl.scrollTop>40);
+
+    if(reduce) return;
+
+    // hero parallax
+    if(heroImg && docEl.scrollTop<window.innerHeight){
+      heroImg.style.transform='translateY('+(docEl.scrollTop*0.08).toFixed(1)+'px)';
+    }
+
+    // sticky-stack active flavour + dots
+    if(stack){
+      const r=stack.getBoundingClientRect();
+      const inView = r.top < window.innerHeight*0.5 && r.bottom > window.innerHeight*0.5;
+      dots.classList.toggle('show', inView);
+      if(inView){
+        const total=r.height-window.innerHeight;
+        let p=total>0?(-r.top)/total:0;
+        p=Math.max(0,Math.min(0.9999,p));
+        const idx=Math.min(cards.length-1,Math.floor(p*cards.length));
+        dotEls.forEach((d,i)=>d.classList.toggle('on',i===idx));
+      }
+    }
+  }
+
+  function raf(t){ if(lenis) lenis.raf(t); update(); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  // mouse parallax on blobs (desktop)
+  if(!reduce && matchMedia('(hover:hover)').matches){
+    window.addEventListener('mousemove',e=>{
+      const mx=(e.clientX/window.innerWidth-0.5);
+      const my=(e.clientY/window.innerHeight-0.5);
+      blobs.forEach((b,i)=>{const f=(i+1)*10;b.style.transform='translate('+(mx*f).toFixed(1)+'px,'+(my*f).toFixed(1)+'px)';});
+    });
+  }
+
+  // smooth anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(!t) return; e.preventDefault();
+      if(lenis) lenis.scrollTo(t,{offset:-10}); else t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  // reveals
+  const io=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:0.16,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  requestAnimationFrame(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){
+      if(el.getBoundingClientRect().top < window.innerHeight*0.92){ el.classList.add('in'); io.unobserve(el); }
+    });
+  });
+
+  // magnetic CTA + click ring
+  const canHover=matchMedia('(hover:hover)').matches && !reduce;
+  document.querySelectorAll('.magnetic').forEach(btn=>{
+    if(canHover){
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        const dx=Math.max(-8,Math.min(8,(e.clientX-(r.left+r.width/2))*0.3));
+        const dy=Math.max(-8,Math.min(8,(e.clientY-(r.top+r.height/2))*0.4));
+        btn.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';
+      });
+      btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+    }
+    btn.addEventListener('click',()=>{const ring=document.createElement('span');ring.className='ring';btn.appendChild(ring);setTimeout(()=>ring.remove(),640);});
+  });
+})();
+</script>
+</body>
+</html>

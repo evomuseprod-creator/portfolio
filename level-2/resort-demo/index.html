@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumera — a private bay retreat</title>
+<!--
+  PACKAGE 2 (Level 2): it MOVES and RESPONDS, on AWARD-TIER composition (reads elevated even frozen).
+  REBUILD (2026-06-21) of the 1.5-graded version. Research: this folder's sibling notes + ai-os/rules/website-design.md.
+  Composition (the fix): TYPE-AS-HERO (oversized "Lumera" interacting with the image), asymmetric layered panels,
+  floating misaligned frame, edge tension, off-black on warm sand, ONE accent (bay sea-green) for interactive only.
+  Motion (restrained, a11y): Lenis smooth scroll, LOW-amplitude parallax (~6-12%), soft staggered scroll-reveals,
+  ONE signature pinned horizontal pavilions gallery (-> mobile swipe carousel + progress), subtle magnetic CTA.
+  prefers-reduced-motion collapses all of it. Real Gemini resort imagery. Zero em-dashes. Verified desktop + mobile.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand:#efe7d6;
+    --paper:#f7f1e6;
+    --ink:#211e18;
+    --muted:#6f6655;
+    --faint:#a99e88;
+    --line:#e0d6c2;
+    --accent:#2f6b63;
+    --accent-deep:#244f49;
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--sand);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 6vw}
+  .label{font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--accent)}
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:70}
+
+  .magnetic{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#f6f3ea;font-size:13px;
+    font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:16px 32px;border-radius:2px;
+    transition:transform .3s cubic-bezier(.2,.9,.3,1),background .3s,box-shadow .3s;will-change:transform}
+  .magnetic:hover{background:var(--accent-deep);box-shadow:0 22px 50px -22px rgba(36,79,73,.6)}
+  .ghost{display:inline-flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink);border:1px solid rgba(33,30,24,.24);padding:16px 28px;border-radius:2px;transition:background .3s,transform .3s}
+  .ghost:hover{background:rgba(33,30,24,.04);transform:translateY(-2px)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:24px 6vw;color:#f6f1e6;transition:background .4s,color .4s,padding .4s,box-shadow .4s}
+  nav .logo{font-family:var(--serif);font-size:25px;font-weight:600;letter-spacing:.2em;color:inherit}
+  nav .links{display:flex;align-items:center;gap:32px}
+  nav .links a{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:inherit;opacity:.9}
+  nav .links a:hover{opacity:1}
+  nav .navcta{border:1px solid rgba(246,241,230,.5);padding:11px 20px;border-radius:2px;opacity:1}
+  nav.scrolled{background:rgba(239,231,214,.9);backdrop-filter:blur(12px);color:var(--ink);padding-top:14px;padding-bottom:14px;box-shadow:0 1px 0 var(--line)}
+  nav.scrolled .navcta{border-color:rgba(33,30,24,.25)}
+
+  /* HERO — type-as-hero, asymmetric, layered */
+  .hero{min-height:100dvh;display:grid;grid-template-columns:1.18fr 1fr;gap:clamp(28px,4vw,60px);
+    align-items:center;padding:128px 6vw 56px;max-width:1380px;margin:0 auto;position:relative}
+  .hero .copy{position:relative;z-index:3}
+  .hero .label{margin-bottom:22px}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(78px,13vw,210px);line-height:.86;letter-spacing:.01em}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lead{margin-top:26px;font-size:clamp(16px,1.3vw,19px);color:var(--muted);max-width:40ch;line-height:1.7}
+  .hero .actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .figure{position:relative;height:clamp(440px,80vh,760px)}
+  .hero .figure .frame{position:absolute;inset:18px -22px -18px 18px;border:1px solid var(--accent);border-radius:3px;z-index:1}
+  .hero .figure .imgwrap{position:absolute;inset:0;overflow:hidden;border-radius:3px;z-index:2;box-shadow:0 50px 90px -52px rgba(40,40,30,.5)}
+  .hero .figure img{position:absolute;left:0;top:-8%;width:100%;height:116%;object-fit:cover;will-change:transform}
+  .hero .figure .chip{position:absolute;left:-26px;bottom:46px;z-index:3;background:var(--paper);border:1px solid var(--line);
+    border-radius:2px;padding:14px 18px;box-shadow:0 24px 50px -28px rgba(40,40,30,.5)}
+  .hero .figure .chip .k{font-family:var(--serif);font-size:24px;font-weight:500;line-height:1}
+  .hero .figure .chip .t{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+  /* STATEMENT */
+  .statement{padding:clamp(90px,14vw,180px) 0;background:var(--paper)}
+  .statement .grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(40px,6vw,100px);align-items:end}
+  .statement .big{font-family:var(--serif);font-size:clamp(32px,4.6vw,68px);line-height:1.12;font-weight:500;letter-spacing:-.005em}
+  .statement .big em{font-style:italic;color:var(--accent)}
+  .statement .aside{border-top:1px solid var(--line);padding-top:22px;max-width:38ch}
+  .statement .aside p{color:var(--muted);font-size:16px;line-height:1.8}
+  .statement .aside .small{margin-top:16px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+  /* PINNED HORIZONTAL pavilions */
+  .horiz{position:relative;height:340vh}
+  .horiz .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+  .horiz .ghead{padding:0 6vw 26px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+  .horiz .ghead h2{font-family:var(--serif);font-size:clamp(36px,5vw,68px);font-weight:500;line-height:1}
+  .horiz .ghead .meta{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:18px}
+  .horiz .ghead .dots{display:flex;gap:7px}
+  .horiz .ghead .dots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .3s,transform .3s}
+  .horiz .ghead .dots i.on{background:var(--accent);transform:scale(1.25)}
+  .htrack{display:flex;gap:26px;padding:0 6vw;will-change:transform}
+  .panel{position:relative;flex:0 0 58vw;height:64vh;border-radius:4px;overflow:hidden;box-shadow:0 50px 90px -44px rgba(40,40,30,.5)}
+  .panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.3s cubic-bezier(.16,1,.3,1)}
+  .panel:hover img{transform:scale(1.05)}
+  .panel .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:30px;color:#f6f1e6;
+    background:linear-gradient(0deg,rgba(20,22,18,.78),rgba(20,22,18,0))}
+  .panel .cap .n{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1}
+  .panel .cap p{font-size:14px;opacity:.92;margin-top:6px;max-width:34ch}
+
+  /* EXPERIENCE parallax band */
+  .exp{position:relative;height:100vh;min-height:560px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+  .exp .bg{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;z-index:0;will-change:transform}
+  .exp::after{content:"";position:absolute;inset:0;z-index:1;background:rgba(18,20,16,.46)}
+  .exp .inner{position:relative;z-index:2;color:#f6f1e6;padding:0 6vw;width:100%}
+  .exp h2{font-family:var(--serif);font-size:clamp(36px,5.6vw,84px);font-weight:500;line-height:1.04;max-width:16ch;margin:0 auto;width:100%}
+  .exp p{margin:18px auto 0;font-size:clamp(15px,1.2vw,18px);opacity:.92;max-width:42ch;width:100%}
+
+  /* RESERVE */
+  .reserve{padding:clamp(90px,14vw,180px) 0;text-align:center}
+  .reserve .label{justify-content:center;margin-bottom:24px}
+  .reserve h2{font-family:var(--serif);font-size:clamp(44px,7vw,118px);font-weight:500;line-height:.96;letter-spacing:-.01em;max-width:15ch;margin:0 auto}
+  .reserve h2 em{font-style:italic;color:var(--accent)}
+  .reserve .actions{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .reserve .meta{margin-top:30px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+  footer{border-top:1px solid var(--line);background:var(--paper)}
+  footer .grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:34px 0;font-size:13px;letter-spacing:.04em;color:var(--muted)}
+  footer .logo{font-family:var(--serif);font-size:19px;letter-spacing:.2em;color:var(--ink)}
+
+  /* scroll-reveal */
+  .rv{opacity:0;transform:translateY(24px);filter:blur(4px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .9s}
+  .rv.in{opacity:1;transform:none;filter:none}
+  .rv[data-d="1"]{transition-delay:.08s}.rv[data-d="2"]{transition-delay:.16s}.rv[data-d="3"]{transition-delay:.24s}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;min-height:auto;gap:30px;padding-top:120px}
+    .hero h1{font-size:clamp(72px,22vw,150px)}
+    .hero .figure{height:60vh;order:2}
+    .hero .figure .frame{inset:14px -14px -14px 14px}
+    .hero .figure .chip{left:0}
+    .statement .grid{grid-template-columns:1fr;gap:30px}
+    .horiz{height:auto}
+    .horiz .sticky{position:static;height:auto;overflow:visible;padding:80px 0}
+    .horiz .ghead{flex-direction:column;align-items:flex-start;gap:8px}
+    .horiz .ghead .dots{display:none}
+    .htrack{transform:none!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:0 20px 12px;-webkit-overflow-scrolling:touch}
+    .panel{flex:0 0 84vw;height:60vh;scroll-snap-align:center}
+  }
+  @media (max-width:560px){ nav .links a:not(.navcta){display:none} }
+  @media (prefers-reduced-motion:reduce){
+    .rv{opacity:1;transform:none;filter:none}
+    .hero .figure img,.exp .bg{top:0;height:100%}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<nav id="nav">
+  <div class="logo">LUMERA</div>
+  <div class="links">
+    <a href="#pavilions">Pavilions</a>
+    <a href="#bay">The bay</a>
+    <a href="#reserve">Reserve</a>
+    <a href="#reserve" class="navcta">Check availability</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="copy">
+    <div class="label rv">A private bay &middot; Bintan</div>
+    <h1 class="rv" data-d="1">Lu<em>me</em>ra</h1>
+    <p class="lead rv" data-d="2">Eleven timber pavilions on a quiet bay, an infinity pool that meets the sea, and nothing on the schedule but the tide.</p>
+    <div class="actions rv" data-d="3">
+      <a href="#reserve" class="magnetic">Reserve a stay</a>
+      <a href="#pavilions" class="ghost">See the pavilions</a>
+    </div>
+  </div>
+  <div class="figure rv" data-d="2">
+    <div class="frame"></div>
+    <div class="imgwrap"><img data-parallax="0.08" src="assets/resort-hero-1.jpg" alt="A timber resort villa above an infinity pool at sunset, the bay and islands beyond"></div>
+    <div class="chip"><div class="k">11</div><div class="t">pavilions, no two alike</div></div>
+  </div>
+</header>
+
+<section class="statement">
+  <div class="wrap">
+    <div class="grid">
+      <p class="big rv">Some places you visit. Lumera is one you <em>exhale</em> into, and forget what day it is.</p>
+      <div class="aside rv" data-d="1">
+        <p>Eleven timber pavilions on a single quiet bay. No crowds, no clocks, and no two days the same.</p>
+        <div class="small">Teluk Sebong &middot; Bintan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="horiz" id="pavilions">
+  <div class="sticky">
+    <div class="ghead">
+      <h2 class="rv">The pavilions</h2>
+      <div class="meta">
+        <span class="rv" data-d="1">Eleven, no two alike</span>
+        <span class="dots" id="dots"><i class="on"></i><i></i><i></i></span>
+      </div>
+    </div>
+    <div class="htrack" id="htrack">
+      <div class="panel">
+        <img src="assets/resort-suite-1.jpg" alt="The Ocean Pavilion: a timber suite opening to a balcony and the sea at dusk">
+        <div class="cap"><div class="n">Ocean Pavilion</div><p>A low timber bed, a private deck, and the sea filling every window.</p></div>
+      </div>
+      <div class="panel">
+        <img src="assets/resort-suite-2.jpg" alt="The Garden Suite: a warm-lit room among the palms">
+        <div class="cap"><div class="n">Garden Suite</div><p>Tucked into the palms, warm and quiet, a step from the spring-fed pool.</p></div>
+      </div>
+      <div class="panel">
+        <img src="assets/resort-hero-2.jpg" alt="The Pool Villa: a private infinity edge over the bay at golden hour">
+        <div class="cap"><div class="n">Pool Villa</div><p>Your own infinity edge over the bay, best at the hour the sky turns.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="exp" id="bay">
+  <img class="bg" data-parallax="0.1" src="assets/resort-hero-2.jpg" alt="Golden hour over the resort and the bay">
+  <div class="inner">
+    <h2 class="rv">The bay does the rest.</h2>
+    <p class="rv" data-d="1">Wake to flat water. Swim before breakfast. Let the afternoon go long. Dinner arrives as the sky turns gold.</p>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <div class="wrap">
+    <div class="label rv">Reserve</div>
+    <h2 class="rv" data-d="1">Come for three nights. <em>Stay</em> for the quiet.</h2>
+    <div class="actions rv" data-d="2">
+      <a href="mailto:stay@lumera.bay" class="magnetic">Check availability</a>
+      <a href="tel:+6280000000" class="ghost">Speak with us</a>
+    </div>
+    <div class="meta rv" data-d="2">Lumera &middot; Teluk Sebong, Bintan &middot; Open year round</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap grid">
+    <span class="logo">LUMERA</span>
+    <span>A private bay retreat &middot; Bintan, Indonesia</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  // smooth inertial scroll (restrained)
+  let lenis = null;
+  if (!reduce && window.Lenis) {
+    lenis = new Lenis({ lerp:0.1 });
+    const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+  }
+
+  // bulletproof scroll-reveal (IO + scroll sweep + timer; content can never stay hidden)
+  const rvs = [...document.querySelectorAll('.rv')];
+  const show = el => el.classList.add('in');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es,o)=>es.forEach(e=>{ if(e.isIntersecting){ show(e.target); o.unobserve(e.target);} }), { threshold:0, rootMargin:'0px 0px -10% 0px' });
+    rvs.forEach(el=>io.observe(el));
+    const sweep = () => { const vh=innerHeight; rvs.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<vh*0.92 && r.bottom>0) show(el); }); };
+    addEventListener('scroll', sweep, { passive:true });
+    setTimeout(sweep, 220);
+  } else { rvs.forEach(show); }
+
+  // parallax + pinned horizontal + progress + dots
+  const parallaxEls = [...document.querySelectorAll('[data-parallax]')];
+  const navEl = document.getElementById('nav');
+  const horiz = document.querySelector('.horiz');
+  const track = document.getElementById('htrack');
+  const progress = document.getElementById('progress');
+  const dots = [...document.querySelectorAll('#dots i')];
+  function frame(){
+    const vh = innerHeight;
+    if(navEl){ navEl.classList.toggle('scrolled', scrollY > vh*0.82); }
+    if(!reduce){
+      for(const el of parallaxEls){
+        const r = el.getBoundingClientRect();
+        if(r.bottom < -vh || r.top > vh*2) continue;
+        const off = (r.top + r.height/2) - vh/2;
+        const sp = parseFloat(el.dataset.parallax) || 0.08;
+        el.style.transform = `translate3d(0, ${(-off*sp).toFixed(1)}px, 0)`;
+      }
+    }
+    if(track && horiz){
+      if(innerWidth > 900 && !reduce){
+        const r = horiz.getBoundingClientRect();
+        const dist = horiz.offsetHeight - vh;
+        const p = Math.min(Math.max(-r.top / dist, 0), 1);
+        const max = track.scrollWidth - innerWidth;
+        track.style.transform = `translate3d(${(-(p*max)).toFixed(1)}px,0,0)`;
+        const active = Math.round(p*(dots.length-1));
+        dots.forEach((d,i)=>d.classList.toggle('on', i===active));
+      } else { track.style.transform = ''; }
+    }
+    const max = document.body.scrollHeight - vh;
+    progress.style.width = (max>0 ? (scrollY/max)*100 : 0) + '%';
+  }
+  if(lenis) lenis.on('scroll', frame);
+  addEventListener('scroll', frame, { passive:true });
+  addEventListener('resize', frame);
+  frame();
+
+  // magnetic CTA (desktop hover only, not reduced-motion)
+  if (matchMedia('(hover:hover)').matches && !reduce) {
+    document.querySelectorAll('.magnetic').forEach(btn=>{
+      btn.addEventListener('mousemove', e=>{
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - (r.left + r.width/2);
+        const y = e.clientY - (r.top + r.height/2);
+        btn.style.transform = `translate(${(x*0.25).toFixed(1)}px, ${(y*0.35).toFixed(1)}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>{ btn.style.transform = ''; });
+    });
+  }
+</script>
+</body>
+</html>

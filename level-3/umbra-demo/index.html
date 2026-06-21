@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UMBRA — born of dark</title>
+<!--
+  LEVEL 3 (Package 3, immersive showpiece). Story brief: ./STORY-BRIEF.md
+  THE STORY: scroll the UMBRA out of a black void as one hard light rakes across it, revealing every
+  line, until it ignites and launches into light. The scroll IS the reveal (hook -> tension -> reveal
+  -> payoff). One continuous black world; cinematic Veo film scrubbed by scroll (Apple-style), not
+  stacked sections. Art direction: car as gallery sculpture, not a road ad (the named "stock ad" trap).
+  ENGINE: Lenis smooth scroll + hand-rolled scroll handler (matches the repo's motion stack, no GSAP).
+  A pinned 100vh stage holds the film; scroll progress drives video.currentTime (lerped) so the frame is
+  ALWAYS moving = zero dead air (rule #23). Type beats fade in/out across the same scroll.
+  A11y: prefers-reduced-motion -> film autoplays muted loop, beats shown static, no scrub. Coarse/mobile
+  -> film autoplays loop (no currentTime scrub, iOS-safe), beats still fade. One accent (electric cyan).
+  Zero em-dashes. Real Veo footage in ./assets/. Page renders gracefully before footage (animated fallback).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050608;
+    --bg-2:#0a0c10;
+    --ink:#eef2f6;
+    --muted:#828c98;
+    --faint:#3b424c;
+    --line:rgba(255,255,255,.10);
+    --line-2:rgba(255,255,255,.06);
+    --accent:#36cdee;
+    --accent-deep:#13a6c9;
+    --glow:rgba(54,205,238,.5);
+    --disp:"Space Grotesk",system-ui,sans-serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:auto}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden}
+  img,video{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#03252c}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 6vw}
+  .label{font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--accent)}
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);box-shadow:0 0 16px var(--glow);z-index:90}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;
+    padding:26px 6vw;transition:padding .4s,background .4s,box-shadow .4s,backdrop-filter .4s}
+  nav.scrolled{padding:16px 6vw;background:rgba(5,6,8,.66);backdrop-filter:blur(14px) saturate(1.1);box-shadow:0 1px 0 var(--line-2)}
+  nav .logo{font-family:var(--disp);font-size:20px;font-weight:600;letter-spacing:.42em;padding-left:.42em}
+  nav .links{display:flex;align-items:center;gap:34px}
+  nav .links a{font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);transition:color .3s}
+  nav .links a:hover{color:var(--ink)}
+  nav .navcta{color:var(--ink);border:1px solid var(--line);padding:11px 20px;border-radius:2px;transition:border-color .3s,background .3s}
+  nav .navcta:hover{border-color:var(--accent);background:rgba(54,205,238,.08)}
+
+  /* INTRO veil */
+  .veil{position:fixed;inset:0;z-index:85;background:var(--bg);display:flex;align-items:center;justify-content:center;
+    transition:opacity 1s ease,visibility 1s}
+  .veil.gone{opacity:0;visibility:hidden}
+  .veil .mark{font-family:var(--disp);font-weight:600;font-size:clamp(40px,9vw,120px);letter-spacing:.5em;padding-left:.5em;
+    color:transparent;-webkit-text-stroke:1px rgba(238,242,246,.5);position:relative;overflow:hidden}
+  .veil .mark span{position:absolute;inset:0;color:var(--ink);-webkit-text-stroke:0;
+    clip-path:inset(0 100% 0 0);animation:fill 1.6s .25s cubic-bezier(.7,0,.2,1) forwards}
+  @keyframes fill{to{clip-path:inset(0 0 0 0)}}
+
+  /* FILM (the pinned scrub hero) */
+  .film{position:relative;height:560vh}
+  .stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:#000}
+  .film-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+  .stage.has-video .film-vid{opacity:1}
+  /* animated light-sweep fallback (also ambient before footage) */
+  .stage-fallback{position:absolute;inset:0;background:
+     radial-gradient(120% 80% at 18% 42%,rgba(54,205,238,.10),transparent 55%),
+     radial-gradient(60% 60% at 80% 60%,rgba(255,255,255,.05),transparent 60%),#04060a;
+     overflow:hidden}
+  .stage-fallback::before{content:"";position:absolute;top:-20%;left:-30%;width:60%;height:140%;
+     background:linear-gradient(100deg,transparent,rgba(255,255,255,.10),transparent);
+     filter:blur(14px);animation:sweep 7s ease-in-out infinite}
+  .stage-fallback::after{content:"";position:absolute;inset:0;
+     background:radial-gradient(80% 120% at 50% 120%,rgba(54,205,238,.12),transparent 60%)}
+  @keyframes sweep{0%{transform:translateX(-30%) skewX(-12deg)}50%{transform:translateX(180%) skewX(-12deg)}100%{transform:translateX(180%) skewX(-12deg)}}
+  .stage.has-video .stage-fallback{opacity:0;transition:opacity 1.2s ease}
+  .vignette{position:absolute;inset:0;pointer-events:none;
+     background:radial-gradient(120% 100% at 50% 38%,transparent 42%,rgba(0,0,0,.55) 100%),
+     linear-gradient(180deg,rgba(0,0,0,.45),transparent 22%,transparent 72%,rgba(5,6,8,.9))}
+  .grain{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .emerge{position:absolute;inset:0;z-index:3;background:radial-gradient(120% 90% at 62% 52%,rgba(0,0,0,.35),#000 72%);opacity:.72;pointer-events:none}
+
+  /* BEATS over the film */
+  .beats{position:absolute;inset:0;z-index:4;pointer-events:none}
+  .beat{position:absolute;left:0;right:0;padding:0 7vw;will-change:opacity,transform}
+  .beat.bl{bottom:13vh}
+  .beat.cl{top:50%;transform:translateY(-50%)}
+  .beat .eyebrow{margin-bottom:18px}
+  .beat h1{font-family:var(--disp);font-weight:600;font-size:clamp(54px,11vw,168px);line-height:.92;letter-spacing:-.02em}
+  .beat h2{font-family:var(--disp);font-weight:500;font-size:clamp(34px,6.4vw,92px);line-height:1.0;letter-spacing:-.01em;max-width:16ch}
+  .beat .sub{margin-top:22px;font-size:clamp(15px,1.35vw,19px);color:var(--muted);max-width:40ch;line-height:1.7}
+  .beat .em{color:var(--ink)}
+  .beat .stat{margin-top:30px;display:flex;gap:42px;flex-wrap:wrap}
+  .beat .stat .v{font-family:var(--disp);font-weight:600;font-size:clamp(28px,3.4vw,46px);line-height:1;letter-spacing:-.01em}
+  .beat .stat .k{margin-top:7px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .beat .cta-row{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;pointer-events:auto}
+
+  .btn{display:inline-flex;align-items:center;gap:11px;background:var(--accent);color:#03252c;font-weight:600;font-size:13px;
+    letter-spacing:.06em;text-transform:uppercase;padding:16px 30px;border-radius:2px;
+    transition:transform .35s cubic-bezier(.2,.9,.3,1),box-shadow .35s,background .35s;will-change:transform}
+  .btn:hover{background:#5ad8f4;box-shadow:0 20px 50px -18px var(--glow);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);background:rgba(54,205,238,.08);box-shadow:none}
+
+  .scrollcue{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:5;
+    font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;
+    align-items:center;gap:12px;transition:opacity .6s}
+  .scrollcue i{width:1px;height:46px;background:linear-gradient(var(--accent),transparent);animation:cue 2.2s ease-in-out infinite}
+  @keyframes cue{0%,100%{transform:scaleY(.4);opacity:.5;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
+
+  /* SPEC section */
+  .spec{position:relative;padding:clamp(110px,17vw,220px) 0;background:linear-gradient(180deg,var(--bg),var(--bg-2))}
+  .spec .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(40px,6vw,96px);align-items:end}
+  .spec .big{font-family:var(--disp);font-weight:500;font-size:clamp(32px,4.7vw,68px);line-height:1.1;letter-spacing:-.01em}
+  .spec .big em{font-style:normal;color:var(--accent)}
+  .spec .aside{border-top:1px solid var(--line);padding-top:22px;max-width:40ch}
+  .spec .aside p{color:var(--muted);font-size:16px;line-height:1.85}
+  .spec .aside .small{margin-top:16px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+  /* NUMBERS band */
+  .numbers{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);background:var(--bg-2)}
+  .numbers .row{display:grid;grid-template-columns:repeat(4,1fr)}
+  .numbers .cell{padding:clamp(40px,6vw,84px) 5vw;border-left:1px solid var(--line-2)}
+  .numbers .cell:first-child{border-left:none}
+  .numbers .v{font-family:var(--disp);font-weight:600;font-size:clamp(40px,5.4vw,76px);line-height:1;letter-spacing:-.02em}
+  .numbers .v small{font-size:.42em;color:var(--muted);font-weight:500;margin-left:6px;letter-spacing:0}
+  .numbers .k{margin-top:14px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+  /* RESERVE */
+  .reserve{position:relative;padding:clamp(120px,18vw,240px) 0;text-align:center;overflow:hidden}
+  .reserve::before{content:"";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:80vw;height:80vw;
+    max-width:900px;max-height:900px;background:radial-gradient(circle,rgba(54,205,238,.13),transparent 62%);pointer-events:none}
+  .reserve .inner{position:relative;z-index:2}
+  .reserve .label{display:inline-block;margin-bottom:26px}
+  .reserve h2{font-family:var(--disp);font-weight:600;font-size:clamp(50px,9.5vw,150px);line-height:.92;letter-spacing:-.025em}
+  .reserve .sub{margin:24px auto 0;font-size:clamp(15px,1.3vw,18px);color:var(--muted);max-width:44ch}
+  .reserve .cta-row{margin-top:40px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .reserve .fine{margin-top:30px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line-2);padding:50px 6vw;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  footer .logo{font-family:var(--disp);font-weight:600;letter-spacing:.42em;padding-left:.42em}
+  footer .fnote{font-size:12px;color:var(--faint);max-width:52ch;line-height:1.7}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:860px){
+    nav .links a:not(.navcta){display:none}
+    .film{height:380vh}
+    .spec .grid{grid-template-columns:1fr;gap:30px}
+    .numbers .row{grid-template-columns:repeat(2,1fr)}
+    .numbers .cell:nth-child(3){border-left:none}
+    .numbers .cell:nth-child(n+3){border-top:1px solid var(--line-2)}
+    .beat.bl{bottom:11vh}
+    .beat .stat{gap:26px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .film{height:auto}
+    .stage{position:relative;height:86vh}
+    .beat{position:absolute}
+    .stage-fallback::before{animation:none}
+    .scrollcue i{animation:none}
+    .veil{display:none}
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+  body.reduce .film{height:auto}
+  body.reduce .stage{position:relative;height:86vh}
+</style>
+</head>
+<body>
+<div class="progress"></div>
+
+<div class="veil"><div class="mark">UMBRA<span>UMBRA</span></div></div>
+
+<nav>
+  <div class="logo">UMBRA</div>
+  <div class="links">
+    <a href="#film">The Car</a>
+    <a href="#spec">Performance</a>
+    <a href="#reserve">Design</a>
+    <a class="navcta" href="#reserve">Reserve</a>
+  </div>
+</nav>
+
+<!-- FILM: pinned, scroll-scrubbed -->
+<section class="film" id="film">
+  <div class="stage">
+    <video class="film-vid" id="filmVid" muted playsinline preload="auto" poster="assets/umbra-poster.jpg">
+      <source src="assets/umbra-film.mp4" type="video/mp4">
+    </video>
+    <div class="stage-fallback"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="emerge"></div>
+
+    <div class="beats">
+      <div class="beat cl" data-in="0" data-out="0.17">
+        <div class="label eyebrow">UMBRA &middot; GT Electric</div>
+        <h1>Born of<br>dark.</h1>
+        <p class="sub">An electric grand tourer shaped by the absence of light. Begin in the void.</p>
+      </div>
+      <div class="beat bl" data-in="0.22" data-out="0.47">
+        <h2>Every line<br>earns its <span class="em">shadow.</span></h2>
+        <p class="sub">No badge. No noise. Only the form, drawn out of black by a single light.</p>
+      </div>
+      <div class="beat bl" data-in="0.53" data-out="0.76">
+        <h2>Silence,<br>then <span class="em">force.</span></h2>
+        <div class="stat">
+          <div><div class="v">2.1s</div><div class="k">0 to 100</div></div>
+          <div><div class="v">1,020</div><div class="k">Horsepower</div></div>
+          <div><div class="v">0 dB</div><div class="k">Engine note</div></div>
+        </div>
+      </div>
+      <div class="beat cl" data-in="0.84" data-out="1.0">
+        <div class="label eyebrow">The reveal</div>
+        <h1>Step into<br>the dark.</h1>
+        <div class="cta-row">
+          <a class="btn" href="#reserve">Reserve UMBRA</a>
+          <a class="btn ghost" href="#spec">See the numbers</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="scrollcue">Scroll<i></i></div>
+  </div>
+</section>
+
+<!-- SPEC -->
+<section class="spec" id="spec">
+  <div class="wrap">
+    <div class="grid">
+      <div class="big reveal">A grand tourer that <em>disappears</em> until the moment you ask it not to. Carbon monocoque, three motors, one intention.</div>
+      <div class="aside reveal">
+        <p>UMBRA is built around the driver and nothing else. The silhouette is sculpted in a wind tunnel of pure shadow, every surface tuned to catch a single line of light.</p>
+        <div class="small">Hand assembled in 99 examples</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="numbers">
+  <div class="row">
+    <div class="cell reveal"><div class="v">2.1<small>s</small></div><div class="k">0 to 100 km/h</div></div>
+    <div class="cell reveal"><div class="v">1,020<small>hp</small></div><div class="k">Tri-motor output</div></div>
+    <div class="cell reveal"><div class="v">640<small>km</small></div><div class="k">Range</div></div>
+    <div class="cell reveal"><div class="v">350<small>km/h</small></div><div class="k">Top speed</div></div>
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve">
+  <div class="inner">
+    <div class="label">Reservations open</div>
+    <h2>Reserve UMBRA</h2>
+    <p class="sub">Ninety nine cars. A single deposit holds your place in the dark. Deliveries begin 2026.</p>
+    <div class="cta-row">
+      <a class="btn" href="#reserve">Reserve now</a>
+      <a class="btn ghost" href="#spec">Request a viewing</a>
+    </div>
+    <div class="fine">Hand assembled &middot; 99 cars &middot; 2026</div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">UMBRA</div>
+  <div class="fnote">UMBRA is a fictional marque created as an immersive design showpiece. Cinematic footage generated for demonstration. No vehicle is offered for sale.</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const coarse = matchMedia('(max-width:760px), (pointer:coarse)').matches;
+  if(reduce) document.body.classList.add('reduce');
+
+  const film = document.getElementById('film');
+  const stage = document.querySelector('.stage');
+  const vid = document.getElementById('filmVid');
+  const beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+  const cue = document.querySelector('.scrollcue');
+  const bar = document.querySelector('.progress');
+  const emerge = document.querySelector('.emerge');
+  const revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  function revealCheck(){
+    for(let n=0;n<revealEls.length;n++){
+      const el=revealEls[n];
+      if(!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight*0.86) el.classList.add('in');
+    }
+  }
+  const nav = document.querySelector('nav');
+  const veil = document.querySelector('.veil');
+
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+
+  // ----- veil out -----
+  window.addEventListener('load',()=>{ setTimeout(()=>veil&&veil.classList.add('gone'),1700); });
+  setTimeout(()=>veil&&veil.classList.add('gone'),2600); // safety
+
+  // ----- video setup -----
+  let dur=0, hasVid=false, scrub=false, targetT=0, curT=0;
+  if(vid){
+    vid.addEventListener('loadedmetadata',()=>{
+      dur=vid.duration||0; hasVid=dur>0;
+      if(hasVid){ stage.classList.add('has-video'); }
+      scrub = hasVid && !reduce && !coarse;
+      if(hasVid && !scrub){ vid.loop=true; vid.muted=true; const p=vid.play(); if(p&&p.catch)p.catch(()=>{}); }
+      else if(scrub){ vid.pause(); }
+    });
+    vid.addEventListener('error',()=>{ hasVid=false; scrub=false; });
+  }
+
+  // ----- beats -----
+  function applyBeats(p){
+    for(let n=0;n<beats.length;n++){
+      const b=beats[n];
+      const i=parseFloat(b.dataset.in), o=parseFloat(b.dataset.out);
+      let a=0;
+      if(p>=i && p<=o){
+        const local=(p-i)/((o-i)||1);
+        const fin = i<=0.001 ? 1 : clamp(local/0.20,0,1);   // first beat shows on load
+        const fout = o>=0.999 ? 1 : clamp((1-local)/0.20,0,1); // last beat holds at the end
+        a=Math.min(fin,fout);
+      }
+      b.style.opacity=a.toFixed(3);
+      const baseY = b.classList.contains('cl') ? -50 : 0;
+      b.style.transform = 'translate3d(0,'+ (baseY + (1-a)*26).toFixed(1) +'px,0)'
+                        + (b.classList.contains('cl') ? '' : '');
+      // keep centered beats vertically centered via translateY(-50%) handled here:
+      if(b.classList.contains('cl')) b.style.transform='translate3d(0,'+(-50)+'%,0) translateY('+((1-a)*22).toFixed(1)+'px)';
+    }
+  }
+
+  function sectionProgress(){
+    if(reduce) return 0;
+    const rect=film.getBoundingClientRect();
+    const total=film.offsetHeight-window.innerHeight;
+    return total>0 ? clamp(-rect.top/total,0,1) : 0;
+  }
+
+  function frame(){
+    const p=sectionProgress();
+    applyBeats(p);
+    if(bar) bar.style.width=(p*100).toFixed(2)+'%';
+    if(cue) cue.style.opacity = p>0.015 ? 0 : 0.75;
+    if(emerge) emerge.style.opacity = (reduce||coarse) ? '0' : (clamp(1-p/0.30,0,1)*0.72).toFixed(3);
+    if(scrub) targetT=p*dur;
+    if(nav) nav.classList.toggle('scrolled', window.scrollY>40);
+    revealCheck();
+  }
+
+  // smooth currentTime toward target
+  function tick(){
+    if(scrub){
+      curT += (targetT-curT)*0.16;
+      if(Math.abs(targetT-curT)>0.002){ try{ vid.currentTime=curT; }catch(e){} }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // ----- Lenis (repo stack) -----
+  let lenis=null;
+  if(!reduce && window.Lenis){
+    lenis=new Lenis({lerp:0.1});
+    const raf=t=>{lenis.raf(t);requestAnimationFrame(raf);};
+    requestAnimationFrame(raf);
+    lenis.on('scroll',frame);
+  }
+  window.addEventListener('scroll',frame,{passive:true});
+  window.addEventListener('resize',frame);
+  frame();
+
+  // ----- scroll reveals (driven by frame()/revealCheck, bulletproof with Lenis) -----
+  revealCheck();
+
+  // ----- magnetic buttons (pointer only) -----
+  if(matchMedia('(hover:hover)').matches && !reduce){
+    document.querySelectorAll('.btn').forEach(btn=>{
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        btn.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.18).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*0.3-2).toFixed(1)+'px)';
+      });
+      btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+    });
+  }
+
+  // verification hook: deterministically drive the scrub to a scroll fraction (harmless in prod)
+  window.__seek=function(p){
+    p=Math.max(0,Math.min(1,p));
+    const total=film.offsetHeight-window.innerHeight;
+    const y=film.offsetTop + p*total;
+    if(lenis) lenis.scrollTo(y,{immediate:true}); else window.scrollTo(0,y);
+    if(scrub && hasVid){ targetT=p*dur; curT=p*dur; try{vid.currentTime=curT;}catch(e){} }
+    frame();
+    return {p:p, scrollY:Math.round(window.scrollY), t:(scrub&&hasVid)?+curT.toFixed(2):null};
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folklore Coffee — roasted while the city sleeps</title>
+<!--
+  STORY BRIEF (PART 0, ai-os/rules/website-design.md) — the redo, real footage not an effect.
+  TRUTH (swap-the-logo-proof): Folklore roasts by hand in Tiong Bahru while the city sleeps, so your
+    morning is worth waking for. A rival roaster could not reuse this exact line.
+  ARC: HOOK the lone roaster at dawn -> TENSION+REVEAL the hand-roast craft (roasted the night before,
+    not months ago an ocean away) -> the green-to-dark roast -> Nocturne revealed -> your morning + order.
+  EVERY BEAT SHOWS A REAL THING: real documentary photography (Gemini), never an abstract sculpture.
+  LEVEL: ~8 — a premium cinematic photo-story. It means something.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --amber:#e8a44a;
+    --bone:#efe7d8;
+    --dim:#9b9384;
+    --ink:#0a0807;
+    --r-pill:999px;
+    --r-card:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:auto}
+  body{background:var(--ink);color:var(--bone);font-family:"Space Grotesk",system-ui,sans-serif;overflow-x:hidden}
+  ::selection{background:var(--amber);color:#1a1206}
+  img{display:block}
+
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--amber);width:0;z-index:50;box-shadow:0 0 12px var(--amber)}
+
+  /* fixed minimal chrome */
+  .brand{position:fixed;top:26px;left:34px;z-index:40;font-family:"Clash Display",sans-serif;font-weight:700;font-size:20px;letter-spacing:.04em;display:flex;align-items:center;gap:10px;mix-blend-mode:difference;color:#fff}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--amber)}
+  .nav-cta{position:fixed;top:22px;right:30px;z-index:40;font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:13px;letter-spacing:.02em;color:#1a1206;background:var(--bone);border-radius:var(--r-pill);padding:10px 20px;text-decoration:none;transition:transform .3s cubic-bezier(.16,1,.3,1),background .3s}
+  .nav-cta:hover{transform:translateY(-2px);background:var(--amber)}
+
+  /* cinematic full-bleed beats */
+  .beat{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;display:flex}
+  .beat .bg{position:absolute;left:0;top:-7%;width:100%;height:114%;object-fit:cover;will-change:transform;z-index:0}
+  .beat .scrim{position:absolute;inset:0;z-index:1}
+  .beat .content{position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto;padding:0 7vw;display:flex;flex-direction:column;justify-content:center}
+
+  /* scrims tuned per anchor so text always holds (bottom-left default) */
+  .scrim-bl{background:linear-gradient(90deg, rgba(8,6,5,.82) 0%, rgba(8,6,5,.5) 38%, rgba(8,6,5,0) 70%),linear-gradient(0deg, rgba(8,6,5,.7) 0%, rgba(8,6,5,0) 45%)}
+  .scrim-b{background:linear-gradient(0deg, rgba(8,6,5,.86) 4%, rgba(8,6,5,.2) 46%, rgba(8,6,5,.45) 100%)}
+  .scrim-l{background:linear-gradient(90deg, rgba(8,6,5,.86) 0%, rgba(8,6,5,.45) 42%, rgba(8,6,5,0) 72%)}
+  .scrim-tl{background:linear-gradient(180deg, rgba(8,6,5,.84) 0%, rgba(8,6,5,.28) 42%, rgba(8,6,5,0) 72%),linear-gradient(90deg, rgba(8,6,5,.6) 0%, rgba(8,6,5,0) 60%)}
+
+  .eyebrow{font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);margin-bottom:24px}
+  h1{font-family:"Clash Display",sans-serif;font-weight:600;font-size:clamp(46px,7.4vw,116px);line-height:.96;letter-spacing:-.03em;max-width:15ch;text-shadow:0 8px 50px rgba(0,0,0,.55)}
+  h2{font-family:"Clash Display",sans-serif;font-weight:600;font-size:clamp(34px,5vw,76px);line-height:1.0;letter-spacing:-.025em;max-width:16ch;text-shadow:0 6px 40px rgba(0,0,0,.6)}
+  .accent{color:var(--amber)}
+  p.lead{margin-top:26px;font-size:clamp(16px,1.45vw,20px);line-height:1.62;color:#e4ddcf;max-width:48ch;text-shadow:0 2px 20px rgba(0,0,0,.7)}
+  .content.end{align-items:flex-start}
+
+  /* tasting notes on the blend beat */
+  .tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;max-width:46ch}
+  .tag{font-size:12px;letter-spacing:.04em;border:1px solid rgba(239,231,216,.26);border-radius:var(--r-pill);padding:9px 16px;color:#e4ddcf;backdrop-filter:blur(3px)}
+
+  .cta{display:inline-flex;align-items:center;gap:10px;margin-top:38px;font-family:"Clash Display",sans-serif;font-weight:600;font-size:15px;background:var(--amber);color:#1a1206;border:none;border-radius:var(--r-pill);padding:15px 30px;cursor:pointer;text-decoration:none;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+  .cta:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(232,164,74,.34)}
+  .meta{margin-top:46px;font-size:12px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+
+  /* scroll reveal */
+  .rv{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+  .rv.in{opacity:1;transform:none}
+  .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
+  /* a small step counter for the craft beats (story wayfinding, not a scroll cue) */
+  .step{position:absolute;right:7vw;bottom:8vh;z-index:2;font-family:"Clash Display",sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;color:rgba(239,231,216,.5)}
+  .step b{color:var(--amber)}
+
+  @media (max-width:760px){
+    .beat .content{padding:0 26px}
+    .scrim-bl,.scrim-l{background:linear-gradient(0deg, rgba(8,6,5,.9) 6%, rgba(8,6,5,.25) 52%, rgba(8,6,5,.5) 100%)}
+    .nav-cta{display:none}
+    h1{font-size:clamp(40px,11vw,64px)}
+    .step{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .rv{opacity:1;transform:none}
+    .beat .bg{top:0;height:100%}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="brand"><span class="dot"></span>FOLKLORE</div>
+<a href="#shop" class="nav-cta">Shop the roast</a>
+
+<main>
+  <!-- BEAT 1 — HOOK: the lone roaster at dawn -->
+  <section class="beat">
+    <img class="bg" src="assets/roaster-2.jpg" alt="A roaster pouring green coffee beans into a drum roaster before dawn, light through an arched window">
+    <div class="scrim scrim-bl"></div>
+    <div class="content">
+      <div class="eyebrow rv">Folklore Coffee · Tiong Bahru, Singapore</div>
+      <h1 class="rv d1">Roasted while<br>the city <span class="accent">sleeps.</span></h1>
+      <p class="lead rv d2">Before dawn, while the street is still dark and quiet, the fire is already lit. Small-batch coffee, roasted by hand the night before you ever drink it.</p>
+    </div>
+  </section>
+
+  <!-- BEAT 2 — THE CRAFT (tension + reveal): hand-roasted, fresh, not months old -->
+  <section class="beat">
+    <img class="bg" src="assets/roaster-1.jpg" alt="A roaster tipping a sack of green beans into a glowing PROBAT drum roaster, shaft of light, sacks of single-origin coffee">
+    <div class="scrim scrim-bl"></div>
+    <div class="content">
+      <h2 class="rv">Twelve kilos.<br>By hand. <span class="accent">By fire.</span></h2>
+      <p class="lead rv d1">Most coffee is roasted months ago, an ocean away, by no one in particular. Ours is roasted twelve kilos at a time, by one person who listens for the first crack and knows exactly when to pull it.</p>
+    </div>
+    <div class="step"><b>01</b> / The roast</div>
+  </section>
+
+  <!-- BEAT 3 — THE TRANSFORMATION: green seed to dark gold -->
+  <section class="beat">
+    <img class="bg" src="assets/roast-levels.jpg" alt="Light, medium and dark roast coffee beans laid out on dark slate">
+    <div class="scrim scrim-tl"></div>
+    <div class="content" style="justify-content:flex-start;padding-top:13vh">
+      <h2 class="rv" style="max-width:20ch">Stopped exactly where the <span class="accent">sweetness</span> peaks.</h2>
+      <p class="lead rv d1">A few seconds is the whole difference. We take Nocturne dark and full, for the deep, chocolate body that holds its own in milk.</p>
+    </div>
+    <div class="step"><b>02</b> / The profile</div>
+  </section>
+
+  <!-- BEAT 4 — THE BLEND revealed (the product) -->
+  <section class="beat">
+    <img class="bg" src="assets/bag.jpg" alt="Nocturne Blend, a 500g bag of dark roast espresso, beside an espresso cup and scattered beans on slate">
+    <div class="scrim scrim-l"></div>
+    <div class="content">
+      <div class="eyebrow rv">The house blend</div>
+      <h2 class="rv d1">Nocturne.</h2>
+      <p class="lead rv d2">A bold, earthy espresso roast built for milk and slow mornings. Heavy body, a long and sweet finish. Rested three days, then sent the moment you order.</p>
+      <div class="tags rv d3">
+        <span class="tag">Dark chocolate</span><span class="tag">Molasses</span><span class="tag">Toasted walnut</span><span class="tag">Brown sugar</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEAT 5 — PAYOFF: your morning + order -->
+  <section class="beat" id="shop">
+    <img class="bg" src="assets/interior.jpg" alt="The Folklore cafe at night, a barista making a pour-over under warm lamps">
+    <div class="scrim scrim-bl"></div>
+    <div class="content end">
+      <h2 class="rv">Now it's<br>your <span class="accent">morning.</span></h2>
+      <p class="lead rv d1">Brewed at home or poured at the counter on Yong Siak Street. Either way, it started in the dark, so yours could start well.</p>
+      <a href="#" class="cta rv d2">Shop the roast</a>
+      <div class="meta rv d2">Folklore Coffee Roasters · 78 Yong Siak St, Singapore · Open Tue to Sun</div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  // smooth scroll (premium inertial feel)
+  let lenis = null;
+  if(!reduce && window.Lenis){
+    lenis = new Lenis({ lerp:0.09 });
+    function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+  }
+
+  // scroll reveal
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }), { threshold:0.2 });
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // cinematic parallax on each beat's background + progress bar
+  const beats = [...document.querySelectorAll('.beat')];
+  const bar = document.getElementById('progress');
+  function onScroll(){
+    const vh = innerHeight;
+    for(const b of beats){
+      const r = b.getBoundingClientRect();
+      if(r.bottom < -vh*0.3 || r.top > vh*1.3) continue;
+      const center = r.top + r.height/2;
+      const off = (center - vh/2) / vh;            // -1..1 through the viewport
+      const img = b.querySelector('.bg');
+      if(img && !reduce) img.style.transform = `translateY(${(-off*6).toFixed(2)}%)`;
+    }
+    const max = document.body.scrollHeight - vh;
+    bar.style.width = (max>0 ? (scrollY/max)*100 : 0) + '%';
+  }
+  if(lenis) lenis.on('scroll', onScroll);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+</script>
+</body>
+</html>

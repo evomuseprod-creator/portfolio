@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORM — small-group strength training</title>
+<!--
+  PACKAGE 1 (Level 1): clean & real, STATIC. The award-tier step is COMPOSITION, not motion.
+  Story brief: fitness-demo/BRIEF.md  ·  Research: fitness-demo/RESEARCH.md (Perplexity, 2026-06-21)
+  TRUTH: strength is a skill you practice in a room of ten, coached every rep, re-measured every month.
+  Award-tier moves (read elevated even frozen): type-as-hero (giant "FORM" with photo masked INSIDE the
+  letters), asymmetric 60/40 hero, type crossing image edges, layered overlapping panels, editorial sections.
+  Dark theme locked, ONE accent (molten orange) used sparingly, real Gemini imagery, zero em-dashes.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0e0c;
+    --bg2:#141310;
+    --panel:#1a1814;
+    --ink:#f4efe4;
+    --muted:#a59d8c;
+    --faint:#6f6857;
+    --line:#2a2722;
+    --accent:#ff5a1e;
+    --accent-ink:#140a04;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:var(--accent-ink)}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 6vw}
+  .mono{font-family:var(--mono);font-weight:500;letter-spacing:.04em}
+  .label{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+  .accent{color:var(--accent)}
+
+  /* CTA */
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);
+    font-weight:700;font-size:14px;letter-spacing:.02em;padding:15px 26px;border-radius:4px;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s,box-shadow .25s;white-space:nowrap}
+  .btn:hover{background:#ff6e38;transform:translateY(-2px);box-shadow:0 16px 40px -16px rgba(255,90,30,.7)}
+  .btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn--ghost:hover{background:var(--panel);border-color:#3a362e;box-shadow:none;transform:translateY(-2px)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:20px 6vw;transition:background .35s ease,padding .35s ease,border-color .35s ease;border-bottom:1px solid transparent}
+  nav.scrolled{background:rgba(14,14,12,.82);backdrop-filter:blur(14px);border-bottom-color:var(--line);padding-top:13px;padding-bottom:13px}
+  nav .logo{font-weight:900;font-size:22px;letter-spacing:.04em}
+  nav .logo span{color:var(--accent)}
+  nav .links{display:flex;align-items:center;gap:34px}
+  nav .links a{font-size:14px;font-weight:500;color:var(--muted);transition:color .2s}
+  nav .links a:hover{color:var(--ink)}
+  nav .navcta{font-size:13px;font-weight:700;letter-spacing:.02em;padding:11px 20px}
+
+  /* HERO — asymmetric 60/40, giant masked type interacting with the photo */
+  .hero{position:relative;min-height:100dvh;display:grid;grid-template-columns:1.42fr 1fr;
+    background:radial-gradient(120% 90% at 18% 8%, #1b1915 0%, var(--bg) 60%)}
+  .hero .left{position:relative;z-index:3;padding:128px 0 46px 6vw;display:flex;flex-direction:column;justify-content:space-between}
+  .hero .top{max-width:38ch}
+  .hero .top .label{margin-bottom:26px}
+  .heromask{font-weight:900;line-height:.84;letter-spacing:-.05em;font-size:clamp(74px,12.5vw,186px);color:var(--ink)}
+  .heromask i{font-style:normal;color:var(--accent);-webkit-text-fill-color:var(--accent)}
+  @supports ((-webkit-background-clip:text) or (background-clip:text)){
+    .heromask{background:linear-gradient(176deg,#fbf8f0 0%,#e7e0d1 42%,#b3ab98 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  }
+  .hero h1{font-size:0;margin:0}
+  .hero .sub{margin-top:28px;font-size:clamp(16px,1.35vw,19px);color:var(--muted);max-width:40ch;line-height:1.65}
+  .hero .sub b{color:var(--ink);font-weight:600}
+  .hero .actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+  .hero .stats{display:flex;gap:42px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px;margin-top:48px;max-width:560px}
+  .hero .stats .s .n{font-weight:800;font-size:26px;letter-spacing:-.01em}
+  .hero .stats .s .n em{font-style:normal;color:var(--accent)}
+  .hero .stats .s .t{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+  .hero .right{position:relative}
+  .hero .right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+  .hero .right::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(14,14,12,.15) 22%,rgba(14,14,12,0) 55%)}
+  .hero .badge{position:absolute;left:-54px;bottom:90px;z-index:4;background:var(--accent);color:var(--accent-ink);
+    padding:14px 20px;border-radius:4px;max-width:215px;box-shadow:0 24px 60px -24px rgba(0,0,0,.8)}
+  .hero .badge .bn{font-weight:800;font-size:17px;line-height:1.2}
+  .hero .badge .bt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;opacity:.78}
+
+  /* SECTION scaffolding */
+  section{position:relative}
+  .pad{padding:clamp(86px,12vw,168px) 0}
+  .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:34px}
+  .eyebrow::before{content:"";width:30px;height:1px;background:var(--accent)}
+
+  /* STATEMENT */
+  .statement{background:var(--bg)}
+  .statement .grid{display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(40px,6vw,96px);align-items:end}
+  .statement .big{font-size:clamp(30px,4.2vw,58px);font-weight:800;line-height:1.1;letter-spacing:-.02em}
+  .statement .big .accent{color:var(--accent)}
+  .statement .aside{border-top:1px solid var(--line);padding-top:22px;max-width:40ch}
+  .statement .aside p{color:var(--muted);font-size:16px;line-height:1.75}
+  .statement .aside .label{margin-top:18px}
+
+  /* METHOD — editorial numbered rows (NOT identical cards) */
+  .method{background:var(--bg2)}
+  .method .head{max-width:30ch;margin-bottom:18px}
+  .method h2{font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.06}
+  .method .rows{margin-top:40px;border-top:1px solid var(--line)}
+  .method .row{display:grid;grid-template-columns:120px 1fr 1.1fr;gap:clamp(20px,4vw,64px);align-items:start;
+    padding:38px 0;border-bottom:1px solid var(--line)}
+  .method .row .num{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent);padding-top:6px}
+  .method .row h3{font-size:clamp(21px,2vw,28px);font-weight:700;letter-spacing:-.01em}
+  .method .row p{color:var(--muted);font-size:16px;line-height:1.7;max-width:46ch}
+
+  /* THE ROOM — full-bleed photo, headline crossing the image edge */
+  .room{position:relative;min-height:78vh;display:flex;align-items:flex-end;overflow:hidden}
+  .room img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .room::after{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(0deg,rgba(10,10,9,.86) 0%,rgba(10,10,9,.12) 52%,rgba(10,10,9,.5) 100%)}
+  .room .rc{position:relative;z-index:2;padding:0 6vw clamp(54px,7vw,96px);width:100%}
+  .room h2{font-size:clamp(34px,6vw,92px);font-weight:900;letter-spacing:-.03em;line-height:.95;max-width:15ch}
+  .room p{margin-top:20px;color:#d9d3c6;max-width:46ch;font-size:clamp(16px,1.3vw,18px)}
+
+  /* COACH — featured, asymmetric */
+  .coach{background:var(--bg)}
+  .coach .grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(36px,5vw,80px);align-items:center}
+  .coach .ph{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:4/5;background:var(--panel)}
+  .coach .ph img{width:100%;height:100%;object-fit:cover}
+  .coach .ph .tag{position:absolute;left:18px;bottom:18px;background:rgba(14,14,12,.7);backdrop-filter:blur(6px);
+    border:1px solid var(--line);padding:9px 14px;border-radius:4px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+  .coach h2{font-size:clamp(28px,3.4vw,48px);font-weight:800;letter-spacing:-.02em;line-height:1.08}
+  .coach .role{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:18px 0 20px}
+  .coach p{color:var(--muted);font-size:16px;line-height:1.8;max-width:50ch}
+  .coach p + p{margin-top:16px}
+  .coach .team{margin-top:30px;border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:15px}
+  .coach .team b{color:var(--ink);font-weight:600}
+
+  /* PROOF — one big pulled quote + two specific milestones (varied, not 3 cards) */
+  .proof{background:var(--bg2)}
+  .proof .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(34px,5vw,72px);align-items:stretch}
+  .proof .quote{display:flex;flex-direction:column;justify-content:center}
+  .proof .quote .q{font-size:clamp(24px,2.9vw,40px);font-weight:700;line-height:1.22;letter-spacing:-.015em}
+  .proof .quote .by{margin-top:24px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--muted)}
+  .proof .mile{display:grid;gap:16px;align-content:center}
+  .proof .m{border:1px solid var(--line);border-radius:6px;padding:24px 26px;background:var(--bg)}
+  .proof .m .pr{font-weight:800;font-size:22px;letter-spacing:-.01em}
+  .proof .m .pr em{font-style:normal;color:var(--accent)}
+  .proof .m .who{color:var(--muted);font-size:14px;margin-top:6px;font-family:var(--mono);letter-spacing:.02em}
+
+  /* PRICING */
+  .pricing{background:var(--bg)}
+  .pricing .head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:46px}
+  .pricing h2{font-size:clamp(30px,3.6vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+  .pricing .note{color:var(--muted);font-size:15px;max-width:34ch}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tier{border:1px solid var(--line);border-radius:8px;padding:30px 28px;background:var(--bg2);display:flex;flex-direction:column;gap:18px}
+  .tier.feature{border-color:var(--accent);background:linear-gradient(180deg,rgba(255,90,30,.07),rgba(255,90,30,0));position:relative}
+  .tier.feature .flag{position:absolute;top:-11px;left:28px;background:var(--accent);color:var(--accent-ink);
+    font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:3px}
+  .tier .tn{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .tier .tp{font-weight:800;font-size:40px;letter-spacing:-.02em;line-height:1}
+  .tier .tp span{font-size:15px;font-weight:500;color:var(--faint);font-family:var(--mono)}
+  .tier ul{list-style:none;display:grid;gap:11px;margin-top:2px}
+  .tier li{color:var(--muted);font-size:15px;padding-left:22px;position:relative;line-height:1.5}
+  .tier li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:.55}
+  .tier .btn{justify-content:center;margin-top:auto}
+
+  /* EXPECT */
+  .expect{background:var(--bg2)}
+  .expect .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(34px,5vw,80px);align-items:start}
+  .expect h2{font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .expect .items{display:grid;gap:24px}
+  .expect .it{display:grid;grid-template-columns:40px 1fr;gap:18px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:22px}
+  .expect .it:last-child{border-bottom:0;padding-bottom:0}
+  .expect .it .k{font-family:var(--mono);color:var(--accent);font-size:14px;font-weight:600;padding-top:3px}
+  .expect .it h4{font-size:18px;font-weight:700;margin-bottom:5px}
+  .expect .it p{color:var(--muted);font-size:15px;line-height:1.65;max-width:52ch}
+
+  /* CLOSE */
+  .close{background:radial-gradient(120% 120% at 50% 0%, #1c1914 0%, var(--bg) 62%);text-align:center}
+  .close .label{justify-content:center;margin-bottom:26px}
+  .close h2{font-size:clamp(40px,7vw,108px);font-weight:900;letter-spacing:-.03em;line-height:.92}
+  .close h2 .accent{color:var(--accent)}
+  .close p{margin:24px auto 0;color:var(--muted);max-width:42ch;font-size:17px}
+  .close .actions{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line);background:var(--bg)}
+  footer .grid{display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap;padding:46px 0 40px}
+  footer .logo{font-weight:900;font-size:20px;letter-spacing:.04em}
+  footer .logo span{color:var(--accent)}
+  footer .col h5{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  footer .col p,footer .col a{display:block;color:var(--muted);font-size:14px;line-height:1.9}
+  footer .col a:hover{color:var(--ink)}
+  footer .base{border-top:1px solid var(--line);padding:18px 0;font-family:var(--mono);font-size:12px;color:var(--faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* ---- responsive ---- */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .hero .left{padding:120px 6vw 56px}
+    .hero .right{height:62vh;order:2}
+    .hero .right::after{background:linear-gradient(0deg,var(--bg) 0%,rgba(14,14,12,0) 40%)}
+    .hero .badge{left:6vw;bottom:24px}
+    .heromask{font-size:clamp(96px,32vw,200px)}
+    .statement .grid,.coach .grid,.proof .grid,.expect .grid{grid-template-columns:1fr;gap:34px}
+    .method .row{grid-template-columns:64px 1fr;}
+    .method .row p{grid-column:1/-1;max-width:none}
+    .tiers{grid-template-columns:1fr;max-width:460px}
+    .coach .ph{max-width:440px}
+  }
+  @media (max-width:560px){
+    nav .links a{display:none}
+    nav .links .navcta{display:inline-flex}
+    .hero .stats{gap:26px}
+    .hero .stats .s .n{font-size:22px}
+    .method .row{grid-template-columns:1fr}
+    .method .row .num{padding-top:0}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">FOR<span>M</span></div>
+  <div class="links">
+    <a href="#method">Method</a>
+    <a href="#room">The room</a>
+    <a href="#coach">Coaches</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#book" class="btn navcta">Book a trial</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="left">
+    <div class="top">
+      <div class="label">Small-group strength &middot; Singapore</div>
+      <h1><div class="heromask">FOR<i>M</i></div></h1>
+      <p class="sub">Strength is a skill. You practice it here in a room of <b>ten</b>, coached every rep and re-measured every month.</p>
+      <div class="actions">
+        <a href="#book" class="btn">Book a trial</a>
+        <a href="#method" class="btn btn--ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="s"><div class="n"><em>10</em> max</div><div class="t">people per class</div></div>
+      <div class="s"><div class="n">4 wks</div><div class="t">re-test cadence</div></div>
+      <div class="s"><div class="n">3</div><div class="t">coaches, no rotation</div></div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="assets/member.jpg" alt="A member performing a barbell front squat with focus in the FORM studio">
+    <div class="badge">
+      <div class="bn">Free first session</div>
+      <div class="bt">No card, no contract</div>
+    </div>
+  </div>
+</header>
+
+<section class="statement pad">
+  <div class="wrap">
+    <div class="grid">
+      <p class="big">Most gyms are a hundred strangers and a wall of mirrors. This is ten people and a coach who <span class="accent">knows your name</span>.</p>
+      <div class="aside">
+        <p>No machines to wait for, no music you have to shout over. Just barbells, a plan written for you, and someone watching every rep so it is done right.</p>
+        <div class="label">A studio, not a gym floor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="method pad" id="method">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow"><span class="label">The work</span></div>
+      <h2>A method, not a vibe.</h2>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="num">01 / Assess</div>
+        <h3>We measure where you actually are.</h3>
+        <p>A 60-minute movement and strength assessment before you lift anything heavy. We find what is tight, what is weak, and what we build first. No guessing, no ego lifts.</p>
+      </div>
+      <div class="row">
+        <div class="num">02 / Build</div>
+        <h3>Strength blocks, written for you.</h3>
+        <p>You train in blocks with a clear target each week. Squat, hinge, push, pull, carry. The coach loads the bar to your day, not a class average, so progress is real and joints stay happy.</p>
+      </div>
+      <div class="row">
+        <div class="num">03 / Re-test</div>
+        <h3>Every four weeks, we prove it.</h3>
+        <p>We re-test the same lifts and movements so the line on the page goes up, not just the playlist. You leave knowing exactly what changed and what comes next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="room" id="room">
+  <img src="assets/room.jpg" alt="The FORM studio interior: timber lifting platforms, black power racks and neat rows of iron plates in warm directional light">
+  <div class="rc">
+    <h2>Ten platforms. No mirrors to perform for.</h2>
+    <p>One room, built for lifting and nothing else. Warm light, real iron, and enough space that nobody is ever waiting on you or watching the clock.</p>
+  </div>
+</section>
+
+<section class="coach pad" id="coach">
+  <div class="wrap">
+    <div class="grid">
+      <div class="ph">
+        <img src="assets/coach.jpg" alt="Head coach Marcus Tan in the studio">
+        <div class="tag">10+ yrs &middot; strength &amp; rehab</div>
+      </div>
+      <div class="txt">
+        <div class="eyebrow"><span class="label">Who coaches you</span></div>
+        <h2>You get the same coach, every session.</h2>
+        <div class="role">Marcus Tan &middot; Head coach</div>
+        <p>Marcus spent ten years coaching powerlifters and post-injury clients before opening FORM. He is the one who writes your plan and the one who spots your heavy sets, so nothing gets lost in a handover.</p>
+        <p>His rule is simple: load the person in front of you, not the program on the wall. Strong for life beats strong for a photo.</p>
+        <div class="team">Coaching the floor with Marcus: <b>Priya Nair</b> (women's strength, pre and postnatal) and <b>Daniel Foo</b> (Olympic lifting, sport). Eight to ten lifters per session, never more.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof pad">
+  <div class="wrap">
+    <div class="grid">
+      <div class="quote">
+        <div class="eyebrow"><span class="label">From the floor</span></div>
+        <p class="q">"I came in unable to do a single push-up and scared of the squat rack. Nine months later I deadlift more than I weigh, and my back stopped hurting at my desk."</p>
+        <div class="by">Wei, 34 &middot; product manager &middot; member since 2025</div>
+      </div>
+      <div class="mile">
+        <div class="m">
+          <div class="pr"><em>0 to 6</em> strict pull-ups</div>
+          <div class="who">Hannah, 29 &middot; in 5 months</div>
+        </div>
+        <div class="m">
+          <div class="pr">First <em>100kg</em> deadlift</div>
+          <div class="who">Raj, 41 &middot; after a slipped disc</div>
+        </div>
+        <div class="m">
+          <div class="pr">Back to lifting <em>12 weeks</em> post-birth</div>
+          <div class="who">Mei Lin, 33 &middot; coached return</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing pad" id="pricing">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="eyebrow"><span class="label">Membership</span></div>
+        <h2>Simple pricing. No lock-in.</h2>
+      </div>
+      <p class="note">Every plan includes your written program, monthly re-tests and unlimited coach messaging. Pause any time.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tn">Twice a week</div>
+        <div class="tp">$220<span> / mo</span></div>
+        <ul>
+          <li>2 small-group sessions each week</li>
+          <li>Your own written program</li>
+          <li>Monthly strength re-test</li>
+        </ul>
+        <a href="#book" class="btn btn--ghost">Start here</a>
+      </div>
+      <div class="tier feature">
+        <div class="flag">Most popular</div>
+        <div class="tn">Unlimited</div>
+        <div class="tp">$320<span> / mo</span></div>
+        <ul>
+          <li>Train as often as you like</li>
+          <li>Program plus open-gym access</li>
+          <li>Monthly re-test and check-in call</li>
+          <li>Bring a friend once a month</li>
+        </ul>
+        <a href="#book" class="btn">Book a trial</a>
+      </div>
+      <div class="tier">
+        <div class="tn">Drop-in</div>
+        <div class="tp">$45<span> / session</span></div>
+        <ul>
+          <li>One small-group session</li>
+          <li>Great for visitors and travel</li>
+          <li>No commitment</li>
+        </ul>
+        <a href="#book" class="btn btn--ghost">Book a slot</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="expect pad">
+  <div class="wrap">
+    <div class="grid">
+      <h2>Your first session, start to finish.</h2>
+      <div class="items">
+        <div class="it"><div class="k">01</div><div><h4>Arrive ten minutes early.</h4><p>A coach meets you at the door, shows you around, and talks through what you want from training. Wear normal gym clothes, bring water.</p></div></div>
+        <div class="it"><div class="k">02</div><div><h4>We assess, you move.</h4><p>You will lift, but light and coached. The point is to learn how you move so the next twelve weeks are built on something real.</p></div></div>
+        <div class="it"><div class="k">03</div><div><h4>Leave with a plan.</h4><p>You go home knowing your starting numbers and exactly what session two looks like. No pressure to sign anything that day.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="close pad" id="book">
+  <div class="wrap">
+    <div class="eyebrow label" style="display:inline-flex">Book a trial</div>
+    <h2>Come lift once.<br>Then <span class="accent">decide</span>.</h2>
+    <p>Your first session is free, with a real coach, no card and no contract. Slots are capped at ten, so the week fills early.</p>
+    <div class="actions">
+      <a href="mailto:hello@formstrength.sg" class="btn">Book your free session</a>
+      <a href="tel:+6560000000" class="btn btn--ghost">Call the studio</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div class="col">
+        <div class="logo">FOR<span>M</span></div>
+        <p style="color:var(--muted);margin-top:10px;max-width:30ch">Small-group strength training, capped at ten.</p>
+      </div>
+      <div class="col">
+        <h5>Studio</h5>
+        <p>27A Kim Yam Road<br>Singapore 239329</p>
+        <p>Mon to Sat &middot; 6am to 9pm</p>
+      </div>
+      <div class="col">
+        <h5>Visit</h5>
+        <a href="#book">Book a trial</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#method">The method</a>
+      </div>
+      <div class="col">
+        <h5>Follow</h5>
+        <a href="#">Instagram</a>
+        <a href="#">Newsletter</a>
+        <a href="mailto:hello@formstrength.sg">hello@formstrength.sg</a>
+      </div>
+    </div>
+    <div class="wrap base">
+      <span>&copy; 2026 FORM Strength Studio</span>
+      <span>Built as an agency demo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // the only motion on a static Level-1 page: nav gains a solid bar after the hero (legibility + polish)
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+</body>
+</html>

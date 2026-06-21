@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOOR — skin &amp; aesthetics studio</title>
+<!--
+  PACKAGE 1 (Level 1): clean & real, STATIC. Award-tier COMPOSITION on a LIGHT/luminous background.
+  Story brief: medspa-demo/BRIEF.md  ·  Research: medspa-demo/RESEARCH.md (Perplexity, 2026-06-21)
+  TRUTH: NOOR is doctor-led; treatments chosen for YOUR skin after a real consult; results look like you,
+  never "done". Award moves: oversized elegant SERIF (Bodoni), type interacting with soft portrait imagery,
+  asymmetry, layered soft panels with tinted shadows, generous air. Ivory base, ONE accent (warm rose-clay),
+  real Gemini imagery (faces checked), zero em-dashes. IMPROVES on FORM: opposite register (light vs dark),
+  serif vs bold sans, exercises bright-background craft.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f3ea;
+    --paper:#fdfbf5;
+    --warm:#efe7d8;
+    --ink:#2b2620;
+    --muted:#7c7466;
+    --faint:#a79e8d;
+    --line:#e5dccb;
+    --accent:#b56a4e;
+    --accent-soft:#c98e75;
+    --serif:"Bodoni Moda",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 6vw}
+  .label{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow{display:flex;align-items:center;gap:13px;margin-bottom:26px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent)}
+  .pad{padding:clamp(80px,11vw,150px) 0}
+
+  /* CTA */
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;font-size:14px;font-weight:500;
+    letter-spacing:.01em;padding:15px 28px;border-radius:2px;transition:background .3s,transform .3s,box-shadow .3s}
+  .btn:hover{background:#a05a40;transform:translateY(-2px);box-shadow:0 18px 36px -18px rgba(150,74,52,.55)}
+  .btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn--ghost:hover{background:var(--paper);border-color:var(--accent-soft);box-shadow:none;transform:translateY(-2px)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:22px 6vw;transition:background .35s,padding .35s,box-shadow .35s}
+  nav.scrolled{background:rgba(247,243,234,.85);backdrop-filter:blur(12px);padding-top:14px;padding-bottom:14px;box-shadow:0 1px 0 var(--line)}
+  nav .logo{font-family:var(--serif);font-size:25px;font-weight:500;letter-spacing:.22em}
+  nav .links{display:flex;align-items:center;gap:32px}
+  nav .links a{font-size:14px;color:var(--muted);transition:color .2s}
+  nav .links a:hover{color:var(--ink)}
+  nav .navcta{font-size:13px;padding:11px 20px;color:#fff}
+
+  /* HERO */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,72px);align-items:center;
+    min-height:100dvh;padding:118px 6vw 70px;max-width:1380px;margin:0 auto}
+  .hero .copy .label{margin-bottom:24px}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(44px,5.6vw,86px);line-height:1.04;letter-spacing:-.01em}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lead{margin-top:26px;font-size:clamp(16px,1.25vw,18px);color:var(--muted);max-width:42ch;line-height:1.7}
+  .hero .actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .trust{margin-top:30px;font-size:13px;color:var(--faint);display:flex;align-items:center;gap:10px}
+  .hero .trust b{color:var(--ink);font-weight:600}
+  .hero .figure{position:relative}
+  .hero .figure img{width:100%;height:clamp(440px,72vh,720px);object-fit:cover;border-radius:4px;
+    box-shadow:0 50px 90px -50px rgba(90,60,45,.45)}
+  .hero .figure .card{position:absolute;left:-38px;bottom:42px;background:var(--paper);border:1px solid var(--line);
+    border-radius:4px;padding:18px 22px;box-shadow:0 30px 60px -34px rgba(90,60,45,.5);max-width:230px}
+  .hero .figure .card .n{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1}
+  .hero .figure .card .t{font-size:13px;color:var(--muted);margin-top:5px}
+
+  /* STATEMENT */
+  .statement{background:var(--paper)}
+  .statement .grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(36px,6vw,90px);align-items:end}
+  .statement .big{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.9vw,52px);line-height:1.18;letter-spacing:-.01em}
+  .statement .big em{font-style:italic;color:var(--accent)}
+  .statement .aside{border-top:1px solid var(--line);padding-top:22px;max-width:40ch}
+  .statement .aside p{color:var(--muted);font-size:16px;line-height:1.75}
+  .statement .aside .who{margin-top:16px;font-size:13px;letter-spacing:.04em;color:var(--ink)}
+  .statement .aside .who b{font-weight:600}
+
+  /* OUTCOMES (treatments by outcome, editorial - not boxed cards) */
+  .outcomes .head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:54px}
+  .outcomes h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4vw,56px);line-height:1.05;letter-spacing:-.01em}
+  .outcomes .head p{color:var(--muted);font-size:16px;max-width:42ch;justify-self:end}
+  .outcomes .grid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(34px,5vw,72px);align-items:center}
+  .outcomes .list{display:grid}
+  .outcomes .item{display:grid;grid-template-columns:42px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
+  .outcomes .item:last-child{border-bottom:1px solid var(--line)}
+  .outcomes .item .no{font-family:var(--serif);font-size:18px;color:var(--accent);font-weight:500}
+  .outcomes .item h3{font-family:var(--serif);font-size:clamp(21px,2vw,27px);font-weight:500;letter-spacing:-.005em}
+  .outcomes .item p{color:var(--muted);font-size:15px;margin-top:6px;line-height:1.65;max-width:46ch}
+  .outcomes .figure img{width:100%;height:clamp(420px,58vh,620px);object-fit:cover;border-radius:4px;box-shadow:0 40px 80px -48px rgba(90,60,45,.4)}
+
+  /* ROOM */
+  .room{background:var(--warm)}
+  .room .grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(34px,5vw,80px);align-items:center}
+  .room .figure img{width:100%;height:clamp(440px,64vh,680px);object-fit:cover;border-radius:4px;box-shadow:0 44px 84px -50px rgba(90,60,45,.45)}
+  .room h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4vw,58px);line-height:1.06;letter-spacing:-.01em}
+  .room h2 em{font-style:italic;color:var(--accent)}
+  .room p{color:var(--muted);font-size:16px;line-height:1.8;max-width:46ch;margin-top:22px}
+  .room p + p{margin-top:14px}
+  .room .pts{margin-top:30px;display:grid;gap:13px}
+  .room .pts div{display:flex;gap:12px;align-items:baseline;font-size:15px;color:var(--ink)}
+  .room .pts div::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;transform:translateY(-2px)}
+
+  /* DOCTOR */
+  .doctor{background:var(--bg)}
+  .doctor .grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(36px,5vw,80px);align-items:center}
+  .doctor .figure{position:relative}
+  .doctor .figure img{width:100%;height:clamp(460px,66vh,680px);object-fit:cover;object-position:center 25%;border-radius:4px;box-shadow:0 44px 84px -50px rgba(90,60,45,.45)}
+  .doctor h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,50px);line-height:1.08;letter-spacing:-.01em}
+  .doctor .role{font-size:13px;letter-spacing:.06em;color:var(--accent);margin:16px 0 20px;text-transform:uppercase;font-weight:500}
+  .doctor p{color:var(--muted);font-size:16px;line-height:1.8;max-width:50ch}
+  .doctor p + p{margin-top:15px}
+  .doctor .creds{margin-top:28px;border-top:1px solid var(--line);padding-top:22px;display:flex;gap:42px;flex-wrap:wrap}
+  .doctor .creds .c .n{font-family:var(--serif);font-size:26px;font-weight:500}
+  .doctor .creds .c .t{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+
+  /* REVIEW */
+  .review{background:var(--paper);text-align:center}
+  .review .stars{color:var(--accent);letter-spacing:.32em;font-size:14px;margin-bottom:26px}
+  .review blockquote{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.3vw,46px);line-height:1.28;letter-spacing:-.01em;max-width:18ch;margin:0 auto}
+  .review .by{margin-top:28px;font-size:14px;color:var(--muted)}
+
+  /* PRICING / CONSULT */
+  .pricing{background:var(--bg)}
+  .pricing .grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(40px,6vw,96px);align-items:center}
+  .pricing h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4vw,56px);line-height:1.05;letter-spacing:-.01em}
+  .pricing .sub{color:var(--muted);font-size:16px;margin-top:20px;max-width:40ch;line-height:1.7}
+  .pricing .rows{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:8px 30px}
+  .pricing .r{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .pricing .r:last-child{border-bottom:0}
+  .pricing .r .name{font-family:var(--serif);font-size:20px;font-weight:500}
+  .pricing .r .name span{display:block;font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:3px;letter-spacing:0}
+  .pricing .r .price{font-size:15px;color:var(--ink);white-space:nowrap;font-weight:500}
+  .pricing .r .price b{font-family:var(--serif);font-size:22px;font-weight:500}
+  .pricing .note{margin-top:22px;font-size:13px;color:var(--faint)}
+
+  /* CLOSE */
+  .close{background:var(--warm);text-align:center}
+  .close .eyebrow{justify-content:center}
+  .close h2{font-family:var(--serif);font-weight:500;font-size:clamp(38px,6vw,92px);line-height:1.02;letter-spacing:-.01em}
+  .close h2 em{font-style:italic;color:var(--accent)}
+  .close p{margin:22px auto 0;color:var(--muted);max-width:42ch;font-size:16px}
+  .close .actions{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  footer{background:var(--paper);border-top:1px solid var(--line)}
+  footer .grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding:50px 0 40px}
+  footer .logo{font-family:var(--serif);font-size:22px;letter-spacing:.2em;font-weight:500}
+  footer .col h5{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  footer .col p,footer .col a{display:block;color:var(--muted);font-size:14px;line-height:1.95}
+  footer .col a:hover{color:var(--ink)}
+  footer .base{border-top:1px solid var(--line);padding:18px 0;font-size:12px;color:var(--faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.02em}
+
+  @media (max-width:960px){
+    .hero{grid-template-columns:1fr;min-height:auto;gap:40px}
+    .hero .figure{order:-1}
+    .hero .figure img{height:58vh}
+    .statement .grid,.outcomes .grid,.outcomes .head,.room .grid,.doctor .grid,.pricing .grid{grid-template-columns:1fr;gap:34px}
+    .outcomes .head p{justify-self:start}
+    .room .figure,.doctor .figure{max-width:520px}
+    .review blockquote{max-width:24ch}
+  }
+  @media (max-width:560px){
+    nav .links a:not(.navcta){display:none}
+    .hero .figure .card{left:0;bottom:18px}
+    .doctor .creds{gap:28px}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">NOOR</div>
+  <div class="links">
+    <a href="#outcomes">Treatments</a>
+    <a href="#room">The studio</a>
+    <a href="#doctor">Our doctor</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#book" class="btn navcta">Book a consultation</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="copy">
+    <div class="eyebrow"><span class="label">Doctor-led skin &amp; aesthetics &middot; Singapore</span></div>
+    <h1>Skin that looks like <em>you</em>, on a good day.</h1>
+    <p class="lead">No menu of trends, no overdone results. A doctor reads your skin first, then builds a plan that is only yours. The goal is quietly better skin you forget to think about.</p>
+    <div class="actions">
+      <a href="#book" class="btn">Book a consultation</a>
+      <a href="#outcomes" class="btn btn--ghost">See what we treat</a>
+    </div>
+    <div class="trust"><b>4.9</b> from 280+ reviews &middot; on Kim Yam Road since 2019</div>
+  </div>
+  <div class="figure">
+    <img src="assets/hero.jpg" alt="A woman with calm, luminous, natural skin in soft daylight">
+    <div class="card">
+      <div class="n">280+</div>
+      <div class="t">consultations a year, each one in person with the doctor</div>
+    </div>
+  </div>
+</header>
+
+<section class="statement pad">
+  <div class="wrap">
+    <div class="grid">
+      <p class="big">Most clinics sell you a treatment. We start with a <em>diagnosis</em>, and quite often the answer is less than you expected.</p>
+      <div class="aside">
+        <p>Every visit begins with a proper consultation, not a sales pitch. If a treatment will not help your skin, we will tell you, and we would rather you trust us next year too.</p>
+        <div class="who">Dr. Aisha Rahman &middot; <b>founder</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="outcomes pad" id="outcomes">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="eyebrow"><span class="label">What we treat</span></div>
+        <h2>Chosen for your skin, not a trend.</h2>
+      </div>
+      <p>We talk in outcomes, not machine names. In your consult we map which of these matters for you, and in what order.</p>
+    </div>
+    <div class="grid">
+      <div class="list">
+        <div class="item"><div class="no">01</div><div><h3>Glow and radiance</h3><p>Dull, tired skin brought back to life with gentle resurfacing and hydration, paced so it never looks raw.</p></div></div>
+        <div class="item"><div class="no">02</div><div><h3>Texture and pores</h3><p>Smoother skin and refined pores through micro-needling and tailored peels, built up slowly over weeks.</p></div></div>
+        <div class="item"><div class="no">03</div><div><h3>Pigmentation and tone</h3><p>Sunspots and uneven tone treated with medical-grade care and a home routine that actually protects the result.</p></div></div>
+        <div class="item"><div class="no">04</div><div><h3>Firmness and fine lines</h3><p>Subtle lift and collagen support. The aim is rested, never frozen, and only if it suits your face.</p></div></div>
+      </div>
+      <div class="figure">
+        <img src="assets/detail.jpg" alt="A serum dropper and a smooth stone on natural linen in soft morning light">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="room pad" id="room">
+  <div class="wrap">
+    <div class="grid">
+      <div class="figure">
+        <img src="assets/room.jpg" alt="A calm, light-filled NOOR treatment room with white linen and soft daylight">
+      </div>
+      <div class="copy">
+        <div class="eyebrow"><span class="label">The studio</span></div>
+        <h2>A calm room, <em>not</em> a clinic.</h2>
+        <p>Three private treatment rooms, soft daylight, and no rush. You are seen at your time, by the same team, in a space that feels closer to a quiet home than a waiting room.</p>
+        <div class="pts">
+          <div>One client at a time, never double-booked</div>
+          <div>Medical-grade devices, gently used</div>
+          <div>A written plan you take home after every visit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doctor pad" id="doctor">
+  <div class="wrap">
+    <div class="grid">
+      <div class="figure">
+        <img src="assets/doctor.jpg" alt="Dr. Aisha Rahman, founder and aesthetic physician at NOOR">
+      </div>
+      <div class="copy">
+        <div class="eyebrow"><span class="label">Who you see</span></div>
+        <h2>You are treated by a doctor, every time.</h2>
+        <div class="role">Dr. Aisha Rahman &middot; aesthetic physician</div>
+        <p>Aisha trained in dermatology before twelve years in aesthetic medicine. She does the consult, plans the work, and performs the treatments herself, so nothing is handed off to a machine operator.</p>
+        <p>Her rule for the studio is simple: treat the skin in front of you, recommend less rather than more, and only do what you would be glad you did in five years.</p>
+        <div class="creds">
+          <div class="c"><div class="n">12 yrs</div><div class="t">in aesthetic medicine</div></div>
+          <div class="c"><div class="n">MBBS</div><div class="t">dermatology trained</div></div>
+          <div class="c"><div class="n">3</div><div class="t">person team, no rotation</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="review pad">
+  <div class="wrap">
+    <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+    <blockquote>"I went in expecting to be upsold. Aisha talked me out of half of it and my skin is the best it has been in years."</blockquote>
+    <div class="by">Charlotte L. &middot; client since 2022</div>
+  </div>
+</section>
+
+<section class="pricing pad" id="pricing">
+  <div class="wrap">
+    <div class="grid">
+      <div class="copy">
+        <div class="eyebrow"><span class="label">Where to start</span></div>
+        <h2>Start with a consultation.</h2>
+        <p class="sub">Ninety minutes with the doctor: a full skin assessment and an honest plan. The fee is credited in full to your first treatment, so the advice costs you nothing if you go ahead.</p>
+        <a href="#book" class="btn" style="margin-top:30px">Book a consultation</a>
+      </div>
+      <div class="rows">
+        <div class="r"><div class="name">Skin consultation<span>90 min with Dr. Rahman, credited to treatment</span></div><div class="price"><b>$90</b></div></div>
+        <div class="r"><div class="name">Signature facial<span>resurface, hydrate, glow</span></div><div class="price">from <b>$180</b></div></div>
+        <div class="r"><div class="name">Micro-needling course<span>texture and pores, 3 sessions</span></div><div class="price">from <b>$840</b></div></div>
+        <div class="r"><div class="name">Pigmentation programme<span>assessed and priced at consult</span></div><div class="price">tailored</div></div>
+      </div>
+    </div>
+    <p class="note">Prices are a guide and confirmed after your consultation. No packages are sold before the doctor has seen your skin.</p>
+  </div>
+</section>
+
+<section class="close pad" id="book">
+  <div class="wrap">
+    <div class="eyebrow"><span class="label">Book a consultation</span></div>
+    <h2>Good skin starts with an <em>honest</em> look.</h2>
+    <p>Tell us a little about your skin and we will find you a time with the doctor this week. No pressure, no packages until you have been seen.</p>
+    <div class="actions">
+      <a href="mailto:hello@noorskin.sg" class="btn">Request a time</a>
+      <a href="tel:+6562000000" class="btn btn--ghost">Call the studio</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div class="col">
+        <div class="logo">NOOR</div>
+        <p style="color:var(--muted);margin-top:10px;max-width:30ch">Doctor-led skin &amp; aesthetics, on Kim Yam Road.</p>
+      </div>
+      <div class="col">
+        <h5>Studio</h5>
+        <p>14 Kim Yam Road, #02-01<br>Singapore 239328</p>
+        <p>Tue to Sat &middot; 10am to 7pm</p>
+      </div>
+      <div class="col">
+        <h5>Visit</h5>
+        <a href="#book">Book a consultation</a>
+        <a href="#outcomes">Treatments</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <div class="col">
+        <h5>Reach us</h5>
+        <a href="#">Instagram</a>
+        <a href="mailto:hello@noorskin.sg">hello@noorskin.sg</a>
+        <a href="tel:+6562000000">+65 6200 0000</a>
+      </div>
+    </div>
+    <div class="wrap base">
+      <span>&copy; 2026 NOOR Skin &amp; Aesthetics</span>
+      <span>Built as an agency demo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+</body>
+</html>
