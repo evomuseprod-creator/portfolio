@@ -3,332 +3,355 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>RESON One — Silence, perfected.</title>
-<meta name="description" content="RESON One: premium over-ear headphones. 40mm beryllium drivers, adaptive ANC, 60-hour battery, lambskin memory foam." />
+<title>RESON One · Silence, perfected.</title>
+<meta name="description" content="RESON One. Premium over-ear headphones. 40mm beryllium drivers, adaptive noise cancellation, sixty-hour battery." />
+<!--
+  RESON One — Apple-tier rebuild (2026-06-21). Reference: apple.com product pages.
+  Rules applied: ONE font (Inter, SF-neutral), ONE accent (copper), ONE theme (warm light), zero em-dashes,
+  huge type + massive negative space, hero centred (product is the hero), bulletproof reveals (scroll sweep).
+  SIGNATURE: the showcase scrubs a real Veo product film (8s, watermark removed, re-encoded all-intra) so as
+  you scroll the headphones ROTATE -> ZOOM into the copper driver -> settle FRONT. The hero + buy use frames
+  from that same film, so the product is consistent everywhere. Warm bg matches the film so it floats.
+  a11y: reduced-motion + mobile fall back to a muted autoplay loop + static features. Built from real footage.
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#F2F1EE; --ink:#161616; --soft:#8A8780; --copper:#B07A4B;
-    --line:rgba(22,22,22,.12); --raised:#EAE8E2;
-    --disp:"Space Grotesk",system-ui,sans-serif;
-    --body:"DM Sans",system-ui,sans-serif;
+    --bg:#cdc4b5;          /* warm greige, matches the film backdrop so the product floats seamlessly */
+    --bg-2:#d6cec1;
+    --panel:#c3baa9;
+    --ink:#1d1d1f;
+    --muted:#5d574c;
+    --faint:#8a8175;
+    --line:rgba(29,29,31,.15);
+    --line-2:rgba(29,29,31,.08);
+    --copper:#97582b;
+    --copper-soft:#b1713c;
+    --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  img{display:block;max-width:100%}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:400;line-height:1.5;overflow-x:hidden;letter-spacing:-.011em}
+  img,video{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
   ::selection{background:var(--copper);color:#fff}
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--copper);z-index:130}
 
-  .progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:130}
-  .progress span{display:block;height:100%;width:0;background:var(--copper)}
+  header{position:fixed;top:0;left:0;width:100%;z-index:120;display:flex;align-items:center;justify-content:space-between;
+    padding:18px clamp(20px,5vw,56px);transition:background .4s,box-shadow .4s,padding .4s}
+  header.solid{background:rgba(205,196,181,.72);backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 1px 0 var(--line-2);padding-top:13px;padding-bottom:13px}
+  .brand{font-weight:600;font-size:20px;letter-spacing:.02em}
+  nav.main{display:flex;gap:30px;align-items:center}
+  nav.main a{font-size:14px;opacity:.82;transition:opacity .3s}
+  nav.main a:hover{opacity:1}
+  nav.main a.buy{opacity:1;background:var(--copper);color:#fff;border-radius:100px;padding:9px 20px;font-weight:500;font-size:13.5px;transition:background .3s}
+  nav.main a.buy:hover{background:var(--copper-soft)}
+  @media(max-width:760px){nav.main a:not(.buy){display:none}}
 
-  header{position:fixed;top:0;left:0;width:100%;z-index:120;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(18px,5vw,56px);transition:background .4s,box-shadow .4s,padding .4s}
-  header.solid{background:rgba(242,241,238,.82);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line);padding-top:14px;padding-bottom:14px}
-  .brand{font-family:var(--disp);font-weight:700;font-size:21px;letter-spacing:.04em}
-  nav.main{display:flex;gap:28px;align-items:center}
-  nav.main a{text-decoration:none;font-size:14.5px;color:var(--ink);font-weight:500;transition:color .3s}
-  nav.main a:hover{color:var(--copper)}
-  .buy-pill{display:flex;align-items:center;gap:12px}
-  .buy-pill .px{font-size:14px;color:var(--soft)}
-  nav.main a.pill{background:var(--ink);color:var(--bg);border-radius:100px;padding:10px 20px;font-weight:600;font-size:14px}
-  nav.main a.pill:hover{background:var(--copper);color:#fff}
-  @media(max-width:760px){nav.main a:not(.pill),.buy-pill .px{display:none}}
+  .eyebrow{font-size:13px;letter-spacing:.01em;color:var(--copper);font-weight:600}
+  .btn{background:var(--copper);color:#fff;font-weight:500;font-size:16px;border:none;border-radius:100px;padding:15px 34px;cursor:pointer;
+    transition:transform .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:transform;font-family:var(--font)}
+  .btn:hover{background:var(--copper-soft)}
 
-  /* hero */
-  .hero{position:relative;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(10px,3vw,40px);padding:110px clamp(18px,5vw,56px) 60px;overflow:hidden}
-  .hero-copy{max-width:520px}
-  .eyebrow{font-family:var(--disp);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--copper);font-weight:500;margin-bottom:26px}
-  .hero h1{font-family:var(--disp);font-weight:600;font-size:clamp(52px,8vw,116px);line-height:.92;letter-spacing:-.03em}
-  .hero p{font-size:clamp(16px,1.4vw,19px);color:var(--ink);opacity:.78;max-width:42ch;margin-top:26px}
-  .hero-actions{display:flex;align-items:center;gap:22px;margin-top:36px;flex-wrap:wrap}
-  .btn{font-family:var(--body);font-weight:600;font-size:15px;border:none;border-radius:100px;padding:16px 32px;cursor:pointer;background:var(--ink);color:var(--bg);transition:transform .25s cubic-bezier(.16,1,.3,1),background .35s}
-  .btn:hover{background:var(--copper)}
-  .hero-actions .from{font-family:var(--disp);font-size:15px;color:var(--soft)}
-  .hero-figure{position:relative;justify-self:center}
-  .hero-figure img{width:min(48vw,640px);will-change:transform;filter:drop-shadow(0 40px 50px rgba(22,22,22,.16))}
-  @media(max-width:900px){.hero{grid-template-columns:1fr;gap:8px}.hero-figure{justify-self:start}.hero-figure img{width:min(86vw,520px)}}
+  /* HERO — centred, product is the hero */
+  .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:128px clamp(20px,5vw,56px) 0;position:relative}
+  .hero .eyebrow{margin-bottom:18px}
+  .hero h1{font-weight:600;font-size:clamp(58px,10vw,148px);line-height:.94;letter-spacing:-.035em}
+  .hero .sub{margin-top:22px;font-size:clamp(18px,1.7vw,25px);color:var(--muted);max-width:30ch;font-weight:400}
+  .hero .cta{margin-top:30px;display:flex;align-items:center;gap:22px}
+  .hero .from{font-size:16px;color:var(--muted)}
+  .hero .figure{margin-top:clamp(-26px,-2vw,4px);width:min(96vw,1080px)}
+  .hero .figure img{width:100%;will-change:transform}
 
-  /* THE feature proof (pinned product + callouts) */
-  .proof{height:300vh;position:relative;background:var(--raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .proof-pin{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
-  .proof-kicker{position:absolute;top:clamp(36px,7vh,64px);left:0;width:100%;text-align:center;font-family:var(--disp);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--copper)}
-  .stage{position:relative;width:min(94vw,1080px);height:min(82vh,760px)}
-  .stage>.product{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(var(--s,1));height:74%;width:auto;transition:transform .2s linear;filter:drop-shadow(0 30px 50px rgba(22,22,22,.16))}
-  .callout{position:absolute;width:clamp(180px,17vw,230px);opacity:0;transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
-  .callout.in{opacity:1}
-  .callout .cspec{font-family:var(--disp);font-weight:600;font-size:clamp(20px,2vw,26px);letter-spacing:-.01em}
-  .callout .clabel{font-size:14px;color:var(--soft);margin-top:3px}
-  .callout .tick{position:absolute;top:50%;height:1px;background:var(--copper)}
-  .callout .tick::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:var(--copper);transform:translateY(-50%)}
-  .callout.left{left:0;text-align:right;transform:translateX(-16px)}
-  .callout.left.in{transform:translateX(0)}
-  .callout.left .tick{right:-66px;width:54px}
-  .callout.left .tick::after{right:-3px}
-  .callout.right{right:0;text-align:left;transform:translateX(16px)}
-  .callout.right.in{transform:translateX(0)}
-  .callout.right .tick{left:-66px;width:54px}
-  .callout.right .tick::after{left:-3px}
-  .c1{top:20%}.c2{top:20%}.c3{top:66%}.c4{top:66%}
-  @media(max-width:880px){
-    .proof{height:auto}
-    .proof-pin{position:static;height:auto;display:block;padding:clamp(64px,9vh,96px) clamp(20px,6vw,48px) 30px}
-    .proof-kicker{position:static;text-align:left;margin-bottom:26px}
-    .stage{width:100%;height:auto;display:flex;flex-direction:column;align-items:center}
-    .stage>.product{position:static;transform:none;height:auto;width:min(70vw,340px);margin-bottom:30px}
-    .callout{position:static;width:100%;opacity:1;transform:none;display:flex;align-items:baseline;gap:14px;text-align:left;border-top:1px solid var(--line);padding:18px 0}
-    .callout .tick{display:none}
-    .callout .clabel{margin-top:0}
-  }
+  /* SHOWCASE — pinned: scrub the product film (rotate -> driver macro -> front), features in sequence */
+  .showcase{height:380vh;position:relative;background:var(--bg)}
+  .show-pin{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--bg)}
+  .show-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .show-pin::before,.show-pin::after{content:"";position:absolute;left:0;width:100%;z-index:2;pointer-events:none}
+  .show-pin::before{top:0;height:24%;background:linear-gradient(180deg,var(--bg) 26%,rgba(205,196,181,0))}
+  .show-pin::after{bottom:0;height:34%;background:linear-gradient(0deg,var(--bg) 14%,rgba(205,196,181,0))}
+  .show-kicker{position:absolute;top:clamp(72px,12vh,118px);left:0;width:100%;text-align:center;z-index:3}
+  .feat{position:absolute;left:0;bottom:clamp(58px,11vh,116px);width:100%;text-align:center;padding:0 6vw;z-index:3}
+  .feat .line{position:absolute;left:0;width:100%;opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
+  .feat .line.in{opacity:1;transform:none}
+  .feat .line b{display:block;font-weight:600;font-size:clamp(26px,3.4vw,46px);letter-spacing:-.02em}
+  .feat .line span{display:block;margin-top:8px;color:var(--muted);font-size:clamp(14px,1.2vw,17px)}
 
-  /* spec sheet */
-  .specs{max-width:1100px;margin:0 auto;padding:clamp(60px,11vh,140px) clamp(18px,5vw,56px)}
-  .specs h2{font-family:var(--disp);font-weight:600;font-size:clamp(26px,3.4vw,44px);letter-spacing:-.02em;margin-bottom:clamp(34px,6vh,60px)}
-  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(40px,8vw,120px)}
-  .spec-row{display:flex;justify-content:space-between;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
-  .spec-row dt{color:var(--soft);font-size:14.5px}
-  .spec-row dd{font-family:var(--disp);font-weight:500;font-size:15px;text-align:right}
-  @media(max-width:760px){.spec-grid{grid-template-columns:1fr;gap:0}}
+  /* SPEC */
+  .specs{max-width:1120px;margin:0 auto;padding:clamp(96px,16vh,220px) clamp(20px,5vw,56px)}
+  .specs .head{text-align:center;margin-bottom:clamp(48px,9vh,104px)}
+  .specs .head h2{font-weight:600;font-size:clamp(40px,6vw,88px);letter-spacing:-.03em;line-height:1}
+  .specs .head p{margin-top:18px;color:var(--muted);font-size:clamp(16px,1.4vw,20px)}
+  .big-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,64px);text-align:center;margin-bottom:clamp(56px,10vh,110px)}
+  .big-nums .v{font-weight:600;font-size:clamp(48px,7vw,104px);letter-spacing:-.04em;line-height:1}
+  .big-nums .v small{font-size:.34em;color:var(--muted);font-weight:500;margin-left:4px;letter-spacing:-.01em}
+  .big-nums .k{margin-top:12px;color:var(--muted);font-size:clamp(13px,1.1vw,16px)}
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(40px,8vw,120px);border-top:1px solid var(--line)}
+  .spec-row{display:flex;justify-content:space-between;gap:20px;padding:20px 2px;border-bottom:1px solid var(--line-2)}
+  .spec-row dt{color:var(--muted);font-size:15px}
+  .spec-row dd{font-weight:500;font-size:15px;text-align:right}
+  @media(max-width:760px){.big-nums{grid-template-columns:1fr;gap:40px}.spec-grid{grid-template-columns:1fr}}
 
-  /* material detail band */
-  .material{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;border-top:1px solid var(--line)}
-  .material figure{overflow:hidden}
-  .material img{width:100%;height:100%;min-height:60vh;object-fit:cover}
-  .material .mcopy{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,8vh,90px) clamp(20px,5vw,72px)}
-  .material .mcopy .eyebrow{margin-bottom:18px}
-  .material h2{font-family:var(--disp);font-weight:600;font-size:clamp(28px,3.6vw,46px);letter-spacing:-.02em;line-height:1.05;margin-bottom:20px}
-  .material p{font-size:16px;color:var(--ink);opacity:.78;max-width:42ch}
-  @media(max-width:860px){.material{grid-template-columns:1fr}.material img{min-height:46vh}}
+  /* DESIGN split */
+  .design{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:0;background:var(--bg-2);border-top:1px solid var(--line)}
+  .design .copy{padding:clamp(56px,10vh,130px) clamp(24px,5vw,80px);max-width:560px;justify-self:end}
+  .design .copy h2{font-weight:600;font-size:clamp(34px,4.4vw,60px);letter-spacing:-.03em;line-height:1.02;margin:16px 0 22px}
+  .design .copy p{color:var(--muted);font-size:clamp(16px,1.3vw,19px);max-width:42ch}
+  .design figure{height:100%;min-height:62vh;overflow:hidden}
+  .design figure img{width:100%;height:100%;object-fit:cover}
+  @media(max-width:880px){.design{grid-template-columns:1fr}.design .copy{justify-self:stretch}.design figure{min-height:48vh;order:-1}}
 
-  /* trust */
-  .trust{text-align:center;padding:clamp(70px,13vh,160px) clamp(18px,5vw,56px);border-top:1px solid var(--line)}
-  .trust p{font-family:var(--disp);font-weight:500;font-size:clamp(22px,3.4vw,42px);line-height:1.25;letter-spacing:-.01em;max-width:20ch;margin:0 auto}
-  .trust .src{margin-top:26px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+  /* BUY */
+  .buy{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:clamp(32px,6vw,90px);max-width:1180px;margin:0 auto;padding:clamp(80px,14vh,180px) clamp(20px,5vw,56px)}
+  .buy figure img{width:100%;border-radius:18px}
+  .buy .copy .eyebrow{margin-bottom:16px}
+  .buy .copy h2{font-weight:600;font-size:clamp(40px,5.4vw,76px);letter-spacing:-.03em;line-height:1;margin-bottom:12px}
+  .buy .copy .price{font-size:clamp(20px,2vw,26px);color:var(--muted);margin-bottom:30px}
+  .ways{display:flex;gap:12px;margin-bottom:30px}
+  .way{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:100px;padding:8px 18px 8px 9px;font-size:14px;cursor:pointer;transition:border-color .3s}
+  .way:hover{border-color:var(--muted)}
+  .way.sel{border-color:var(--ink)}
+  .way .sw{width:20px;height:20px;border-radius:50%}
+  .sw.graphite{background:linear-gradient(135deg,#4a463f,#211f1c)}
+  .sw.copper{background:linear-gradient(135deg,#c08a55,#8a5a30)}
+  .buy .reassure{margin-top:22px;font-size:14px;color:var(--muted);line-height:1.7}
+  @media(max-width:860px){.buy{grid-template-columns:1fr;gap:30px}.buy figure{order:-1}}
 
-  /* buy */
-  .buy{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,90px);align-items:center;max-width:1180px;margin:0 auto;padding:clamp(60px,11vh,150px) clamp(18px,5vw,56px);border-top:1px solid var(--line)}
-  .buy-figure img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:4px;background:var(--raised)}
-  .buy-copy .eyebrow{margin-bottom:18px}
-  .buy-copy h2{font-family:var(--disp);font-weight:600;font-size:clamp(34px,4.6vw,62px);letter-spacing:-.02em;line-height:1;margin-bottom:14px}
-  .buy-copy .price{font-family:var(--disp);font-size:clamp(22px,2.6vw,30px);margin-bottom:28px}
-  .ways{display:flex;gap:14px;margin-bottom:30px}
-  .way{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:100px;padding:8px 16px 8px 8px;font-size:14px;cursor:pointer;transition:border-color .3s}
-  .way:hover,.way.sel{border-color:var(--ink)}
-  .way .sw{width:22px;height:22px;border-radius:50%}
-  .sw.graphite{background:linear-gradient(135deg,#3a3a3a,#1c1c1c)}
-  .sw.sand{background:linear-gradient(135deg,#d8c8ad,#b9a884)}
-  .magnetic{position:relative;display:inline-block;background:var(--ink);color:var(--bg);font-family:var(--body);font-weight:600;font-size:16px;border:none;border-radius:100px;padding:18px 42px;cursor:pointer;overflow:hidden;transition:transform .25s cubic-bezier(.16,1,.3,1),background .35s}
-  .magnetic:hover{background:var(--copper)}
-  .magnetic .ring{position:absolute;top:50%;left:50%;width:42px;height:42px;border:1px solid rgba(242,241,238,.8);border-radius:50%;transform:translate(-50%,-50%) scale(.4);opacity:.9;pointer-events:none;animation:ring .62s ease-out forwards}
-  @keyframes ring{to{transform:translate(-50%,-50%) scale(4.4);opacity:0}}
-  .buy-copy .reassure{margin-top:22px;font-size:14px;color:var(--soft)}
-  @media(max-width:860px){.buy{grid-template-columns:1fr;gap:32px}.buy-figure{order:-1}}
-
-  footer{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:44px clamp(18px,5vw,56px);border-top:1px solid var(--line)}
-  footer .brand{font-size:17px}
-  footer nav{display:flex;gap:24px}
-  footer nav a{text-decoration:none;color:var(--soft);font-size:13px;letter-spacing:.06em;transition:color .3s}
+  footer{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:40px clamp(20px,5vw,56px);border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  footer .brand{color:var(--ink);font-size:16px}
+  footer nav{display:flex;gap:22px}
+  footer nav a{transition:color .3s}
   footer nav a:hover{color:var(--ink)}
-  footer .copy{font-size:13px;color:var(--soft)}
 
-  .reveal{opacity:0;transform:translateY(20px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
   .reveal.in{opacity:1;transform:none}
-  body.reduce .reveal{opacity:1;transform:none;transition:none}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.callout{opacity:1;transform:none}}
+
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.feat .line{opacity:1;transform:none;position:static;margin-top:18px}}
+  body.reduce .reveal,body.reduce .feat .line{opacity:1;transform:none}
+  @media(max-width:880px){
+    .showcase{height:auto}
+    .show-pin{position:static;height:auto;padding:clamp(70px,9vh,100px) 0 10px}
+    .show-vid{position:relative;height:auto;aspect-ratio:7/6;object-fit:cover}
+    .show-kicker{position:static;margin-bottom:18px}
+    .feat{position:static;padding:30px 8vw 0}
+    .feat .line{position:static;opacity:1;transform:none;margin-bottom:26px}
+  }
 </style>
 </head>
 <body>
-  <div class="progress"><span id="prog"></span></div>
+<div class="progress" id="prog"></div>
 
-  <header id="header">
-    <div class="brand">RESON</div>
-    <nav class="main">
-      <a href="#proof">Sound</a>
-      <a href="#material">Design</a>
-      <a href="#specs">Specs</a>
-      <span class="buy-pill"><span class="px">From S$ 549</span><a href="#buy" class="pill">Buy</a></span>
-    </nav>
-  </header>
+<header id="header">
+  <div class="brand">RESON</div>
+  <nav class="main">
+    <a href="#showcase">Sound</a>
+    <a href="#design">Design</a>
+    <a href="#specs">Specs</a>
+    <a href="#buy" class="buy">Buy</a>
+  </nav>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow reveal">RESON One · Over-ear</div>
-      <h1 class="reveal">Silence,<br>perfected.</h1>
-      <p class="reveal" style="transition-delay:.08s">Forty millimetres of beryllium, tuned by hand. Adaptive noise cancellation that reads the room. Sixty hours between charges.</p>
-      <div class="hero-actions reveal" style="transition-delay:.16s">
-        <a href="#buy"><button class="btn">Buy RESON One</button></a>
-        <span class="from">From S$ 549</span>
-      </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow reveal">RESON One</div>
+  <h1 class="reveal" style="transition-delay:.05s">Silence,<br>perfected.</h1>
+  <p class="sub reveal" style="transition-delay:.12s">Hand-tuned sound. Adaptive quiet. Sixty hours of it.</p>
+  <div class="cta reveal" style="transition-delay:.18s">
+    <a href="#buy"><button class="btn">Buy</button></a>
+    <span class="from">From S$ 549</span>
+  </div>
+  <div class="figure reveal" style="transition-delay:.1s">
+    <img id="heroImg" src="assets/reson-f1.jpg" alt="RESON One headphones in graphite with copper accents, floating." />
+  </div>
+</section>
+
+<!-- SHOWCASE: scrubbed product film (rotate -> driver macro -> front) -->
+<section class="showcase" id="showcase">
+  <div class="show-pin">
+    <video class="show-vid" id="showVid" muted playsinline preload="auto" poster="assets/reson-f1.jpg">
+      <source src="assets/reson-film.mp4" type="video/mp4" />
+    </video>
+    <div class="show-kicker eyebrow">Engineered to disappear</div>
+    <div class="feat">
+      <div class="line" data-at="0.10"><b>40mm beryllium drivers.</b><span>Hand-tuned, 5 Hz to 40 kHz.</span></div>
+      <div class="line" data-at="0.42"><b>The copper driver.</b><span>Up to 42 dB of adaptive quiet.</span></div>
+      <div class="line" data-at="0.74"><b>Sixty-hour battery.</b><span>Ten minutes gives you eight hours.</span></div>
     </div>
-    <div class="hero-figure reveal" style="transition-delay:.1s">
-      <img class="hero-img" src="assets/hero.jpg" alt="RESON One headphones in matte graphite with copper accents." />
+  </div>
+</section>
+
+<!-- SPECS -->
+<section class="specs" id="specs">
+  <div class="head reveal">
+    <h2>The detail.</h2>
+    <p>Everything you can hear, and everything you cannot.</p>
+  </div>
+  <div class="big-nums">
+    <div class="reveal"><div class="v">42<small>dB</small></div><div class="k">Adaptive noise cancelling</div></div>
+    <div class="reveal" style="transition-delay:.08s"><div class="v">60<small>hr</small></div><div class="k">Battery, ANC on</div></div>
+    <div class="reveal" style="transition-delay:.16s"><div class="v">278<small>g</small></div><div class="k">On your head</div></div>
+  </div>
+  <div class="spec-grid">
+    <div>
+      <div class="spec-row reveal"><dt>Drivers</dt><dd>40mm beryllium</dd></div>
+      <div class="spec-row reveal"><dt>Frequency</dt><dd>5 Hz to 40 kHz</dd></div>
+      <div class="spec-row reveal"><dt>Charging</dt><dd>USB-C, 10 min to 8 hrs</dd></div>
     </div>
-  </section>
-
-  <!-- THE FEATURE PROOF (pinned product + callouts) -->
-  <section class="proof" id="proof">
-    <div class="proof-pin">
-      <div class="proof-kicker">Engineered to disappear</div>
-      <div class="stage">
-        <img class="product" src="assets/product.jpg" alt="RESON One, front view." />
-        <div class="callout left c1">
-          <div class="cspec">40mm beryllium</div>
-          <div class="clabel">Hand-tuned drivers, 5Hz to 40kHz</div>
-          <span class="tick"></span>
-        </div>
-        <div class="callout right c2">
-          <div class="cspec">Adaptive ANC</div>
-          <div class="clabel">Up to 42dB, reads the room</div>
-          <span class="tick"></span>
-        </div>
-        <div class="callout left c3">
-          <div class="cspec">60-hour battery</div>
-          <div class="clabel">10 minutes gives you 8 hours</div>
-          <span class="tick"></span>
-        </div>
-        <div class="callout right c4">
-          <div class="cspec">Lambskin foam</div>
-          <div class="clabel">Memory foam, weightless at 278g</div>
-          <span class="tick"></span>
-        </div>
-      </div>
+    <div>
+      <div class="spec-row reveal"><dt>Codecs</dt><dd>LDAC, aptX Adaptive, AAC</dd></div>
+      <div class="spec-row reveal"><dt>Materials</dt><dd>Aluminium, lambskin, copper</dd></div>
+      <div class="spec-row reveal"><dt>In the box</dt><dd>Case, USB-C, 3.5mm cable</dd></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SPEC SHEET -->
-  <section class="specs" id="specs">
-    <h2 class="reveal">The detail.</h2>
-    <div class="spec-grid">
-      <div>
-        <div class="spec-row reveal"><dt>Drivers</dt><dd>40mm beryllium</dd></div>
-        <div class="spec-row reveal"><dt>Frequency</dt><dd>5 Hz to 40 kHz</dd></div>
-        <div class="spec-row reveal"><dt>Noise cancelling</dt><dd>Adaptive, up to 42 dB</dd></div>
-        <div class="spec-row reveal"><dt>Battery</dt><dd>60 hours, ANC on</dd></div>
-      </div>
-      <div>
-        <div class="spec-row reveal"><dt>Charging</dt><dd>USB-C, 10 min to 8 hrs</dd></div>
-        <div class="spec-row reveal"><dt>Codecs</dt><dd>LDAC, aptX Adaptive, AAC</dd></div>
-        <div class="spec-row reveal"><dt>Weight</dt><dd>278 g</dd></div>
-        <div class="spec-row reveal"><dt>Materials</dt><dd>Aluminium, lambskin, copper</dd></div>
-      </div>
+<!-- DESIGN -->
+<section class="design" id="design">
+  <div class="copy">
+    <div class="eyebrow reveal">The design</div>
+    <h2 class="reveal" style="transition-delay:.05s">Made of things<br>that last.</h2>
+    <p class="reveal" style="transition-delay:.1s">Brushed aluminium arms. A copper hinge that turns smooth for years. Lambskin over slow-recovery memory foam, so the seal stays soft on the thousandth wear.</p>
+  </div>
+  <figure class="reveal"><img src="assets/detail-headband.jpg" alt="RESON One headband and copper hinge detail." /></figure>
+</section>
+
+<!-- BUY -->
+<section class="buy" id="buy">
+  <div class="copy">
+    <div class="eyebrow reveal">Buy</div>
+    <h2 class="reveal" style="transition-delay:.04s">RESON One</h2>
+    <div class="price reveal" style="transition-delay:.08s">S$ 549</div>
+    <div class="ways reveal" style="transition-delay:.12s">
+      <div class="way sel"><span class="sw graphite"></span>Graphite</div>
+      <div class="way"><span class="sw copper"></span>Copper</div>
     </div>
-  </section>
+    <a href="#buy"><button class="btn reveal" style="transition-delay:.16s">Add to Bag</button></a>
+    <div class="reassure reveal" style="transition-delay:.22s">Two-year warranty. Free 30-day returns. Ships in two days.</div>
+  </div>
+  <figure class="reveal"><img id="buyImg" src="assets/reson-f3.jpg" alt="RESON One headphones, front view." /></figure>
+</section>
 
-  <!-- MATERIAL DETAIL -->
-  <section class="material" id="material">
-    <div class="mcopy">
-      <div class="eyebrow reveal">The design</div>
-      <h2 class="reveal">Made of things that last.</h2>
-      <p class="reveal" style="transition-delay:.06s">Brushed aluminium arms. A copper hinge that turns smooth for years. Lambskin over slow-recovery memory foam, so the seal stays soft on the thousandth wear.</p>
-    </div>
-    <figure class="reveal"><img src="assets/detail-earcup.jpg" alt="Earcup detail: lambskin cushion, copper ring." /></figure>
-  </section>
+<footer>
+  <div class="brand">RESON</div>
+  <nav>
+    <a href="#showcase">Sound</a>
+    <a href="#design">Design</a>
+    <a href="#specs">Specs</a>
+    <a href="#buy">Buy</a>
+  </nav>
+  <div>RESON Audio. A concept build, 2026.</div>
+</footer>
 
-  <!-- TRUST -->
-  <section class="trust">
-    <p class="reveal">"The most quietly confident headphones we have tested this year."</p>
-    <div class="src reveal" style="transition-delay:.08s">SoundField Review · 2026</div>
-  </section>
-
-  <!-- BUY -->
-  <section class="buy" id="buy">
-    <div class="buy-copy">
-      <div class="eyebrow reveal">Buy</div>
-      <h2 class="reveal">RESON One</h2>
-      <div class="price reveal" style="transition-delay:.05s">S$ 549</div>
-      <div class="ways reveal" style="transition-delay:.1s">
-        <div class="way sel"><span class="sw graphite"></span>Graphite</div>
-        <div class="way"><span class="sw sand"></span>Sand</div>
-      </div>
-      <button class="magnetic reveal" style="transition-delay:.14s">Add to bag</button>
-      <div class="reassure reveal" style="transition-delay:.2s">Two-year warranty. Free 30-day returns. Ships in two days.</div>
-    </div>
-    <div class="buy-figure reveal"><img src="assets/detail-headband.jpg" alt="RESON One headband and copper hinge." /></div>
-  </section>
-
-  <footer>
-    <div class="brand">RESON</div>
-    <nav>
-      <a href="#proof">Sound</a>
-      <a href="#material">Design</a>
-      <a href="#specs">Specs</a>
-      <a href="#buy">Buy</a>
-    </nav>
-    <div class="copy">© 2026 RESON Audio</div>
-  </footer>
-
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script>
 (function(){
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
   if(reduce) document.body.classList.add('reduce');
-  let lenis=null;
-  if(!reduce && window.Lenis){ lenis=new Lenis({lerp:0.1}); window.lenis=lenis; }
 
-  const header=document.getElementById('header');
-  const prog=document.getElementById('prog');
-  const heroImg=document.querySelector('.hero-img');
-  const proof=document.querySelector('.proof');
-  const stage=document.querySelector('.stage');
-  const callouts=Array.from(document.querySelectorAll('.callout'));
-  const docEl=document.documentElement;
+  const docEl = document.documentElement;
+  const header = document.getElementById('header');
+  const prog = document.getElementById('prog');
+  const heroImg = document.getElementById('heroImg');
+  const showcase = document.getElementById('showcase');
+  const vid = document.getElementById('showVid');
+  const featLines = Array.prototype.slice.call(document.querySelectorAll('.feat .line'));
+  const revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
 
-  function isStatic(){ return reduce || window.innerWidth<=880; }
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+  function mobile(){ return window.innerWidth <= 880; }
 
-  function update(){
-    const max=docEl.scrollHeight-docEl.clientHeight;
-    prog.style.width=((max>0?docEl.scrollTop/max:0)*100).toFixed(2)+'%';
-    header.classList.toggle('solid',docEl.scrollTop>40);
-    if(reduce) return;
+  // video scrub setup
+  let dur=0, hasVid=false, scrub=false, targetT=0, curT=0;
+  if(vid){
+    vid.addEventListener('loadedmetadata',()=>{
+      dur=vid.duration||0; hasVid=dur>0;
+      scrub = hasVid && !reduce && !mobile();
+      if(hasVid && !scrub){ vid.loop=true; vid.muted=true; const p=vid.play(); if(p&&p.catch)p.catch(()=>{}); }
+      else if(scrub){ vid.muted=true; const pp=vid.play(); if(pp&&pp.then){ pp.then(()=>vid.pause()).catch(()=>{try{vid.pause();}catch(e){}}); } } // play->pause forces full buffering so currentTime is seekable
+    });
+    vid.addEventListener('error',()=>{ hasVid=false; scrub=false; });
+  }
 
-    if(heroImg && docEl.scrollTop<window.innerHeight){
-      heroImg.style.transform='translateY('+(docEl.scrollTop*0.05).toFixed(1)+'px)';
-    }
-
-    if(proof && !isStatic()){
-      const r=proof.getBoundingClientRect();
-      const total=r.height-window.innerHeight;
-      let p=total>0?(-r.top)/total:0;
-      p=Math.max(0,Math.min(1,p));
-      stage.style.setProperty('--s',(1+p*0.06).toFixed(3));
-      const shown=Math.min(callouts.length,Math.floor(p*4)+1);
-      callouts.forEach((c,i)=>c.classList.toggle('in',i<shown && p>0.02));
+  function revealCheck(){
+    for(let i=0;i<revealEls.length;i++){
+      const el=revealEls[i];
+      if(!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight*0.88) el.classList.add('in');
     }
   }
-  function raf(t){ if(lenis) lenis.raf(t); update(); requestAnimationFrame(raf); }
-  requestAnimationFrame(raf);
 
-  // hero mouse parallax (desktop)
+  function update(){
+    const max = docEl.scrollHeight - docEl.clientHeight;
+    if(prog) prog.style.width = (max>0 ? docEl.scrollTop/max*100 : 0).toFixed(2)+'%';
+    if(header) header.classList.toggle('solid', docEl.scrollTop>40);
+    revealCheck();
+    if(reduce) return;
+
+    if(heroImg && docEl.scrollTop < window.innerHeight){
+      heroImg.style.transform = 'translateY('+(docEl.scrollTop*0.04).toFixed(1)+'px)';
+    }
+
+    if(showcase && !mobile()){
+      const r = showcase.getBoundingClientRect();
+      const total = showcase.offsetHeight - window.innerHeight;
+      const p = total>0 ? clamp(-r.top/total,0,1) : 0;
+      if(scrub) targetT = p*dur;
+      for(let i=0;i<featLines.length;i++){
+        const at = parseFloat(featLines[i].dataset.at);
+        featLines[i].classList.toggle('in', p>=at && p<at+0.24);
+      }
+    }
+  }
+
+  function tick(){
+    if(scrub && hasVid){
+      curT += (targetT-curT)*0.16;
+      if(Math.abs(targetT-curT)>0.002){ try{ vid.currentTime=curT; }catch(e){} }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  let lenis=null;
+  if(!reduce && window.Lenis){
+    lenis = new Lenis({lerp:0.1});
+    const raf=t=>{lenis.raf(t);requestAnimationFrame(raf);};
+    requestAnimationFrame(raf);
+    lenis.on('scroll',update);
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+
   if(!reduce && matchMedia('(hover:hover)').matches){
-    const hf=document.querySelector('.hero-figure');
+    const fig=document.querySelector('.hero .figure');
     window.addEventListener('mousemove',e=>{
       if(docEl.scrollTop>window.innerHeight) return;
       const mx=(e.clientX/window.innerWidth-0.5), my=(e.clientY/window.innerHeight-0.5);
-      if(hf) hf.style.transform='translate('+(mx*14).toFixed(1)+'px,'+(my*10).toFixed(1)+'px)';
+      if(fig) fig.style.transform='translate('+(mx*12).toFixed(1)+'px,'+(my*8).toFixed(1)+'px)';
     });
   }
 
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();if(lenis)lenis.scrollTo(t,{offset:-10});else t.scrollIntoView({behavior:'smooth'});});
+    a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();if(lenis)lenis.scrollTo(t,{offset:-8});else t.scrollIntoView({behavior:'smooth'});});
   });
 
-  const io=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:0.14,rootMargin:'0px 0px -7% 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  requestAnimationFrame(function(){document.querySelectorAll('.reveal').forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight*0.92){el.classList.add('in');io.unobserve(el);}});});
+  const buyImg = document.getElementById('buyImg');
+  document.querySelectorAll('.way').forEach(w=>w.addEventListener('click',()=>{
+    document.querySelectorAll('.way').forEach(x=>x.classList.remove('sel'));
+    w.classList.add('sel');
+    if(buyImg) buyImg.style.filter = w.textContent.trim()==='Copper' ? 'saturate(1.16) hue-rotate(-6deg) brightness(1.03)' : '';
+  }));
 
-  // colourway select
-  document.querySelectorAll('.way').forEach(w=>w.addEventListener('click',()=>{document.querySelectorAll('.way').forEach(x=>x.classList.remove('sel'));w.classList.add('sel');}));
-
-  // magnetic CTA + ring
-  const canHover=matchMedia('(hover:hover)').matches && !reduce;
-  document.querySelectorAll('.magnetic').forEach(btn=>{
-    if(canHover){
-      btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();const dx=Math.max(-8,Math.min(8,(e.clientX-(r.left+r.width/2))*0.3));const dy=Math.max(-8,Math.min(8,(e.clientY-(r.top+r.height/2))*0.4));btn.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';});
-      btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
-    }
-    btn.addEventListener('click',()=>{const ring=document.createElement('span');ring.className='ring';btn.appendChild(ring);setTimeout(()=>ring.remove(),640);});
-  });
+  // verification hook for screenshots
+  window.__seek=function(p){
+    p=clamp(p,0,1);
+    if(showcase){ const total=showcase.offsetHeight-window.innerHeight; const y=showcase.offsetTop+p*total;
+      if(lenis) lenis.scrollTo(y,{immediate:true}); else window.scrollTo(0,y); }
+    if(scrub&&hasVid){ targetT=p*dur; curT=p*dur; try{vid.currentTime=curT;}catch(e){} }
+    update();
+  };
 })();
 </script>
 </body>
