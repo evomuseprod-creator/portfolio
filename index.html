@@ -1243,6 +1243,7 @@
     let mouse = { x: spotlightCanvas.width / 2, y: spotlightCanvas.height * 0.45 };
     let smooth = { x: spotlightCanvas.width / 2, y: spotlightCanvas.height * 0.45 };
     let hoverActive = false;
+    let needsUpdate = true;
     
     window.addEventListener('mousemove', e => {
       const rect = heroEl.getBoundingClientRect();
@@ -1250,7 +1251,13 @@
           e.clientY >= rect.top && e.clientY <= rect.bottom) {
         mouse.x = e.clientX - rect.left;
         mouse.y = e.clientY - rect.top;
-        hoverActive = true;
+        if (!hoverActive) {
+          hoverActive = true;
+          if (!needsUpdate) {
+            needsUpdate = true;
+            requestAnimationFrame(spotlightLoop);
+          }
+        }
       } else {
         hoverActive = false;
       }
@@ -1258,42 +1265,63 @@
     
     function spotlightLoop() {
       if (!hoverActive) {
-        // drift back to center slowly
         mouse.x = spotlightCanvas.width / 2;
         mouse.y = spotlightCanvas.height * 0.45;
       }
       
-      smooth.x += (mouse.x - smooth.x) * 0.1;
-      smooth.y += (mouse.y - smooth.y) * 0.1;
+      const dx = mouse.x - smooth.x;
+      const dy = mouse.y - smooth.y;
       
-      ctx.clearRect(0, 0, spotlightCanvas.width, spotlightCanvas.height);
-      
-      const r = 260;
-      const grad = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, r);
-      grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-      grad.addColorStop(0.4, 'rgba(255, 255, 255, 1)');
-      grad.addColorStop(0.6, 'rgba(255, 255, 255, 0.75)');
-      grad.addColorStop(0.75, 'rgba(255, 255, 255, 0.4)');
-      grad.addColorStop(0.88, 'rgba(255, 255, 255, 0.12)');
-      grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-      
-      ctx.beginPath();
-      ctx.arc(smooth.x, smooth.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
-      
-      try {
-        const dataURL = spotlightCanvas.toDataURL();
-        revealOverlay.style.maskImage = `url(${dataURL})`;
-        revealOverlay.style.webkitMaskImage = `url(${dataURL})`;
-        revealOverlay.style.maskSize = '100% 100%';
-        revealOverlay.style.webkitMaskSize = '100% 100%';
-      } catch (e) {
-        // Fallback if canvas security rules block dataURL extraction
+      if (Math.abs(dx) < 0.2 && Math.abs(dy) < 0.2 && !hoverActive) {
+        smooth.x = mouse.x;
+        smooth.y = mouse.y;
+        needsUpdate = false;
+      } else {
+        smooth.x += dx * 0.1;
+        smooth.y += dy * 0.1;
+        needsUpdate = true;
       }
       
-      requestAnimationFrame(spotlightLoop);
+      if (needsUpdate) {
+        ctx.clearRect(0, 0, spotlightCanvas.width, spotlightCanvas.height);
+        
+        const r = 260;
+        const grad = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, r);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.4, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.6, 'rgba(255, 255, 255, 0.75)');
+        grad.addColorStop(0.75, 'rgba(255, 255, 255, 0.4)');
+        grad.addColorStop(0.88, 'rgba(255, 255, 255, 0.12)');
+        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        
+        ctx.beginPath();
+        ctx.arc(smooth.x, smooth.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+        
+        try {
+          const dataURL = spotlightCanvas.toDataURL();
+          revealOverlay.style.maskImage = `url(${dataURL})`;
+          revealOverlay.style.webkitMaskImage = `url(${dataURL})`;
+          revealOverlay.style.maskSize = '100% 100%';
+          revealOverlay.style.webkitMaskSize = '100% 100%';
+        } catch (e) {
+          // Fallback if canvas security rules block dataURL extraction
+        }
+      }
+      
+      if (hoverActive || needsUpdate) {
+        requestAnimationFrame(spotlightLoop);
+      }
     }
+    
+    window.addEventListener('mousemove', () => {
+      if (!needsUpdate) {
+        needsUpdate = true;
+        requestAnimationFrame(spotlightLoop);
+      }
+    });
+    
     requestAnimationFrame(spotlightLoop);
   }
 
