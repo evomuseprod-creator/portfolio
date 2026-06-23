@@ -211,29 +211,7 @@
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    background: var(--bg);
-  }
-
-  .video-container {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .bg-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    opacity: 0.15;
-  }
-
-  .video-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, transparent 30%, var(--bg) 95%);
+    background: radial-gradient(circle at center, #111115 0%, var(--bg) 80%);
   }
 
   /* Canvas Spotlight Reveal */
@@ -953,13 +931,7 @@
 </nav>
 
 <header class="hero">
-  <!-- Looping Background Video -->
-  <div class="video-container">
-    <video autoplay muted loop playsinline class="bg-video">
-      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260606_154941_df1a96e1-a06f-450c-bd02-d863414cc1a0.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
-  </div>
+
 
   <!-- Canvas Spotlight Reveal overlay -->
   <div class="hero-reveal-overlay"></div>
